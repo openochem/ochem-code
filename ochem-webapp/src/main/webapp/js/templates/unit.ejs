@@ -1,0 +1,53 @@
+<% 
+	var unitName = data["name"] ? data["name"] : "dimensionless";
+	xlsName = unitName.replace("&", "&amp;"); 
+%>
+<table class="compact-item<% if (data.isdefault == "0" && !data.toDefaultConversion) {%> red<% } %>">
+	<tr>
+	<td width="80">
+		<a action="select" title="select"><img src="img/icons/save.gif"/></a>
+		<a action="edit" title="edit"><img src="img/icons/edit.gif"/></a>
+		<!-- wiki_info --> <!-- <a href="wikipage/action.do?entities=unit&id=<%=data.id%>" tab="Wiki" title="wiki page"><img src="img/icons/wiki.gif"/></a> -->
+		<% if (data["documentationTerm"] != null) { %>
+			<a class="infolink" href="https://docs.ochem.eu/display/OKB/<%=data["documentationTerm"]%>" target="_blank"></a>
+		<% } %>
+		<% if (!(data["unit-record"] > 0)) { %>
+		<a action="delete" title="delete"><img src="img/icons/delete.gif"/></a>
+		<% } %>
+	</td>
+	<td width="150">
+		<%=unitName%> <% if (xlsName != unitName) { %><br/><i><%=xlsName%></i><% } %>
+	</td>
+	<td width="30">
+		<% if (data.isdefault == "1") { %>
+		<small>def</small>
+		<% } %>
+	</td>
+	<td width="120">
+		<i>(<%=data.unitCategory["name"]%><!-- wiki_info --><!--<a href="wikipage/action.do?name=<%=data.unitCategory["name"]%>" tab="Wiki"><%=data.unitCategory["name"]%></a> -->)</i>
+	</td>
+	<td width="110">
+		<% if ((data["unit-record"] > 0)) { %>
+			<a href="epbrowser/show.do?unit=<%=data.id%>" tab="Records having the seleted unit"><%=data["unit-record"]%> records</a>
+		<% } else { %>
+			<a href="epbrowser/show.do?unit=<%=data.id%>" tab="Records having the seleted unit">Show records</a>
+		<% } %>
+	</td>
+		<td width="300">
+		<% if (data.description) { %>
+			<i title="<%=data.description%>"><%=data.description.substring(0, 30)%> ...</i>
+		<% } %>
+	</td>
+	<td align="right">
+	<div class="right-label" nowrap="true" style="white-space: nowrap;">
+		<% if (data.introducer != undefined && data.introducer != data.owner) 
+		{ %><%=data.introducer%>
+		<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=unit_<%=data.id%>" title="send message">
+			<img src="img/icons/email_icon.gif"/></a> / 
+		<% }if(data.owner != undefined){%><%=data.owner%>
+			<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=unit_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+		<%}%>
+	</div>
+	</td>
+	</tr>
+</table>

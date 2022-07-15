@@ -1,0 +1,53 @@
+<%
+	var items = array(data.mappings);
+%>
+<table class="compact-item">
+<tr>
+	<td width="50px">
+		<div class="view">
+			<a action="editmapping"><img src="img/icons/edit.gif"/></a>
+		</div>
+		<div class="edit invisible">
+			<a action="savemapping"><img src="img/icons/save.gif"/></a>
+		</div>
+	</td>
+	<td width="100px">
+			<%=data.name%>
+	</td>
+	<td width="100px">
+		<div class="edit invisible">
+			<select name="mapping" send="1">
+			<%  for (var i = 0; i < items.length; i++) {
+					if (items[i].name == data.selectedItem.name)
+					{%>
+						<option value="<%=i%>" selected="selected"><%=items[i].name %> (correlation coefficient = <%=items[i].correlation%>, cosine = <%=items[i].cosine%>)</option>
+					<% } else{ %> 
+						<option value="<%=i%>"><%=items[i].name %> (correlation coefficient = <%=items[i].correlation%>, cosine = <%=items[i].cosine%>)</option>
+					<% }
+				} %>
+			</select>
+		</div>
+		<div class="view">
+			mapped to <%=data.selectedItem.name %>
+		</div>
+	</td>
+	<td width="275px">
+		<div class="view">
+			CC (
+			<%=data.selectedItem.correlation %>
+			scale <%=data.selectedItem.corrfactor %>
+			offset <%=data.selectedItem.corrconstant %>
+			)
+		</div>
+	</td>
+	<td width="275px">
+		<div class="view">
+		COSINE (
+		<%=data.selectedItem.cosine %>
+		scale = <%=data.selectedItem.coef %>
+		error = <%=data.selectedItem.error %> 
+		)
+		</div>
+	</td>
+</tr>
+</table>

@@ -1,0 +1,21 @@
+<input type="hidden" name="co-id" value="<%=data.id%>" send="1"/>
+<table class="compact-item">
+	<tr><td width="200">
+	<% if (data.id < 0) { %>
+		<input type="text" name="co-name" value="<%=data.name%>" send="1"/>
+	<% } else { %>
+		<input type="hidden" class="invisible" name="co-name" value="<%=data.name%>" send="1"/>
+		<input type="text" class="invisible" name="co-name-hidden" value="<%=data.name%>" send="1"/>
+		<span class="option-name"><%=data.name%></span>
+	<% } %>	
+	</td>
+	<% if (data.referenced != "true") { %>
+	<td class="command-panel">
+		<a action="delete" class="delete-link">[x]</a>
+		<% if (data.id > 0) { %>
+			<a action="editoption"><img src="img/icons/edit.gif"/></a>
+		<% } %>
+	</td>
+	<% } %>
+	</tr>
+</table>

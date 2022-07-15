@@ -1,0 +1,131 @@
+<%
+	var propertyValue = data.ep.conditions ? array(data.ep.conditions['property-value']) : array(undefined);
+	var unitName = data.ep.unit ? data.ep.unit.name : "";
+		
+	var authors = array(data.ep.article.authors.author);
+	var unit = data.unit || {};
+	var images = array(data.imageId);
+%>
+<table class="block-table ep" cellspacing="2">
+	<tr>
+		<td >
+			<%
+				var step = 0;
+				var size = images.length;
+				if(images.length > 50)
+					size = 50;
+				var imageSize = 150;	
+				var stepBy = Math.floor(imageSize / size);
+				var imgkey = data.compressionKey;
+				
+				var _block1 = '';
+				var _block2 = "<br><img class='block-image' src='depiction.jsp?id=" + images[0] + "' width='" + imageSize + "' height='" + imageSize + "' usemap='#example" + imgkey + "' name='example" + imgkey + "' alt=''><map name='example"+ imgkey + "'>"
+				var _block3 = '';
+				for (var i=0; i < size; i++)
+			 	{ 
+			 		_block1 += '<img src="depiction.jsp?id=' + images[i] + '" width="1" height="1" alt=""/ >';
+	
+			 		var head = '<area shape="rect" COORDS="';
+			 		var coord = step + ",0," + eval(step + eval(stepBy - 1)) + ',' + imageSize + '"';
+			 		var href = ' href="" onClick="return false" onmouseover="example' + imgkey + '.src=';
+			   		var mouse = "'depiction.jsp?id=" + images[i] + "'";
+			   		var tail = ';" alt="" >';
+			   		
+					_block3 += head + coord + href + mouse + tail;
+					step += stepBy;
+			 	} 
+			 	var finalString = _block1+_block2+_block3;
+			 %>
+			<%=finalString%></map></br><small>Molecules: <b><%=images.length%></b></small>
+		</td>
+		<td class="block-content" valign="top">
+			<div class="conditions">
+				<% for (var i = 0; i < propertyValue.length; i++) { 
+					var value = propertyValue[i].property.qualitive == "true" 	// qualitive condition 
+								? propertyValue[i].option.name 
+								:     propertyValue[i].multi == "true"			// quantitive condition
+									? "---"
+									:     propertyValue[i].value 
+										? propertyValue[i].value   
+										: propertyValue[i].textualValue;
+										
+					var condUnit = propertyValue[i].property.qualitive == "false" &&  propertyValue[i].unit  
+								 ? (propertyValue[i].unit.multi == "true" ? "---" : propertyValue[i].unit.name)
+								 : "";
+					%>
+					<nobr>
+						<span name="condname"><%=propertyValue[i].property.name%></span>
+						<span>&nbsp;=&nbsp;</span>
+						<span name="condvalue"><%=value%></span>
+						 &nbsp;
+						<span name="condunit"><%=condUnit%></span>
+					</nobr>
+					<br/>
+				<% } %>
+			</div>
+			
+			<div name="propdata">
+			<span name="propevidence">
+			<%  // draw by compressed ep_status
+				switch(data.epEvidence)
+				{
+					case "0":
+				   		%> <img src="img/icons/evidence_none.gif" title="No evidence specified"/> <%
+				  		break;
+					case "1":
+					case "2":
+				   		%> <img src="img/icons/evidence_experimental.gif" title="Experimentally measured in this article"/> <%
+				  		break;
+					default:
+			 	  		%> <img src="img/icons/evidence_multi.gif" title="records have different / undedectable evidences"/> <%	
+				}
+			%>
+			</span>
+			
+			<%var value = 
+					(data.ep.property.qualitive == "true") 
+				? 	(data.ep.option.multi == "true" ? "\"multiple options selected\"" : data.ep.option.name) 
+				: 	((data.ep.value == "-0.0") ? "---" : data.ep.value);
+			%>
+			
+				<span name=propname><%=data.ep.property["name"]%></span>
+				&nbsp;=&nbsp;
+				<span name=propvalue><%=value%></span>
+				<span name=propunit><%=unitName%></span>
+			
+			<div class="article-data">
+				 <% if (authors.length > 0)  { %>
+				 	<a action="popup" name="articleLink" link="article/profile.do?render-mode=popup&id=<%=data.ep.article.id%>" title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>, <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 	</a>
+				 <% } %>
+				 <br/>
+				 <a action="popup" name="articleLink" link="article/profile.do?render-mode=popup&id=<%=data.ep.article.id%>" title="<%=data.ep.article.title%>"><%=data.ep.article.title.substr(0, 50)+"..."%></a><br/>
+				 <%=(data.ep["art-page-num"]) ? "P: "+data.ep["art-page-num"]+"&nbsp;" : "" %>
+				 <%=(data.ep["art-table-num"]) ? "T: "+data.ep["art-table-num"]+"&nbsp;" : "" %>
+				 <%=(data.ep["art-line-num"]) ? "L: "+data.ep["art-line-num"]+"&nbsp;" : "" %>
+				 <br/>
+				 <% if (data.ep.article.journal) {%>
+					 <%=data.ep.article.journal_abb%>
+				 <% } %>
+				 <b><%=data.ep.article['publication-date'].year%></b>; <%=data.ep.article.volume%> (<%=data.ep.article.issue%>) <%=data.ep.article.pageNumbers%>
+			</div>	
+			
+			<div class="right-label" nowrap="true" style="white-space: nowrap;">
+				<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><%=data.introducer%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=batch-edit" title="send message">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% } if(data.owner != undefined){%><%=data.owner%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=batch-edit" title="send message"><img src="img/icons/email_icon.gif"/></a>
+				<%}%>
+			</div>
+			
+			<a action="edit">edit</a>
+			
+			<% if (data.ep.errorComment) { %>
+				<div class="molname"><a name="batcheditfilter" href="epbrowser/show.do?estimated=false&batchedit=1"><%=data.ep.errorComment%> record(s)</a> could not be updated.</div>
+			<% } %>	
+		</td>
+	</tr>
+</table>

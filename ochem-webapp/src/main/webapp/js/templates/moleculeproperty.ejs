@@ -1,0 +1,51 @@
+<%
+	var conditions = data.conditions ? array(data.conditions['condition-value']) : array(undefined);	
+	var authors = array(data.article.authors.author);
+	var unit = data.unit || {};
+%>
+<table class="block-table ep">
+	<tr>
+		<td class="block-content" valign="top">
+			<div class="conditions">
+				<% for (var i = 0; i < conditions.length; i++) { 
+					var value = (conditions[i].condition.qualitive == "true") ? conditions[i].option.name : conditions[i].value; %>
+					<nobr><%=conditions[i].condition.name%> = <%=value%></nobr><br/>
+				<% } %>
+			</div>
+			<% if (data["connected_id"] == data.id) { %><img src="img/icons/evidence_experimental.gif"/>
+			<% } else if (data["connected_id"]) { %><img src="img/icons/evidence_referenced.gif"/>
+			<% } else { %><img src="img/icons/evidence_none.gif"/>
+			<% } %>
+			<%=data.property["name"]%>
+			 = 
+			 <%=data.value%>&nbsp;<%=unit.name%>
+			 <div class="article-data">
+				 <% if (authors.length > 0)  { %>
+				 	<div title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>, <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 	</div>
+				 <% } %>
+				 <div title="<%=data.article.title%>"><%=data.article.title.substr(0, 30)+"..."%></div>
+				 <%=(data["art-mol-id"]) ? "N: "+data["art-mol-id"]+"&nbsp;" : "" %>
+				 <%=(data["art-page-num"]) ? "P: "+data["art-page-num"]+"&nbsp;" : "" %>
+				 <%=(data["art-table-num"]) ? "T: "+data["art-table-num"]+"&nbsp;" : "" %>
+				 <%=(data["art-line-num"]) ? "L: "+data["art-line-num"]+"&nbsp;" : "" %>
+				 <br/>
+				<%if (data.article.journal) {
+				var jrn = (data.article.journal.abbreviation) ? data.article.journal.abbreviation : data.article.journal.title;	
+				%><%=jrn%>
+				<%}%>
+						<b><%=data.article['publication-date'].year%></b>; <%=data.article.volume%> (<%=data.article.issue%>) <%=data.article.pageNumbers%>
+			</div>	
+			<div class="right-label" nowrap="true" style="white-space: nowrap;">
+			<% if (data.introducer != undefined && data.introducer != data.owner) 
+			{ %><%=data.introducer%>
+			<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=molecule-property" title="send message">
+				<img src="img/icons/email_icon.gif"/></a> / 
+			<% } if(data.owner != undefined){%><%=data.owner%>
+			<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=molecule-property" title="send message"><img src="img/icons/email_icon.gif"/></a>
+			<%}%>
+			</div>
+			</td>
+	</tr>
+</table>

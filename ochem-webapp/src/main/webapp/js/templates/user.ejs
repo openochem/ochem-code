@@ -1,0 +1,77 @@
+<table class="compact-item rank-<%=data.rank%>">
+	<tr>
+		
+		<td width="20"><a action="select"><img src="img/icons/save.gif"</a></td>
+		<td width="200">
+			<img src="img/icons/user-16.png"/>
+			<%=data.login %><br/>
+			<%=data.FirstName%> <%=data.LastName%>
+		</td>
+		<td width="200">
+			<a href="user/profile.do?login=<%=data.login %>" tab="User profile: <%=data.login %>">[profile]</a><br/>
+			<a href="user/contributions.do?introducer=<%=data.login %>" tab="User contributions: <%=data.login %>">[contributions]</a><br/>
+			<a href="useractions/show.do?login=<%=data.login %>" tab="User activity: <%=data.login %>">[activity]</a>
+		</td>
+		<td width="200">
+			<nobr>Joined on <%=data.registrationTime %></nobr><br/>
+			<% if (data.latestActivityTime) { %>
+				<nobr>Active on <%=data.latestActivityTime %></nobr>
+			<% } else { %>
+				No activity
+			<% } %>
+			
+		</td>
+		<td width="200" style="padding-left: 30px;">
+			<% if(data.Organisation){%>
+				<%=data.Organisation %><br/>
+				<%=data.Affiliation %>
+			<%}%>
+		</td>
+		
+		<td width="300" class="invisible">
+			<%=data["E-mail"]%>
+		</td>
+		<td width="100" align="center" title="Activities last 30 days / Total activities">
+			Activities<br/>
+			<%=activitiesCountMonth %> / <%=activitiesCountTotal %>
+		</td>
+		<td width="150">
+			<select class="rank" name="rank" send="1">
+				<% for (var i = 0; i < rankTitles.length; i++) {%>
+				<option value="<%=ranks[i]%>"<% if (data.rank == ranks[i]){%>selected="selected"<%}%>>
+					<%=rankTitles[i]%>
+				</option>
+				<% } %>
+			</select>
+		</td>
+		<% if(data.reccount){ %>
+			<td width="200">
+				<% if(data.reccount == "0"){%>
+					No Records
+				<%}else{%>
+					Records: <%=data.reccount%>
+				<%}%>
+			</td>
+		
+			<td width="200">
+				<% if(data.basketcount == "0"){%>
+					No Baskets
+				<%}else{%>
+					Baskets: <%=data.basketcount%>
+				<%}%>
+			</td>
+		<% } %>
+		
+			<td class="command-panel">
+				<% if(data.basketcount == "0" && data.reccount == "0" && data.artcount == "0" && data.rank == "0"){%>
+					<a action="delete"><img src="img/icons/delete.gif"/></a>
+				<%}%>
+				<% if (data.suspended == "true") { %>
+					<a action="unsuspend" title="Suspend this user account">unsuspend</a>
+				<% } else { %>
+					<a action="suspend" title="Unsuspend this user account">suspend</a>	 
+				<% } %>
+			</td>
+		
+	</tr>
+</table>

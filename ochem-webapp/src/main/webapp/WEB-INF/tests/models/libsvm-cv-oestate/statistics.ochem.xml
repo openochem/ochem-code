@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<statistics>
+    <containsPredictions>true</containsPredictions>
+    <set setId="training" matchedPoints="192" size="0">
+        <errorCount>0</errorCount>
+        <hasPredicates>false</hasPredicates>
+        <basketId>1000000112</basketId>
+        <dm>BAGGING-STD</dm>
+        <average>0.01</average>
+        <maestd>0.04</maestd>
+        <mae>0.7</mae>
+        <q2std>0.02</q2std>
+        <q2>0.57</q2>
+        <r2std>0.03</r2std>
+        <r2>0.71</r2>
+        <rmsestd>0.04</rmsestd>
+        <rmse>0.89</rmse>
+    </set>
+    <set setId="validation0" matchedPoints="46" size="0">
+        <errorCount>0</errorCount>
+        <hasPredicates>false</hasPredicates>
+        <basketId>1000000113</basketId>
+        <dm>BAGGING-STD</dm>
+        <average>0.2</average>
+        <maestd>0.08</maestd>
+        <mae>0.75</mae>
+        <q2std>0.04</q2std>
+        <q2>0.57</q2>
+        <r2std>0.05</r2std>
+        <r2>0.77</r2>
+        <rmsestd>0.07</rmsestd>
+        <rmse>0.91</rmse>
+    </set>
+    <deletedRecordsCount>0</deletedRecordsCount>
+    <hasDuplicates>0</hasDuplicates>
+</statistics>

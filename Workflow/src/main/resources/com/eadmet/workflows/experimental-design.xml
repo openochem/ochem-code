@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<workflow name="ExperimentalDesign" insockets="2">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="mol-optimiser" task="Unspecified-Optimisation"/>
+		<node id="descriptors-processor" task="Descriptors"/>
+		<node id="descriptors-selector" task="Selection"/>
+		<node id="exp-design-method" task="UndefinedExperimentalDesignMethod" insockets="2"/>
+	</nodes>
+	<connections>
+		<connection from="in" to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="mol-optimiser"/>
+		<connection from="mol-optimiser" to="descriptors-processor"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector" to="exp-design-method"/>
+		<connection from="in" to="exp-design-method" fromPort="1" toPort="1"/>
+		
+		<connection from="exp-design-method" to="out"/>
+	</connections>
+</workflow>

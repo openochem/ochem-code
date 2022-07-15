@@ -1,0 +1,56 @@
+<table class="compact-item" test="test-<%=data.name%>">
+<tr>
+	<td width="150px">
+		<a action="select"><img src="img/icons/save.gif"/></a>
+		<% var selected = "false";		
+		if(sampleBrowser.selectedSets.length > 0)
+		{
+			for(var i=0; i < sampleBrowser.selectedSets.length; i++)
+			{
+				if(sampleBrowser.selectedSets[i]==data.id)
+					selected = "true";
+			}
+		}
+		if(selected == "true"){%>
+			<a action="check" id="<%=data.id%>"><img name="<%=data.id%>" src="img/icons/checked.gif"/><a>
+		<%}else{%>
+			<a action="check" id="<%=data.id%>"><img name="<%=data.id%>" src="img/icons/unchecked.gif"/><a>
+		<%}%>
+		<a action="recordmenu" id="rm-<%=data.id%>"><img src="img/icons/xls.gif"/></a>
+		<a action="edit" title="Open basket profile"><img src="img/icons/edit.gif"/></a>
+		<% if (data.models < 1) { %>
+		<a action="delete"><img src="img/icons/delete.gif"/></a>
+		<% } %>
+	</td>
+	<td>
+		<% if (data.name != "default" && window.callback) { %>
+			<a action="nameclick" title="Click to select this basket"><%=data.name%></a>
+		<% } else { %>
+			<a action="edit" title="Open basket profile"><%=data.name%></a>
+		<% } %>
+		<% if (currentUser != data.ownerName) { %><i>owned by <%=data.ownerName%></i><% } %>
+		<input type="hidden" name="newname" value="" filter="1"/>
+	</td>
+	<td  width="200">
+		<% if (data["size"]) { %>
+			<a tab="The records in the basket" href="epbrowser/show.do?basket-select=<%=data.id%>&apply-basket=checked"><%=data["size"]%> records</a>
+		<% } %>
+	</td>
+	<td  width="350">
+		<% if (data.models > 0) { %>
+			<a tab="Models list" href="model/select.do?basket=<%=data.id%>"><%=data.models%> models</a>
+			<% if (data["pending-models"] > 0) { %>
+				<a tab="Pending tasks" href="pendingtasks/tasks.do?set=<%=data.id%>">(+<%=data["pending-models"]%> pending)</a>
+			<% } %>
+		<% } else if (data["pending-models"] > 0) {%>
+			<a tab="Pending tasks" href="pendingtasks/tasks.do?set=<%=data.id%>"><%=data["pending-models"]%> pending models</a>
+		<% } %>
+		<% if (data.models < -9999) { %>
+			<a tab="Basket models overview" href="model/setoverview.do?basket=<%=data.id%>">[overview]</a>
+		<% } %>
+		<% if ( (1*data.models + 1*data["pending-models"]) > 0) { %>
+			<a tab="Basket models summary" waitMsg="It may take a while to generate a report for a large number of models. Please, wait patiently." href="multiplemodels/show.do?set=<%=data.id%>" title="Tabular summary of the models"><img src="img/icons/table.png"/></a>
+		<% } %>
+	</td>
+</tr>
+</table>

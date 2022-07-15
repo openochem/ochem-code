@@ -1,0 +1,59 @@
+<%
+	var options = array(data.property.option);
+	var units = array(data.property.unitCategory.unit);
+	var predicates = array(data.property.predicates.predicate);
+	var curOption = data.option || {};
+	var curUnit = data.unit || {};
+	var curPredicate = data.predicate || {};
+%>
+<input type="hidden" name="cond-id" value="<%=data.property.id%>" send="1"/>
+<table width="80%">
+	<tr>
+		<td width="80">
+		</td>
+		<td width="150" nowrap="true" style="white-space: nowrap;">
+			<a action="editcondition" name="condition-link"><%=data.property["name"]%></a>
+			<a action="delete" class="delete-link">[x]</a>
+		</td>
+		<td> 
+			<span name="type-0">
+				<select send="1" width="60" name="cond-pred">
+				<% for (var i = 0; i < predicates.length; i++) { %>
+					<option value="<%=predicates[i].id %>" <% if (predicates[i].id == curPredicate.id) { %> selected="selected" <% } %>><%=predicates[i].name%></option>
+				<% } %>
+				</select>
+				<input type="text" send="1" name="cond-value" value="<%=data.value%>" class="w50 right"/>
+				<span name="second-value">
+					<span name="predicate">&#x00B1;</span>
+					<input type="text" name="cond-second-value" value="<%=data.secondValue%>" class="w50 right" send="1"/>
+				</span>
+				<select name="cond-unit" send="1">
+				<% 
+						for (var i = 0; i < units.length; i++)  
+						{
+							var id = units[i].id; 
+				%>
+					<option value="<%=id%>" <% if (id == curUnit.id) { %>selected="selected"<% } %>><%=units[i]["name"]%>
+					</option>
+				<% } %>
+				</select>
+			</span>
+			<span name="type-1">
+				<select name="cond-option" send="1" value="">
+					<% 
+						for (var i = 0; i < options.length; i++)  
+						{
+							var id = options[i].id; 
+					%>
+						<option value="<%=id%>"<% if (curOption.id == id) { %> selected="selected"<% } %>><%=options[i].name%>
+						</option>
+					<% 	} %>
+				</select>
+				<span></span>
+			</span>
+			<span name="type-2">
+				<input type="text" class="cond-text-value" send="1" name="cond-text-value" value="<%=data.textualValue%>"/>
+			</span>
+		</td>
+	</tr>
+</table>

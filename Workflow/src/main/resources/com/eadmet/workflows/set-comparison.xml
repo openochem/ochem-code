@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<workflow name="CDS-Teacher" insockets="2" outsockets="3">
+	<nodes>
+		<node id="mol-standardizer1" task="MolStandartizer"/>	
+		<node id="mol-standardizer2" task="MolStandartizer"/>
+		<node id="descriptors1" task="Descriptors"/>
+		<node id="descriptors2" task="Descriptors"/>
+		<node id="compare-scaffolds" task="CompareScaffolds" insockets="2" outsockets="3"/>
+	</nodes>
+	<connections>
+		<connection to="mol-standardizer1" fromPort="0"/>
+		<connection to="mol-standardizer2" fromPort="1"/>	
+		<connection from="mol-standardizer1" to="descriptors1" />
+		<connection from="mol-standardizer2" to="descriptors2" />
+		<connection from="descriptors1" to="compare-scaffolds" toPort="0"/>
+		<connection from="descriptors2" to="compare-scaffolds" toPort="1"/>
+		
+		<!-- OUTPUTS -->
+		<connection from="compare-scaffolds" fromPort="0" toPort="0"/>
+		<connection from="compare-scaffolds" fromPort="1" toPort="1"/>
+		<connection from="compare-scaffolds" fromPort="2" toPort="2"/>
+		
+	</connections>
+</workflow>

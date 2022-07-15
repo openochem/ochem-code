@@ -1,0 +1,10 @@
+<table class="compact-item">
+	<tr>
+		<td width="50">
+			<a action="delete" title="delete"><img src="img/icons/delete.gif"/></a>
+		</td>
+		<td width="300"><a href="/pathway/profile.do?id=<%=data.id%>" tab="Pathway profile"><%=data.name%></a></td>
+		<td width="100"><%=data["protein-count"] %> proteins</td>
+		<td>uploaded from <%=data.source%> (external ID <%=data.externalID%>)</td>
+	</tr>
+</table>

@@ -1,0 +1,173 @@
+<%
+	var condsmiles = "";
+	var conditions = data.conditions ? array(data.conditions['property-value']) : array(undefined);	
+	var authors = array(data.article.authors.author);
+	var mapping = data.molecule.mapping2 || {};
+	var predicate = data.predicate || "=";
+	var optionName = (data.option) ? data.option.name : "UNDEFINED";
+	var printedValue = data.property.qualitive == "true" ? optionName : data.value;
+	var unit = data.unit || {};
+	var tags = array(data["molecule-tags"]); 
+	
+	var names = array(data.moleculenames.moleculename);
+	var length = 3;
+	if(names.length <= length)
+		length = names.length;
+	
+	var name_proof_unverified = "this name has not been verified yet with PubChem";
+	var name_proof_mismatch = "this name does not correspond to first structure hit in PubChem";
+	var name_proof_match_nostereo = "this name does correspond to first structure hit in PubChem neglecting isomers";
+	var name_proof_match = "this name correspond to first structure hit in PubChem";
+	var name_proof_notfound = "for this name no structure could be found in PubChem";
+%>
+<table class="block-table ep" cellspacing="2">
+	<tr>
+		<td class="block-image">
+		<%  for (var i = 0; i < conditions.length; i++) { 
+				if (conditions[i].property.name == "Ionizable centre (smiles)") {
+					condsmiles = encodeURIComponent(conditions[i].textualValue);
+				}
+			}
+			if (condsmiles != "") {
+		%>
+			<a action="zoom" title="Click to zoom"><img id="<%=data.molecule["id"]%>" src="depiction.jsp?id=<%=data.molecule["id"]%>&smiles=<%=condsmiles%>"/></a>
+		<% } else { %> 
+			<a action="zoom" title="Click to zoom"><img id="<%=data.molecule["id"]%>" src="depiction.jsp?id=<%=data.molecule["id"]%>"/></a>
+		<% } %>
+		<a href="molecule/profile.do?depiction=<%=data.molecule["id"]%>" tab="Molecule profile">molecule profile</a>
+		</td>
+		<td class="block-content" valign="top">
+			<div class="conditions">
+				<% for (var i = 0; i < conditions.length; i++) { %>
+					<nobr><%=conditions[i].property.name%><%=conditions[i].printableValueFull%></nobr><br/>
+				<% } %>
+			</div>
+			
+			<% if (data.property.name != "Dummy") { %>
+				<% if (data["connected_id"] == data.id) { %><img src="img/icons/evidence_experimental.gif" title="Experimentally measured in this article"/>
+				<% } else if (data["connected_id"]) { %><a tab="Connected record" href="epbrowser/show.do?id=<%=data["connected_id"]%>"><img src="img/icons/evidence_referenced.gif" title="The compound was measured in another article, click to show"/></a>
+				<% } else if (data["autoEvidence"]) { %><a tab="Similar record" href="epbrowser/show.do?id=<%=data["autoEvidence"]%>"><img src="img/icons/evidence_similar.gif" title="A similar record exists, click to show"/></a>
+				<% } else { %><img src="img/icons/evidence_none.gif" title="No evidence specified"/>
+				<% } %>
+				<a class="p-link" href="properties/edit.do?id=<%=data.property.id%>" tab="<%=data.property.name%> description" title="<%=data.property.description%>"><%=data.property["name"]%></a>
+				<%=data.printableValue%>
+				<% if (data["exp-analogue"]) { %>
+					<br/>Experimental value: <%= data["exp-analogue"].printableValue %> <a action="expanaloguedetails">[details]</a>
+				<% } %>
+			<% } %>
+			
+			<div class="article-data">
+				<% if (authors.length > 0)  { %>
+				 	<a action="popup" link="article/profile.do?render-mode=popup&id=<%=data.article.id%>" title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>; <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 		<% if(authors.length>1) { %>
+				 		et al
+				 		<% } %>
+				 	</a>
+				<% } %>
+				<br/>
+				<% if (data.article.mediaType == "book") { %><img src="img/icons/book24.png"/><% } %>
+				<a action="popup" title="<%=data.article.title%>" link="article/profile.do?render-mode=popup&id=<%=data.article.id%>"><%=data.article.title.substr(0, 60) + (data.article.title.length > 60 ? "..." : "")%></a><br/>
+				<div>
+				<span><%=(data["art-mol-id"]) ? "N: "+data["art-mol-id"]+"&nbsp;" : "" %></span>
+				<span><%=(data["art-page-num"]) ? "P: "+data["art-page-num"]+"&nbsp;" : "" %></span>
+				<span><%=(data["art-table-num"]) ? "T: "+data["art-table-num"]+"&nbsp;" : "" %></span>
+				<span><%=(data["art-line-num"]) ? "L: "+data["art-line-num"]+"&nbsp;" : "" %></span>
+				</div>
+				
+				<% if (data.article.journal) {
+					var jrn = (data.article.journal.abbreviation) ? data.article.journal.abbreviation : data.article.journal.title;	
+					%>
+				
+				<% if (jrn != "Unpublished") { %>
+					<%= jrn %>
+					
+					<b><%=data.article['publication-date'].year%></b>; <%=data.article.volume%>
+					<% if (data.article.mediaType == "article") { %>
+					 (<%=data.article.issue%>) <%=data.article.pageNumbers%>
+					 <% } %>
+					 <% } %>
+				 
+				 <% } %>
+				 
+				 <% if (tags.length > 0) { %>
+				 	<br/>
+				 	<a action="compounddetails" title="View/edit compound tags"><img src="img/icons/tag16.png"/></a>
+					 <% for (i = 0; i < tags.length; i++) { %>
+						<%=tags[i].name%><!-- wiki_info --> <!-- <a tab="Wiki" href="wikipage/action.do?name=<%=tags[i].name%>"><%=tags[i].name%></a> -->&nbsp;&nbsp;
+					 <% } %>
+				 <% } %>
+			</div>
+			
+			<div class="right-label" nowrap="true" style="white-space: nowrap; position: relative; top: -5px;">
+				RecordID: <i title="The OCHEM identifier of this record is R<%=data.id%>">R<%=data.id%></i><br/>
+				<span title="Created / Last modified" class="time">
+					<%=data["time-created"]%><% if (data.time != data["time-created"]) { %> / <%=data.time%><% } %></span><br/>
+				<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><a href="user/profile.do?login=<%=data.introducer%>" tab="User profile"><%=data.introducer%></a>
+					<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=record_<%=data.id%>">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% }if(data.owner != undefined){%><%=data.owner%>
+					<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=record_<%=data.id%>"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+					<img width="3" height="10" src="img/blank.gif" title="RecordID: <%=data.id %>"/>
+					<% if (data.visible != "all") { %>
+						<br/><span title="Only visible to" class="time">Only visible to <%=data.visible%></span><br/>
+					<% } %>
+			</div>
+				<div class="molname" >
+				<% for (var i = 0; i < length; i++) { %>
+					<% if (names[i].validation == "1") { %> 
+						<font class="name_proof_match" title="<%=name_proof_match%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "2") { %> 
+						<font class="name_proof_match_nostereo" title="<%=name_proof_match_nostereo%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "3") { %> 
+						<font class="name_proof_notfound" title="<%=name_proof_notfound%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "4") { %> 
+						<font class="name_proof_mismatch" title="<%=name_proof_mismatch%>"><%=names[i].name%></font>   		
+					<% } else { %>
+						<font class="name_proof_unverified" title="<%=name_proof_unverified%>"><%=names[i].name%></font>
+					<% } %>
+					<% if (i < (length -1)) { %>; <% } %>
+				<% } %> 	
+				<br/>MoleculeID: <a href="molecule/profile.do?id=<%=data.molecule.mp2%>" tab="Molecule profile"><i title="The OCHEM identifier of this molecule is M<%=data.molecule.mp2%>">M<%=data.molecule.mp2%></i></a> 	
+				</div>
+				<div class="molname" >
+				<b><%=data.externalId%></b>
+				</div>
+				<% 
+					var awaiting = approved != "true" ? " (awaiting approval)" : "";
+					if (approved != "true" && rejected == "true")
+						awaiting = "(Rejected by moderator)";
+					
+					if (rights == 2) { %>
+				 	<small class="gray" title="This is a public record visible to everyone"><img src="img/icons/awaiting-approval.png"/> Public record <%=awaiting%></small>
+				 <% } else if (rights == 0) { %>
+				 	<small class="gray" title="This is a private record. Its not visible to other users"><img src="img/icons/ghost.png"/> Private record </small>
+				 <% } else if (rights == 3) { %>
+				 	<small class="gray" title="This is a public and freely downloadable record"><img src="img/icons/free-data.png"/> Public and freely downloadable record <%=awaiting%></small>
+				 <% } %>
+			<% if (data.ep_status == 0 || data.ep_status == 3) { %><div class="errorcomment"><%=data.errorComment%></div> <% } %>
+		</td>
+		<td class="command-panel">
+			<% if (data.hidepanel == undefined) { %>
+			<a action="select"><img src="img/icons/save.gif"/></a>
+			<a name="checked" action="toggleselect" title="Select/unselect this record">
+				<% if (data["selected"] == "true") { %>
+					<img name="checked" src="img/icons/checked.gif"/>
+				<% } else { %>
+					<img name="checked" src="img/icons/unchecked.gif"/>
+				<% } %>
+			</a>
+			<a action="restore" class="trash" title="Restore this item from trash"><img src="img/icons/restore16.png"/></a>
+			<a action="delete" title="<%=CompoundBrowser.hintForDelete%>"><img src="img/icons/delete.gif"/></a>
+			<a action="recordmenu" id="rm-<%=data.id%>"><img src="img/icons/computer.gif"/></a>
+			<a action="edit" title="Edit this record" class="no-trash"><img src="img/icons/edit.gif"/></a>
+			<% if (data.rights == 0) { %><a action="publish" title="This record is not published. Click to publish"><img src="img/icons/ghost.png"/></a><% } %>
+			<% } %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3" class="duplicate"></td>
+	</tr>
+</table>

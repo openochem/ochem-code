@@ -1,0 +1,31 @@
+<%
+	var descriptors = array(data.descriptors);
+	var cols = descriptors.length + 1;
+%>
+<td width="1px" class="block-image">
+	<img id="<%=data.mol.id%>" src="depiction.jsp?id=<%=data.mol.id%>"/>
+	<a href="molecule/profile.do?depiction=<%=data.mol.id%>" tab="Molecule profile">molecule profile</a>
+</td>
+<td>
+	<%=data.name %><br/>
+	<b>MW:</b> <%=data.mol.molWeight %><br/>
+	<%
+	if (data.error != "" && data.error != undefined)
+	{
+		%>
+			<b>Error:</b> <%=data.error %>
+		<%
+	}
+	%>
+</td>
+<%
+	for (var i=0; i<descriptors.length; i++)
+	{ 
+		%>
+		<td class="hideable invisible">
+			<%=descriptors[i] %>
+		</td>
+		<% 
+	} 
+	
+%>

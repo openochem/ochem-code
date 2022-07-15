@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<workflow name="CDS">
+	<nodes>
+		<node id="corina" task="Corina"/>
+		<node id="descriptors-processor" task="Descriptors"/>
+		<node id="descriptors-selector" task="Selection"/>
+	</nodes>
+	<connections>
+		<connection to="corina"/>
+		<connection from="corina" to="descriptors-processor"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		
+		<connection from="descriptors-selector"/>
+	</connections>
+</workflow>

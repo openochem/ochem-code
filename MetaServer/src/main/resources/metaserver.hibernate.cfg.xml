@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    	
+        <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        
+        <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property> 
+	 	<property name="hibernate.c3p0.acquire_increment">1</property> 
+		<property name="hibernate.c3p0.idle_test_period">30</property>	
+		<property name="hibernate.c3p0.min_size">3</property> 
+		<property name="hibernate.c3p0.max_size">30</property>	
+		<property name="hibernate.c3p0.maxConnectionAge">300</property>
+		<property name="hibernate.c3p0.unreturnedConnectionTimeout">300</property>  
+		<property name="hibernate.c3p0.max_statements">0</property>
+		<property name="hibernate.c3p0.timeout">300</property> 
+		<property name="hibernate.c3p0.preferredTestQuery">SELECT 1</property> 
+        
+        <mapping package="qspr.metaserver.protocol"/>
+        <mapping class="qspr.metaserver.protocol.Task" />
+        
+        <mapping package="qspr.metaserver"/>
+        <mapping class="qspr.metaserver.ArchivedTask" />
+        <mapping class="qspr.metaserver.StatisticsLog" />
+    </session-factory>
+    
+</hibernate-configuration>

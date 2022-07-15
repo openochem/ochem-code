@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="qspr.fragmententities.Fragment" table="Fragment">
+        <id name="id" column="fragment_id" access="field">
+            <generator class="native"/>
+        </id>
+        <property name="inchi1" type="java.lang.String" column="inchi1" access="field"/>
+        
+        <property name="fragment_data" type="java.lang.String" access="field">
+        	<column name="fragment_data" read="uncompress(fragment_data)" write="compress(?)"/>
+        </property>
+        
+        <property name="size" type="java.lang.Long" update="false" insert="false" access="field">
+        	<column name="size" read="length(fragment_data)"/>
+        </property>
+        
+        <set name="mapping1Fragments" access="field" lazy="true">
+        	<key column="fragment_id"/>
+        	<one-to-many entity-name="qspr.fragmententities.Mapping1Fragment"/>
+    	</set>
+        
+    </class>
+</hibernate-mapping>

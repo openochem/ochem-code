@@ -1,0 +1,205 @@
+table.error
+{
+	background-color: #FEE;
+}
+
+b.error { color: #900; font-size: 80%;}
+b.warn { color: #B62; font-size: 80%;}
+b.notice { color: #383; font-size: 80%;}
+
+div.error { color: #900; font-size: 80%;}
+div.warn { color: #B62; font-size: 80%;}
+div.notice { color: #383; font-size: 80%;}
+
+form fieldset {
+    border: 1px inset #000000;
+    padding: 10px;
+    spacing: 10px;
+    margins: 10px;
+    width: 450px;
+}
+
+.preview
+{
+	overflow: auto;
+	width: auto;
+}
+
+.container
+{
+	display:block;
+    border: 1px #000000 solid;
+    padding: 10px;
+    spacing: 10px;
+    margin: 5px;
+}
+
+.p500
+{
+	width: 500px !important;
+}
+
+.bu-item .p500
+{
+	width: 500px !important;
+}
+
+.p120
+{
+	width: 120px;
+	display: block;
+}
+
+.nowrap
+{
+	white-space:nowrap;
+}
+
+.narrow
+{
+	width: 1px;
+}
+
+.bubrowser td
+{
+	padding: 10px !important;
+	margin: 10px !important;
+}
+
+.big
+{
+	font-size: 100%;
+}
+
+.butop 
+{
+	vertical-align: top;
+}
+
+.bottom
+{
+	vertical-align: bottom;
+}
+
+.log
+{
+	display: block;
+	border: 1px #444 solid;
+	background-color: #F9F9F9;
+	padding: 10px;
+}
+
+
+.bubutton a
+{
+	font-family: Verdana,Arial,sans-serif;
+    font-size: 0.8em;
+	background-color: #E1E1E1;
+    border: 1px solid #777;
+    color: black !important;
+    padding: 5px;
+    horizonal-align: center;
+    margin: 2px;
+    display: inline-block;
+	white-space:nowrap;
+
+}
+
+.bubutton a:hover
+{
+	background-color: #FAFAFA;
+	text-decoration: none;
+}
+
+.preview
+{
+			
+}
+
+.preview TABLE
+{
+	border-collapse: separate;
+	border-spacing: 1px;
+}
+
+.preview TD
+{
+	padding: 2px 2px 2px 2px;			
+	vertical-align: top;	
+	white-space:nowrap;
+}
+
+.green
+{
+	background-color: #AAEEAA !important;	
+}	
+
+.dgreen
+{
+	background-color: #66AA66 !important;	
+}	
+
+.red
+{
+	background-color: #EEAAAA !important;	
+}		
+
+.grey
+{
+	background-color: #F5F5F5 !important;	
+}			
+
+.scroll
+{
+	width: 100%;
+	oveflow: auto;
+}
+
+.small
+{
+	font-size: 50%;
+}
+
+.layouttable
+{
+	height: 100%;
+	width: 100%;
+	table-layout:fixed; 
+	min-width: 1000px;
+}
+
+.bu-item
+{
+	white-space:nowrap;
+}
+
+
+.bu-item TD:last-child
+{
+	width: 150px;
+}
+
+.bu-item TD TD
+{
+	width: 200px;
+}
+
+.bu-preview-item
+{
+	margin: 10px;
+}
+
+.bu-preview-item TD
+{
+	padding: 10px;
+}
+
+.underline
+{
+	text-decoration: underline;
+}
+
+#menu
+{
+	width: 200px;
+}

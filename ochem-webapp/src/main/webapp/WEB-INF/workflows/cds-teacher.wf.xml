@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<workflow name="StandartCDSTeacher" outsockets="2" insockets="2" >
+	<nodes>
+		<node id="descriptors-processor" task="DescriptorsProcessor"/>
+		<node id="corina" task="Corina"/>
+		<node id="descriptors-selector" task="Selection"/>
+		<node id="method-node" task="KNN" insockets="2"/>
+	</nodes>
+	<connections>
+		<connection to="corina"/>
+		<connection from="corina" to="descriptors-processor"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector" to="method-node"/>
+		<connection fromPort="1" to="method-node" toPort="1"/>
+		
+		<!-- OUTPUTS -->
+		<connection from="method-node"/>
+		<connection from="descriptors-selector" toPort="1"/>
+	</connections>
+</workflow>

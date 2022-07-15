@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<workflow name="LinearTypicalModel">
+	<nodes>
+		<node id="fragmentor" task="Fragmentor"/>
+		<node id="lm" task="LinearModel"/>
+	</nodes>
+	<connections>
+		<connection to="fragmentor"/>
+		<connection from="fragmentor" to="lm"/>
+		<connection from="lm"/>
+	</connections>
+</workflow>

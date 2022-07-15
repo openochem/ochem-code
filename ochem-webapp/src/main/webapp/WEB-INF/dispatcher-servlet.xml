@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<bean id="urlMapping" class="qspr.toxicity.CustomOCHEMClassNameHandlerMapping" />
+	<bean id="methodNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver" />
+
+	<bean id="allToOneMethodNameResolver" class="qspr.toxicity.SophisticatedMethodNameResolver" />
+	<bean id="catalogueMethodResolver" class="qspr.toxicity.SophisticatedMethodNameResolver">
+		<property name="allToOne" value="false" />
+	</bean>
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<context:component-scan base-package="qspr.controllers" />
+	<context:component-scan base-package="qspr.business"
+		scoped-proxy="interfaces" />
+	<context:component-scan base-package="com.eadmet"
+		scoped-proxy="interfaces" />
+
+	<mvc:annotation-driven />
+
+	<bean id="StaticController" class="qspr.controllers.StaticController">
+		<property name="methodNameResolver" ref="allToOneMethodNameResolver" />
+	</bean>
+
+	<bean id="resourceBundleViewResolver"
+		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename" value="views" />
+		<property name="order" value="0" />
+	</bean>
+
+	<bean id="IRVResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="1" />
+	</bean>
+
+	<bean id="FirstEntryRecalculateBean" class="qspr.schedule.FirstEntryRecalculateTask" />
+	<bean id="FirstEntryRecalculateDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="FirstEntryRecalculateBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="FirstEntryRecalculateTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="FirstEntryRecalculateDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="XemistryIndexingBean" class="qspr.schedule.XemistryIndexingTask" />
+	<bean id="XemistryIndexingDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="XemistryIndexingBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="XemistryIndexingTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="XemistryIndexingDetail" />
+		<property name="startDelay" value="1800000" />
+		<property name="repeatInterval" value="1800000" />
+	</bean>
+
+	<bean id="SynchronizePendingTasksBean" class="qspr.schedule.SynchronizePendingTasksTask" />
+	<bean id="SynchronizePendingTasksDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="SynchronizePendingTasksBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="SynchronizePendingTasksTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="SynchronizePendingTasksDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="CleanAttachmentsBean" class="qspr.schedule.CleanAttachmentsTask" />
+	<bean id="CleanAttachmentsDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CleanAttachmentsBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CleanAttachmentsTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CleanAttachmentsDetail" />
+		<property name="startDelay" value="60000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="CalculateMissingHashesBean" class="qspr.schedule.CalculateMissingHashesTask" />
+	<bean id="CalculateMissingHashesDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CalculateMissingHashesBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CalculateMissingHashesTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CalculateMissingHashesDetail" />
+		<property name="startDelay" value="60000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="CalculateAllHashesLightBean" class="qspr.schedule.CalculateAllHashesLightTask" />
+	<bean id="CalculateAllHashesLightDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CalculateAllHashesLightBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="CalculateAllHashesLightTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="CalculateAllHashesLightDetail" />
+		<property name="cronExpression" value="0 0 20 ? * FRI" />		
+	</bean>
+
+	<bean id="AnnouncementCleanUpBean" class="qspr.schedule.AnnouncementCleanUpTask" />
+	<bean id="AnnouncementCleanUpDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="AnnouncementCleanUpBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="AnnouncementCleanUpTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="AnnouncementCleanUpDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="99999999999" />
+	</bean>
+
+	<bean id="CheckNamesBean" class="qspr.schedule.CheckNamesTask" />
+	<bean id="CheckNamesDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CheckNamesBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CheckNamesTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CheckNamesDetail" />
+		<property name="startDelay" value="15000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="CleanBasketBean" class="qspr.schedule.CleanBasketTask" />
+	<bean id="CleanBasketDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CleanBasketBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CleanBasketTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CleanBasketDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="900000" />
+	</bean>
+
+	<bean id="CleanArticleBean" class="qspr.schedule.CleanArticleTask" />
+	<bean id="CleanArticleDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CleanArticleBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CleanArticleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CleanArticleDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="CalulateInchiBean" class="qspr.schedule.CalulateInchiTask" />
+	<bean id="CalulateInchiDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CalulateInchiBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CalulateInchiTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CalulateInchiDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="PeriodicTestsBean" class="qspr.schedule.PeriodicTestsTask" />
+	<bean id="PeriodicTestsDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="PeriodicTestsBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="PeriodicTestsTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="PeriodicTestsDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="36000000" />
+	</bean>
+
+	<bean id="CleanModelsBean" class="qspr.schedule.CleanModelsTask" />
+	<bean id="CleanModelsDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CleanModelsBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="CleanModelsTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CleanModelsDetail" />
+		<property name="startDelay" value="15000" />
+		<property name="repeatInterval" value="3600000" />
+	</bean>
+
+	<bean id="CheckConsistencyBean" class="qspr.schedule.CheckConsistencyTask" />
+	<bean id="CheckConsistencyDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="CheckConsistencyBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="CheckConsistencyTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="CheckConsistencyDetail" />
+		<property name="startDelay" value="15000" />
+		<property name="repeatInterval" value="86400000" />
+	</bean>
+
+	<bean id="ModeratorNotificationBean" class="qspr.schedule.ModeratorNotificationTask" />
+	<bean id="ModeratorNotificationDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="ModeratorNotificationBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="ModeratorNotificationTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="ModeratorNotificationDetail" />
+		<property name="cronExpression" value="0 0 3 ? * MON" />
+	</bean>
+
+	<bean id="MonitoringBean" class="qspr.schedule.MonitoringTask" />
+	<bean id="MonitoringDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="MonitoringBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="MonitoringTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="MonitoringDetail" />
+		<property name="startDelay" value="100" />
+		<property name="repeatInterval" value="2000" />
+	</bean>
+
+	<bean id="MMPStartIndexBean" class="qspr.schedule.MMPStartIndexTask" />
+	<bean id="MMPStartIndexDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="MMPStartIndexBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="MMPStartIndexTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="MMPStartIndexDetail" />
+		<property name="startDelay" value="30000" />
+		<property name="repeatInterval" value="600000" />
+	</bean>
+
+	<bean id="MMPFetchIndexBean" class="qspr.schedule.MMPFetchIndexTask" />
+	<bean id="MMPFetchIndexDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="MMPFetchIndexBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="MMPFetchIndexTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="MMPFetchIndexDetail" />
+		<property name="startDelay" value="30000" />
+		<property name="repeatInterval" value="600000" />
+	</bean>
+
+	<bean id="MMPSimilarityIndexingBean" class="qspr.schedule.MMPSimilarityIndexingTask" />
+	<bean id="MMPSimilarityIndexingDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="MMPSimilarityIndexingBean" />
+		<property name="targetMethod" value="executeInternal" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="MMPSimilarityIndexingTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="MMPSimilarityIndexingDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="600000" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="CleanBasketTrigger" />
+				<ref bean="CalulateInchiTrigger" />
+				<ref bean="CheckNamesTrigger" />
+				<ref bean="FirstEntryRecalculateTrigger" />
+				<ref bean="CalculateMissingHashesTrigger" />
+				<ref bean="CleanAttachmentsTrigger" />
+				<ref bean="CleanModelsTrigger" />
+				<ref bean="PeriodicTestsTrigger" />
+				<ref bean="SynchronizePendingTasksTrigger" />
+				<ref bean="XemistryIndexingTrigger" />
+				<ref bean="ModeratorNotificationTrigger" />
+				<ref bean="MonitoringTrigger" />
+				<ref bean="MMPStartIndexTrigger" />
+				<ref bean="MMPFetchIndexTrigger" />
+				<ref bean="MMPSimilarityIndexingTrigger" />
+				<ref bean="CalculateAllHashesLightTrigger" />
+				<ref bean="AnnouncementCleanUpTrigger" />
+				
+			</list>
+		</property>
+	</bean>
+</beans>

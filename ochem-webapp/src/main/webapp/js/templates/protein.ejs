@@ -1,0 +1,27 @@
+<%
+	var pathways = data.pathways || {pathway: []};
+	pathways = array(pathways.pathway);
+%>
+<table class="compact-item">
+	<tr>
+		<td width="50">
+			<a action="delete" title="delete"><img src="img/icons/delete.gif"/></a>
+			<a href="/pathway/proteinProfile.do?id=<%=data.id%>" title="Open the protein profile" tab="Protein profile"><img src="img/icons/edit.gif"/></a>
+		</td>
+		<td width="300">
+			<%=data.name%>
+		</td>
+		<td>
+			<% if (pathways.length == 0) {%>No known pathways<%} else { %>
+				Connected pathways: 
+				<% for (var i = 0; i < pathways.length; i++)
+				{
+				%>
+					<a href="pathway/profile.do?id=<%=pathways[i].id%>" tab="Pathway profile"><%=pathways[i].name%></a>, 
+				<%	
+					
+				}
+			}%>
+		</td>
+	</tr>
+</table>

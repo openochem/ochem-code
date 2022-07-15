@@ -1,0 +1,28 @@
+<%
+	var owner = data.session.user ? data.session.user.login : "Anonymous";
+	var title = "";
+	var link = "";
+	if (data.entity == "ExperimentalProperty")
+	{
+		title = "Record";
+		link = "epbrowser/show.do?id=";
+	} else
+	if (data.entity == "Article")
+	{
+		title = "Article";
+		link = "article/show.do?id=";
+	} else
+	if (data.entity == "Property")
+	{
+		title = "Condition/Property";
+		link = "properties/show.do?id=";
+	}	
+%>
+<table class="compact-item">
+<tr>
+	<td width="200"><a href="<%=link+data.key%>" tab="History item"><%=title+" "+data.key%></a></td>
+	<td width="50"><%=owner%></td>
+	<td width="150"><%=data.time%></td>
+	<td><div class="comment"><pre><%=data.comment%></pre></div></td>
+</tr>
+</table>

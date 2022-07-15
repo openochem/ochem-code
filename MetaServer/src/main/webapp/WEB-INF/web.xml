@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+"http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+
+<web-app>
+
+	<servlet>
+		<servlet-name>metaserver</servlet-name>
+		<servlet-class>qspr.metaserver.ServerServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>metaserver</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>metaserver</servlet-name>
+		<url-pattern>/update</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+  		<servlet-name>default</servlet-name>
+  		<url-pattern>*.gif</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+  		<servlet-name>default</servlet-name>
+  		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+  		<servlet-name>default</servlet-name>
+  		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+  		<servlet-name>default</servlet-name>
+  		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+
+</web-app>

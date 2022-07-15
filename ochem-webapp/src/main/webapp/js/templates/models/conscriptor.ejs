@@ -1,0 +1,11 @@
+<input type="checkbox" name="condition" value="<%=data.id%>"/>  <%=data.name%>
+<span class="details">
+&nbsp;&nbsp;
+default value: <input type="text" value="" name="value-<%=data.id%>" class="regression"/>
+<select name="unit-<%=data.id%>" class="regression"></select>
+<select name="option-<%=data.id%>" class="classification"></select> <a action="details">[details]</a>
+</span>
+<div class="invisible mappings">
+	For the modeling purposes, you can merge several condition options, so that the model does not distinguish them.
+	<a action="addmapping">[add a merging rule]</a>
+</div>

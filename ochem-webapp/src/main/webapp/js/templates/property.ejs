@@ -1,0 +1,98 @@
+<% var controllerName;
+if(data.isCondition == "false")
+	controllerName = "property";
+else
+	controllerName = "condition";
+	var name = data["name"];
+	xlsName = name.replace("&", "&amp;").split("<").join("&lt;").split(">").join("&gt;");
+%>
+
+<table class="compact-item<% if (data["isDirectory"] == "true") { %> directory<%}%>">
+	<tr>
+	<td width="80">
+		<a action="select" title="select"><img src="img/icons/save.gif"/></a>
+		<a action="edit" title="edit"><img src="img/icons/edit.gif"/></a>
+		<% if (data["documentationTerm"] != null) { %>
+			<a class="infolink" href="https://docs.ochem.eu/display/OKB/<%=data["documentationTerm"]%>" target="_blank"></a>
+		<% } %>
+		<!-- wiki_info --> <!-- <a href="wikipage/action.do?entities=property&id=<%=data["id"]%>" tab="Wiki" title="wiki page"><img src="img/icons/wiki.gif"/></a> -->
+		<% if (data["referenced"] != "true" && !(data["property-record"] > 0)) { %>
+			<a action="delete" title="delete"><img src="img/icons/delete.gif"/></a>
+		<% } %>
+		<% if (isSuperUser && data.approved == "true") { %><a action="unapprove" title="Unapprove this record"><img src="img/icons/disapprove16.png"/></a><% } %>
+		<% if (isSuperUser && data.approved == "false" && data.rights == 2) { %>
+				<a action="approve"><img src="img/icons/approve16.png" title="Approve this property!"/></a>	
+			<% } %>
+	</td>
+	<td width="250">
+		<% if (data.rights == 0) { %>
+			<a action="publish" title="This property (and all data) are only visible to you. Click to request to make it public."><img src="img/icons/ghost.png"/></a>
+		<% } else if (data.approved == "true") { %>
+		<% } else { %>	
+			<img src="img/icons/awaiting-approval.png" title="This property is awaiting approval by administrator. Data will be hidden untill property is approved."/>
+			
+		<% } %>
+		<% if (data["isDirectory"] == "true") { %>
+		<img src="img/icons/folder.gif"/>
+		<b><%=name%> <% if (xlsName != name) { %><br/><i><%=xlsName%></i><% } %></b><br/>
+		<small><a href="properties/show.do?parent=<%=data.id%>" tab="Children of <%=data.name%>"><%=data["children-count"]%> properties</a> 
+		<a action="addchildselect">[add]</a></small>
+		<%} else {%>
+			<%=name%> <% if (xlsName != name) { %><br/><i><%=xlsName%></i><% } %>	
+		<% }%>
+		<% if (data.parent) { %><small><br/>part of <%=parent.name%> <a action="removechild" class="delete-link">[x]</a></small><% } %>
+		<% if (data.aliases) { %><br/><small><%=data.aliases %></small><% } %>
+	</td>
+	<td width="200">
+		<% if (data.qualitive == "true") {%>
+			<i>(qualitive with <a href="propertyoptions/show.do?property=<%=data.id%>" tab="Property options"><%=data["options-count"]%> options</a>)</i>
+		<% } else if (data.type == 2) { %>
+			<i>(textual)</i>
+		<% } else { %>
+			<i title="unit category / default unit">(<%=data.unitCategory["name"]%> / <%=data.defaultUnit.name%>)</i>
+		<% } %>
+	</td>
+	<td width="110">
+		<% if (data["property-record"]) { %>
+			<a href="epbrowser/show.do?<%=controllerName%>=<%=data.id%>" title="Browse corresponding records" tab="Filtered records" class="count-records-link"><%=data["property-record"]%> records</a>
+		<% } %>
+	</td>
+	<td width="500">
+		<% if (data.description) { %>
+			<i title="<%=data.description%>"><%=data.description.substring(0, 59)%> ...</i>
+		<% } %>
+	</td>
+	<td align="right">
+	<div class="right-label" nowrap="true" style="white-space: nowrap;">
+		<%
+		var moderatorShown = false;
+		if (data.introducer != undefined && data.introducer != data.owner) 
+		{ %>
+			<%=data.introducer%>
+			<% if (data.moderator != undefined && data.introducer == data.moderator.login) {
+				moderatorShown = true; 
+				%>(moderator)
+			<% } %>
+			<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=<%=controllerName%>_<%=data.id%>" title="send message">
+				<img src="img/icons/email_icon.gif"/></a> / 
+		<% } 
+		if(data.owner != undefined)
+		{
+			%><%=data.owner%>
+			<% if (data.moderator != undefined && data.owner == data.moderator.login) {
+				moderatorShown = true; 
+				%>(moderator)
+			<% } %>
+			<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=<%=controllerName%>_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+		<%} 
+		if (data.moderator != undefined && !moderatorShown) 
+		{ %>
+			/ moderated by <%=data.moderator.login%>
+			<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.moderator.login%>&subject=<%=controllerName%>_<%=data.id%>" title="Send message to the moderator"><img src="img/icons/email_icon.gif"/></a>
+		<% } else if (data.moderator == undefined) { %>
+			/ unmoderated
+		<% }%>
+	</div>
+	</td>
+	</tr>
+</table>

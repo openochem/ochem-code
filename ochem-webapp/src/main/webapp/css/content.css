@@ -1,0 +1,32 @@
+body {
+	font-family: georgia, serif;
+	color: #807970;
+}
+
+a:link, a:visited {
+	text-decoration: none;
+	color: #7777FF;
+}
+
+a:hover, a:active {
+	text-decoration: underline;
+	color: #990000;
+}
+
+p {
+	line-height: 1.5;
+	margin-bottom: 1em;
+}
+
+h2, h3
+{
+	font-family: georgia, serif;
+	font-weight: normal;
+	color: #4b4740;
+    margin: 1em 0;
+}
+
+h2 { font-size: 170%; }
+h3 { font-size: 165%; }
+
+

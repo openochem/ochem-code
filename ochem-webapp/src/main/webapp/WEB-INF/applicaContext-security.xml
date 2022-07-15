@@ -1,0 +1,3 @@
+<session-management invalid-session-url="/logout.html">
+    <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+</session-management>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="qspr.entities.OriginalMolecule" table="OriginalMolecule">
+        <id name="id" column="orig_molecule_id" access="field">
+            <generator class="native"/>
+        </id>
+        <property name="md5" type="java.lang.String" column="orig_molecule_md5" access="field"/>
+        <property name="data" type="java.lang.String" access="field">
+        	<column name="data" read="uncompress(data)" write="compress(?)"/>
+        </property>
+        <many-to-one name="molecule" column="molecule_id" class="qspr.entities.Molecule" lazy="false" access="field"/>
+        <many-to-one name="format" column="format_id" class="qspr.entities.MoleculeFormat" access="field"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+/* Copyright (C) 2022 BIGCHEM GmbH <info@bigchem.de>
+ *
+ * Contact: info@bigchem.de
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License (AGPL)
+ * as published by the Free Software Foundation; either version 3.0
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the Affero GNU General Public License for more details.
+ *
+ * You should have received a copy of the Affero GNU Lesser General Public License
+ * along with this program; If not, see <https://www.gnu.org/licenses/>. 
+ */
+
+package qspr.entities;
+
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import qspr.metaserver.configurations.ADConfiguration;
+
+@XmlRootElement(name = "ready-model-attachment")
+public class ReadyModelAttachment
+{	
+	@XmlElement(name="model")
+	public Object modelData;
+
+	@XmlElement(name="model-r")
+	public Object modelDataRecalculated;
+
+	/**
+	 * AD assessment info (accuracy averaging).
+	 * Normally, its generated on the fly and never stored here.
+	 * This variable is here only for exported models (e.g., for the standalone predictor)
+	 */
+	public List<ADConfiguration> adConfigurations;
+
+	public String toString()
+	{
+		if (modelDataRecalculated != null)
+			return modelDataRecalculated.toString();
+		else if (modelData != null)
+			return modelData.toString();
+		else
+			return "";
+	}
+}

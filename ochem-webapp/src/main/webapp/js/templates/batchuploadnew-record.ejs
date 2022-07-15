@@ -1,0 +1,189 @@
+<%
+function paintRecord(data, showtoggler, buData)
+{
+	var condsmiles = "";
+	var conditions = data.conditions ? array(data.conditions['property-value']) : array(undefined);	
+	var authors = array(data.article.authors.author);
+	var mapping = data.molecule.mapping2 || {};
+	var predicate = data.predicate || "=";
+	var optionName = (data.option) ? data.option.name : "UNDEFINED";
+	var printedValue = data.property.qualitive == "true" ? optionName : data.value;
+	var unit = data.unit || {};
+	var tags = array(data["molecule-tags"]); 
+	
+	var names = array(data.moleculenames.moleculename);
+	var length = 3;
+	if(names.length <= length)
+		length = names.length;
+	
+	var colorinfo_black = "this name has not been verified yet with PubChem";
+	var colorinfo_red = "this name does not correspond to first structure hit in PubChem";
+	var colorinfo_dark_green = "this name corresponds to first structure hit in PubChem (ignoring stereoisomers)";
+	var colorinfo_green = "this name correspond to first structure hit in PubChem";
+	var colorinfo_blue = "for this name no structure could be found in PubChem";
+%>
+		<td class="block-image">
+		<%  for (var i = 0; i < conditions.length; i++) { 
+				if (conditions[i].property["name"] == "Ionizable centre (smiles)") {
+					condsmiles = encodeURIComponent(conditions[i]["value"]);
+				}
+			}
+			if (condsmiles != "") {
+		%>
+			<a action="zoom" title="Click to zoom"><img id="<%=data.molecule["id"]%>" src="depiction.jsp?id=<%=data.molecule["id"]%>&smiles=<%=condsmiles%>"/></a>
+		<% } else { %> 
+			<a action="zoom" title="Click to zoom"><img id="<%=data.molecule["id"]%>" src="depiction.jsp?id=<%=data.molecule["id"]%>"/></a>
+		<% } %>
+		</td>
+		<%
+			var addClass = ""; 
+			if (data.ep_status == "0" || data.ep_status == "3")
+				addClass = "highlighterror";
+			else if (data.ep_status =="1")
+				addClass = "highlightnon-v";
+			else if ((buData.row.detailedStatus != undefined) && (buData.row.detailedStatus != null) && (buData.row.detailedStatus != ""))
+				addClass = "highlightwarn";
+		%>
+		<td class="block-content <%=addClass%>" valign="top">
+			<div class="conditions">
+				<% for (var i = 0; i < conditions.length; i++) {  %> 
+				<nobr><%=conditions[i].property.name%><%=conditions[i].printableValueFull%></nobr><br/> 
+				<% }%>
+			</div>
+			<% if (data["connected_id"] == data.id) { %><img src="img/icons/evidence_experimental.gif" title="Experimentally measured in this article"/>
+			<% } else if (data["connected_id"]) { %><a tab="Connected record" href="epbrowser/show.do?id=<%=data["connected_id"]%>"><img src="img/icons/evidence_referenced.gif" title="The compound was measured in another article, click to show"/></a>
+			<% } else if (data["autoEvidence"]) { %><a tab="Similar record" href="epbrowser/show.do?id=<%=data["autoEvidence"]%>"><img src="img/icons/evidence_similar.gif" title="A similar record exists, click to show"/></a>
+			<% } else { %><img src="img/icons/evidence_none.gif" title="No evidence specified"/>
+			<% } %>
+			<a class="p-link" href="properties/edit.do?id=<%=data.property.id%>" tab="<%=data.property.name%> description" title="<%=data.property.description%>"><%=data.property["name"]%></a>
+			<%=data.printableValue%>
+			<% if (data["exp-analogue"]) { %>
+				<br/>Experimental value: <%= data["exp-analogue"].printableValue %> <a action="expanaloguedetails">[details]</a>
+			<% } %>
+			<div class="article-data">
+				<% if (authors.length > 0)  { %>
+				 	<a action="popup" link="article/edit.do?render-mode=popup&id=<%=data.article.id%>" title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>, <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 	</a>
+				<% } %>
+				<br/>
+				<% if (data.article.mediaType == "book") { %><img src="img/icons/book24.png"/><% } %>
+				<a action="popup" title="<%=data.article.title%>" link="article/edit.do?render-mode=popup&id=<%=data.article.id%>"><%=data.article.title.substr(0, 60)+"..."%></a><br/>
+				<%=(data["art-mol-id"]) ? "N: "+data["art-mol-id"]+"&nbsp;" : "" %>
+				<%=(data["art-page-num"]) ? "P: "+data["art-page-num"]+"&nbsp;" : "" %>
+				<%=(data["art-table-num"]) ? "T: "+data["art-table-num"]+"&nbsp;" : "" %>
+				<%=(data["art-line-num"]) ? "L: "+data["art-line-num"]+"&nbsp;" : "" %>
+				<br/>
+				<%if (data.article.journal) {
+				var jrn = (data.article.journal.abbreviation) ? data.article.journal.abbreviation : data.article.journal.title;	
+				%><%=jrn%>
+				<%}%>
+				<b><%=data.article['publication-date'].year%></b>; <%=data.article.volume%>
+				<% if (data.article.mediaType == "article") { %>
+				 (<%=data.article.issue%>) <%=data.article.pageNumbers%>
+				 <% } %>
+				 
+				 <% if (tags.length > 0) { %>
+				 	<br/>
+				 	<a action="compounddetails" title="View/edit compound tags"><img src="img/icons/tag16.png"/></a>
+					 <% for (i = 0; i < tags.length; i++) { %>
+						<%=tags[i].name%><!-- wiki_info --> <!-- <a tab="Wiki" href="wikipage/action.do?name=<%=tags[i].name%>"><%=tags[i].name%></a> -->&nbsp;&nbsp;
+					 <% } %>
+				 <% } %>
+			</div>
+			
+			<div class="right-label" nowrap="true" style="white-space: nowrap; position: relative; top: -5px;">
+				RecordID: <i title="The OCHEM identifier of this record is R<%=data.id%>">R<%=data.id%></i><br/>
+				<span title="Created / Last modified" class="time">
+					<%=data["time-created"]%><% if (data.time != data["time-created"]) { %> / <%=data.time%><% } %></span><br/>
+				<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><%=data.introducer%>
+					<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=record_<%=data.id%>">
+					<img src="img/icons/email_icon.gif"/></a> / 
+					<% }if(data.owner != undefined){%><%=data.owner%>
+					<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=record_<%=data.id%>"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+					<% if (data.visible != "all") { %>
+					<span title="Only visible to" class="time">Only visible to <%=data.visible%></span><br/>
+					<% } %>
+			</div>
+				<div class="molname" >
+				<% for (var i = 0; i < length; i++) { %>
+					<% if (names[i].validation == "1") { %> 
+						<font style="color:green" title="<%=colorinfo_green%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "2") { %> 
+						<font style="color:#994433" title="<%=colorinfo_red%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "3") { %> 
+						<font style="color:#6699CC" title="<%=colorinfo_blue%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "4") { %> 
+						<font style="color:#005C00" title="<%=colorinfo_dark_green%>"><%=names[i].name%></font>   		
+					<% } else { %>
+						<font style="color:black" title="<%=colorinfo_black%>"><%=names[i].name%></font>
+					<% } %>
+					<% if (i < (length -1)) { %>; <% } %>
+				<% } %>
+				</div>
+				<div class="molname">
+				MoleculeID: <i title="The OCHEM identifier of this molecule is M<%=data.molecule.mp2%>">M<%=data.molecule.mp2%></i>
+				</div>
+				<div class="molname" >
+				<b><%=data.externalId%></b>
+				</div>
+			<% if (buData.row.detailedStatus == undefined || buData.row.detailedStatus == null) { %>
+			<% if (data.ep_status == 0 || data.ep_status == 3) { %><div class="errorcomment"><%=data.errorComment%></div> <% } %>
+			<% } else { %>
+			<div class="errorcomment"><%=buData.row.detailedStatus %></div>
+			<% } %>
+			<% if (showtoggler) { %><a class="bottom" action="duplicatetoggle">[show>>]</a><% } %>
+		</td>
+<%
+}
+%>
+
+<%
+function paintToolbarOption(label, value, id, selected)
+{
+	%>
+	<input type="radio" action="state" name="upload_action<%=id%>" id="upload_action<%=id%><%=value%>" value="<%=value%>" <% if (selected) { %> checked="true" <% } %> ><label for="upload_action<%=id%><%=value%>"><%=label%></label><br/>
+	<%	
+}
+%>
+
+<%
+function paintToolbar(data)
+{
+	if (data.row.type == 'valid' || data.row.type == 'warning')
+	{
+		paintToolbarOption("Save", "save", data.row.id, data.row.action == "save");
+		paintToolbarOption("Skip", "skip", data.row.id, data.row.action == "skip");
+	} else if (data.row.type == 'external_duplicate')
+	{
+		paintToolbarOption("Save as error", "save", data.row.id, data.row.action == "save");
+		paintToolbarOption("Skip", "skip", data.row.id, data.row.action == "skip");
+		paintToolbarOption("Merge", "merge", data.row.id, data.row.action == "merge");
+	} else if (data.row.type == 'internal_duplicate')
+	{
+		paintToolbarOption("Save as error", "save", data.row.id, data.row.action == "save");
+		paintToolbarOption("Skip", "skip", data.row.id, data.row.action == "skip");		
+		paintToolbarOption("Merge", "merge", data.row.id, data.row.action == "merge");
+	} else //Unrecoverable error, undefined status
+	{
+		paintToolbarOption("Skip", "skip", data.row.id, data.row.action == "skip");
+	}
+}
+%>
+
+<table class="bubrowser">
+	<tr>
+	<td class="big butop nowrap p120"><b>Row <%=data.row.num %></b><br/><% paintToolbar(data) %></td>
+	<% if (data.ep != null) { %>
+		<% paintRecord(data.ep, data.duplicate != null, data) %>
+		<% if (data.duplicate != null) { %>
+		</tr><tr class="invisible"><td>Existing record:</td>
+		<% paintRecord(data.duplicate, false, data) %>
+		<% } %>
+	<% } else { %>
+		<td class="block-image"></td><td class="block-content highlighterror"><%= data.row.detailedStatus %></td>
+	<% } %>
+	</tr>
+</table>

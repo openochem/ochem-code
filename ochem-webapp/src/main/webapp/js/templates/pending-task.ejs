@@ -1,0 +1,109 @@
+<%
+	if (data.status == "ready")
+		data.detailedStatus = "-";
+	var mm;
+	
+	var login = "Guest";
+	if (data.session && data.session.user)
+		login = data.session.user.login;
+	
+	if (data.model && data.model.modelMappings)
+		mm = (data.model.modelMappings.length ? data.model.modelMappings[0] : data.model.modelMappings);
+	else
+		mm = {property: {name: "-"}};
+		
+	if (!data.model)
+		data.model = {template: {name: ""}, name: ""};
+	var method = "";
+	method = data.model.template.name;
+%>
+<td class="user invisible">
+	<%=login%>
+</td>
+<td>
+	<% if (data.toBeDeleted) { %><img src="img/icons/exclamation.gif" title="This task has not been accessed for long time and will be deleted automatically soon."/><% } %>
+	<% if (data.published == "true") { %><img src="img/icons/public.png" title="This task is published. It is stored permanently and wont be affected by regular clean-ups"/><% } %>
+	<%=taskTypeMap[data.type]%><!-- Task ID <%=data.taskId%>, Calculating server <%=data.calcServerId%>--><br/>
+	<%=data.timePosted%>
+</td>
+<td>
+	<% if (model.name == "") { %>
+		<%=data.name %>
+	<% } else if (data.status == "ready" && data.type != "MODEL_APPLICATION") { %>
+		<a tab="Task results" title="The task is ready! Click to fetch the results" href="pendingtasks/fetchnew.do?id=<%=data.id%>"><%=data.model.name%></a>	
+	<% } else if (data.type == "MODEL_APPLICATION" || data.model.recalculation == "true") { %>
+		<a href="model/profile.do?public_id=<%=data.model.publicId%>" tab="Model profile"><%=data.model.name%></a>
+	<% } else { %> 
+		<%=data.model.name%>
+	<% } %><!-- Model ID <%=data.model.id%>, public ID <%=data.model.publicId%>-->
+</td>
+<td>
+	<%=mm.property.name%><br/>
+	<% if (data.type == "MODEL_TRAINING") { %>
+		<a tab="Training set" href="basket/edit.do?id=<%=data.model["training-set"].id%>"><%=data.model["training-set"].name%></a>
+	<% } else if (data.setDescription) { %>
+		<%=data.setDescription %>
+	<% } else { %>
+		-
+	<% } %>
+</td>
+<td>
+	<%=method%>
+</td>
+<td>
+	<%=data.status%>
+	<% if (data.status == "assigned" || data.status == "init" || data.status == "stop") { %>
+		<img src="img/roller_small.gif"/>
+	<% } %>
+</td>
+<td>
+	<select name="priority" send="1">
+		<option value="0">low</option>
+		<option value="1">normal</option>
+		<option value="2">high</option>
+		<option value="10">extra-high</option>
+	</select>
+</td>
+<td>
+	<% if (data.detailedStatus) { %>
+		<span title="<%=data.detailedStatus%>" onclick="detailedStatus(this);"><%=data.detailedStatus.substring(0, 30)%></span>
+		<% if (data.detailedStatus.length > 30) { %>
+		<a href="#" onclick="detailedStatus(this); return false;">[more&gt;&gt;]</a>
+		<% } %>
+	<% } %>
+</td>
+
+<td align="center">
+		<% if (data.status == "init" || data.status == "assigned" || data.status == "stop") { %>
+			<a action="kill">terminate</a>
+		<% } %>
+		<% if (data.status == "error" || data.status == "ready" || status == "kill" || status == "killed") { %>
+			<a action="recalculate">recalculate</a>
+		<% } %>
+		<% if (data.status == "ready" && data.type != "MODEL_TRAINING" && data.published != "true") { %>
+			<br/><a action="publish" title="Publishing a task will make it permanent. A published task wont be affected by regular cleanups.">publish</a>
+		<% } %>
+		
+		<% if (data.published == "true") { %>
+			<br/><a action="unpublish">unpublish</a>
+		<% } %>
+		
+</td>
+<td>
+	<% if (data.type != "MODEL_TRAINING") { %>
+		<a title="Open the task profile" href="pendingtasks/profile.do?id=<%=data.id%>" tab="Task task profile"><img src="img/icons/edit.gif"/></a>
+	<% } %>
+	<% if (data.type == "MODEL_TRAINING" || data.type == "MODEL_APPLICATION") { %>
+		<a action="showxml"><img src="img/icons/xml.jpg"/></a>
+	<% } %>
+	<a action="delete"><img src="img/icons/delete.gif"/></a>
+	<% if (data.status == "ready") { %>
+		<a tab="Task results" href="pendingtasks/fetchnew.do?id=<%=data.id%>"><img src="img/icons/save.gif"/></a>
+	<% } %>
+	<% if (data.type == "MODEL_TRAINING") { %>
+		<a tab="Basket models summary" waitMsg="It may take a while to generate a report for a large number of models. Please, wait patiently." href="multiplemodels/show.do?set=<%=data.model["training-set"].id%>" title="Tabular summary of the models"><img src="img/icons/table.png"/></a>
+	<% } %>
+	<div class="invisible">
+		<%=data.model.description %>
+	</div>
+</td>

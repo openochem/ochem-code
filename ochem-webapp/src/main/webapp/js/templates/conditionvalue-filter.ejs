@@ -1,0 +1,50 @@
+<%
+	var options = array(data.option);
+	var units = array(data.unitCategory.unit);
+	var curOption = data.option || {};
+	var curUnit = data.unit || {};
+	var propId = data.id;
+%>
+<input type="hidden" name="cond-id<%=propId%>" value="<%=propId%>" filter="1"/>
+<table class="cfilter">
+	<tr>
+		<td width="100" nowrap="true" style="white-space: nowrap;">
+			<%=data.name%>
+			<a restrict="conditionsfilter" action="delete" class="delete-link">[x]</a>
+		</td>
+	</tr>
+	<tr>
+		<td width="100" nowrap="true" style="white-space: nowrap;"> 
+			<span name="type-1">
+				<select test="option-<%=data.name%>" name="cond-option<%=propId%>" value="" filter="1" allowempty="1">
+					<% 
+						for (var i = 0; i < options.length; i++)  
+						{
+							var oid = options[i].id; 
+					%>
+						<option value="<%=id%>"<% if (curOption.id == oid) { %> selected="selected"<% } %>><%=options[i].name%>
+						</option>
+					<% 	} %>
+				</select>
+			</span>
+			
+			<span name="type-0">
+			<input type="text" filter="1" name="cond-value<%=propId%>" value="<%=data.value%>" class="w50 right"/>
+			<select test="unit-<%=data.name%>" name="cond-unit<%=propId%>" filter="1">
+			<% 
+					for (var i = 0; i < units.length; i++)  
+					{
+						var id = units[i].id; 
+			%>
+				<option value="<%=id%>" <% if (id == curUnit.id) { %>selected="selected"<% } %>><%=units[i]["name"]%>
+				</option>
+			<% } %>
+			</select>
+			</span>
+			
+			<span name="type-2">
+				<input type="text" filter="1" class="textual-condition" name="cond-text-value<%=propId%>" value=""/>
+			</span>
+		</td>
+	</tr>
+</table>

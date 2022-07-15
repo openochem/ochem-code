@@ -1,0 +1,46 @@
+<%
+	var providerMolecules = array(data.providerMolecules);
+	
+	function displayValuesTable(title, values)
+	{
+		%>
+		<table class="valtable">
+		<tr><th colspan="2"><%=title %></th></tr>
+		<%
+			var len = (values.length > 6) ? 6 : values.length;
+			for (var j=0; j<values.length; j++)
+			{
+				var invClass = (j > 6) ? "class='invisible'" : "";
+				%>
+				<tr <%=invClass%>><td><%= values[j].type.name %></td><td align="right"><%= values[j].displayedValue %></td></tr>
+				<%
+			}
+			if (values.length > 7)
+			{
+				%>
+				<tr><td colspan = "2"><a action="more"><i>more...</i></a></td></tr>
+				<%
+			}
+		%>
+		</table>
+		<%
+	}		
+%>
+<td width="150px">
+	<a action="zoom" title="Click to zoom"><img width="150px" height="150px" id="<%=data.id%>" src="depiction.jsp?ecid=<%=data.id%>"/></a>
+</td>
+<td width="300px">
+	<b>MW</b>: <%= data.mw %><br/>
+	<b>Names</b>: <i><%=data.nameString %></i><br/>
+	<b>InChI Key</b>: <%=data.inchi2 %><br/><br/>
+	<a action="profile" class="button">molecule profile</a>
+</td>
+<td>
+	 
+	<%
+	for (var i=0; i<providerMolecules.length; i++)
+		displayValuesTable("Values provided by "+providerMolecules[i].provider.name, array(providerMolecules[i].values));
+	
+	displayValuesTable("Predicted values", array(data.predictions));
+	%>
+</td>

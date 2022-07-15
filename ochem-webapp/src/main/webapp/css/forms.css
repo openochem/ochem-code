@@ -1,0 +1,193 @@
+
+.typical-form
+{
+	font-family: Helvetica;
+	font-size: 100%;
+}
+
+.typical-form LABEL, .typical-form INPUT, .typical-form TEXTAREA, .typical-form SELECT, .typical-form STRONG
+{
+	display: block;
+	float: left;
+	margin-bottom: 15px;
+}
+
+.typical-form LABEL
+{
+	width: 85px;
+	padding-right: 25px;
+	text-align: right;
+	min-height: 18px;
+}
+
+.typical-form > DIV > DIV > A, .typical-form A.after-input {float: left; margin-top: 3px; margin-left: 10px;}
+
+.typical-form BR {clear: left;}
+
+.typical-form A
+{
+	color: #33A;
+}
+
+.typical-form INPUT, .typical-form TEXTAREA, .typical-form SELECT, .typical-form .autocomplete-input
+{
+	background-color: #FFFFCC !important;
+	color: #000055;
+	width: 200px;
+	padding: 2px 2px 2px 2px;
+	border: 1px solid #555 !important;
+}
+
+.typical-form INPUT[type="radio"]
+{
+	width: 30px;
+	border: none;
+	padding: 0px 1px;
+	margin: 0px;
+}
+
+
+.typical-form STRONG {width: 200px; padding: 2px;}
+
+.typical-form TEXTAREA {height: 100px;}
+
+.typical-form INPUT.disabled {color: #555;}
+
+.autocomplete-input
+{
+	border: 1px solid #555;
+	padding: 2px 0px 2px 0px;
+}
+
+.hint
+{
+	font-size: 9px;
+	color: #666644;
+}
+
+.source .autocomplete-input
+{
+	width: 120px !important;
+}
+
+.exp-property-content div.autocomplete
+{
+	width: 150px;
+	float: left;
+}
+
+.exp-property-content h1
+{
+	font-family: Arial;
+	font-size: 12px;
+	margin: 10px 0px 2px 0px;
+	padding: 1px 2px 1px 0px;
+	color: #444444;
+}
+
+.exp-property-content h1:first-child
+{
+	margin: 0px 0px 2px 0px;	
+}
+
+.exp-property-content span
+{
+	display: block;
+	float: left;
+	width: 25px;
+	margin: 0px 3px 0px 0px;
+}
+
+.exp-property-content input
+{
+	background-color: transparent;	
+}
+
+.exp-property-content .rb
+{
+	float: right;
+	width: 50px;
+	text-align: right;
+}
+
+.source
+{
+	font-size: 80%;
+	padding: 0px 0px 0px 0px;
+	color: #666611;
+}
+
+.source A {color: inherit;}
+
+.exp-property-content .source input
+{
+	border: 1px solid #BBBB44;
+	display: block;
+	font-size: 80%;
+	padding: 1px 3px 1px 3px;
+	color: #444400;
+}
+
+.unit
+{
+	width: 50px !important;
+	float: left !important;
+}
+
+
+
+.typical-form h1
+{
+	font-family: Lucida Console, Verdana;
+	font-size: 120%;
+	clear: both;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.typical-form .openable.opened .openable-content
+{
+	margin-left: 30px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.typical-form .openable h1
+{
+	background-image: url(../img/icons/triangle2_closed.gif);
+	padding-left: 25px;
+}
+
+
+.typical-form .openable.opened h1 
+{
+	background-image: url(../img/icons/triangle2_opened.gif) !important;
+}
+
+ul.options a
+{
+	font-family: Georgia, Helvetica;
+	font-size: 24px;
+	color: #77F;
+	display: block;
+}
+
+ul.options a:hover {color: #900;}
+
+.options li
+{
+	display: block;
+	padding: 5px 5px 5px 5px;
+	overflow: auto;
+	margin: 0px 5px 10px 10px;
+	width: 400px;
+}
+
+.formsubmit {border-top: 1px solid #777; padding-top: 20px; margin-top: 20px; margin-bottom: 20px;}
+.formsubmit INPUT {border: 1px solid #000; padding: 0px 10px 0px 10px;}
+
+TABLE.configuration TD
+{
+	padding-right: 10px;
+}
+

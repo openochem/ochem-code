@@ -1,0 +1,97 @@
+.nicefieldset 
+{
+	width: 250px;
+	font-family: Verdana;
+	font-size: 10px;
+	text-align: center;
+}
+
+.nicefieldset INPUT
+{
+	font-size: 10px;
+}
+
+.nicetable TD 
+{
+	background-color:#EEEEEE; font-size: 10pt; font-family:Verdana; padding: 1px 5px 1px 5px;
+	width: 200px;
+	border: 10px solid RED;
+}
+
+.nicetable A 
+{
+	color: black;
+}
+
+.log 
+{
+	font-family: Courier;
+	background-color: #DDDDFF;
+	border: 1px solid #000033;
+	padding: 10px 10px 10px 10px;
+	font-size: 10pt;
+}
+
+.embed-log
+{
+	padding: 0px 0px 0px 20px;
+	background-image: url('img/left-line.gif');
+	background-repeat: repeat-y;
+	font-size: 85%;
+}
+
+.niceblock, .warnblock
+{
+	font-family: Verdana, Arial;
+	background-color: #AAAAEE;
+	border: 1px solid black;
+	padding: 10px 10px 10px 10px;
+	margin: 0px 20px 10px 20px;
+	font-size: 10pt;
+	width: 200px; 
+	float: left;
+}
+
+.niceblock A, .warnblock A
+{
+	color: black;
+}
+
+.warnblock 
+{
+	background-color: yellow;
+}
+
+.niceblock TABLE, .warnblock TABLE
+{
+	font-family: Verdana, Arial;
+	font-size: 8pt;
+	width: 100%;
+	align: center;
+}
+
+.niceblock h1, .warnblock h1 
+{font-size: 12pt; font-family: Verdana;}
+
+A.bigbutton 
+{
+	display: block;
+	font-family: Courier;
+	border: 1px solid black;
+	background-color: #DDDDFF;
+	padding: 10px 10px 10px 10px;
+	margin: 0px 0px 10px 0px;
+	font-size: 10pt;
+	color: #000055;
+}
+
+A.bigbutton:hover
+{
+	background-color: yellow;
+}
+
+.error 
+{
+	color: #A00;
+	font-style: italic;
+}

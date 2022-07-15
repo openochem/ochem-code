@@ -1,0 +1,20 @@
+<%
+	var alerts = array(data.value);
+%>
+<table class="block-table ep" cellspacing="2">
+	<tr>
+		<td class="block-image">
+			<a action="zoom" title="Click to zoom"><img src="depiction.jsp?mp2=<%=data.int%>" mp2="<%=data.int%>"/></a>
+			<a href="molecule/profile.do?id=<%=data.int%>" tab="Molecule profile">molecule profile</a>
+		</td>
+		<td class="block-content">
+			<%	for (var i = 0; i < alerts.length; i++) {
+			%>
+				<a href="alerts/show.do?id=<%=alerts[i].id%>" tab="Alert details"><%=alerts[i].name%></a> (for <%=alerts[i].property.name%> in <%=alerts[i]["article-abbr"]%>)<br/>
+			<%}%>
+			
+			<br/><div class="molname" >MoleculeID: <a href="molbrowser/show.do?id=M<%=data.int%>" tab="Compound details"><i title="The OCHEM identifier of this molecule is M<%=data.int%>. Click to see compound details">M<%=data.int%></i></a></div>
+		</td>
+	</tr>
+</table>
+

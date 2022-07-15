@@ -1,0 +1,90 @@
+<% 
+	var modelPredictions = array(data.modelPredictions);
+%>
+<table class="block-table ep">
+	<tr>
+		<td class="block-image top-align" align="center">
+			<a action="zoom" title="Click to zoom">
+				<img class="mol" src="depiction.jsp?id=<%=data.id %>" width="100" height="100" id="<%=data.id %>"/><br/>
+				<a href="molecule/profile.do?depiction=<%=data.id %>" tab="Molecule profile">molecule profile</a>
+			</a>
+		</td>
+		<td class="block-content">
+		<%  
+			for(var i = 0; i < modelPredictions.length; i++) 
+			{
+				var modelPrediction = modelPredictions[i];
+				var modelPredictionPieces = array(modelPrediction.modelPredictionPieces);
+				if (modelPrediction.error == "" || modelPrediction.error == undefined)
+				{
+					for (var j = 0; j < modelPredictionPieces.length; j++)
+					{
+						var prediction = modelPredictionPieces[j];
+						var predictionVector = array(prediction.predictionVector);
+						if (prediction.error == "" || prediction.error == undefined)
+						{
+							var cached = prediction.value.indexOf("cached") >= 0;
+							var outOfAD = prediction.value.indexOf("out_of_ad") >= 0;  
+							prediction.value = prediction.value.replace("cached", "");
+							prediction.value = prediction.value.replace("out_of_ad", "");
+							%>
+								<div class="result-piece">
+						      	<nobr>
+						      	<%=prediction.name %>
+						      	<%=prediction.value %>
+						      	<% if (cached) { %><span class="cached" title="This prediction has been fetched from cache">CACHED</span><% } %>
+						      	<% if (outOfAD) { %><span class="out-ad" title="This prediction is out of the model's applicability domain">OUT OF AD</span><% } %>
+						      	<% if (prediction.name.indexOf("(measured)") == -1) { %>
+						      	<span class="actions">
+						      		<% if (predictionVector && predictionVector.length) { %>
+								      	<!--Prediction vector: <%= predictionVector.join() %> -->
+								    <% } %>
+								    <% var suffix = (predictionVector && predictionVector.length) ? "&predictionVector=1" : "" %>   	
+								    <a tab="Prediction neighbors" title="View similar compounds from the training set" class="neighbors-link" href="modelneighbours/show.do?model_id=<%= modelPrediction.modelId%>&mm_id=<%= prediction.modelMappingId %>&task_num=<%= modelPrediction.taskNum %>&row_num=<%= prediction.tableRowNum %><%=suffix %>">[prediction neighbors]</a>
+						      	</span>
+						      	<% } %>
+						      	</nobr>
+						      	</div>
+							<%
+						} else
+						{
+							%>
+								<div class="result-piece">
+								<nobr>
+						      	<%=prediction.name %>
+						      	<%=prediction.value %>
+						      	</nobr><br/>
+						      	<%
+						      		if (prediction.error.length < 100)
+						      		{
+						      			%>
+						      				Error:  <span class="error"><%=prediction.error %></span>
+						      			<%
+						      		} else
+						      		{
+						      			%>
+						      				<b>Error:</b><i class="error"><%=prediction.error.substring(0,100) %><a action="expanderror">[...]</a></i>
+						      				<i class="fullerror invisible"><%=prediction.error %></i>
+						      			<%
+						      		}
+						      	%>
+						      	</div>
+							<%
+						}  
+					} 
+				} else
+				{
+					%>
+					<<div class="result-piece">
+					<%=modelPrediction.error %>
+					</div>
+					<%
+				}
+			}
+		%>	
+		</td>
+	</tr>
+</table>
+
+
+			 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="qspr.entities.Attachment" table="Attachment">
+        <id name="id" column="attachment_id" access="field">
+            <generator class="native"/>
+        </id>
+        <property name="md5" type="java.lang.String" column="attachment_md5" access="field"/>
+        <property name="flag" type="java.lang.Integer" column="flag" access="field"/>
+        <property name="data" type="binary" access="field">
+        	<column name="data"  read="uncompress(data)" write="compress(?)"/>
+        </property>
+                
+        <property name="source" column="source" not-null="false" access="field">
+	      <type name="org.hibernate.type.EnumType">
+	         <param name="enumClass">qspr.entities.AttachmentSource</param>
+	         <param name="type">12</param>
+	      </type>
+	    </property>
+    </class>
+</hibernate-mapping>

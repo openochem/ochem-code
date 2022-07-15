@@ -1,0 +1,95 @@
+<%
+	var conditions = data.conditions ? array(data.conditions['property-value']) : array(undefined);	
+	var authors = array(data.article.authors.author);
+	var mapping = data.molecule.mapping2 || {};
+	var predicate = data.predicate || "=";
+	var names = array(data.moleculenames.moleculename);
+	var namestr = "";
+	var colorinfo_black = "this name has not been verified yet with PubChem";
+	var colorinfo_red = "this name does not correspond to first structure hit in PubChem";
+	var colorinfo_dark_green = "this name corresponds to first structure hit in PubChem (ignoring stereoisomers)";
+	var colorinfo_green = "this name correspond to first structure hit in PubChem";
+	var colorinfo_blue = "for this name no structure could be found in PubChem";
+	var length = 3;
+	var unit = data.unit || {};
+	var printedValue = data.property.qualitive == "true" ? data.option.name : data.value;
+	if(names.length <= length)
+		length = names.length;
+
+%>
+<table class="block-table ep" cellspacing="2">
+	<tr>
+		<td class="block-image">
+			<a action="zoom" title="<%=namestr%>"><img id="<%=data.molecule['id']%>" src="depiction.jsp?id=<%=data.molecule["id"]%>"/></a>
+		</td>
+		<td class="block-content" valign="top">
+			<div class="conditions">
+				<% 
+				for (var i = 0; i < conditions.length; i++) { 
+					var condvalue = (conditions[i].property.qualitive == "true") ? conditions[i].option.name : conditions[i].value; %>
+					<nobr><%=conditions[i].property.name%> = <%=condvalue%></nobr><br/>
+				<% } %>
+			</div>
+			<% if (data["connected_id"] == data.id) { %><img src="img/icons/evidence_experimental.gif" title="Experimentally measured in this article"/>
+			<% } else if (data["connected_id"]) { %><img src="img/icons/evidence_referenced.gif" title="Measured in another article"/>
+			<% } else if (data["autoEvidence"]=="true") { %><img src="img/icons/evidence_similar.gif" title="Similar record exists"/>
+			<% } else { %><img src="img/icons/evidence_none.gif" title="No evidence specified"/>
+			<% } %>
+			<a class="p-link" href="properties/action.do?action=discuss&id=<%=data.property.id%>" target="_blank"><%=data.property["name"]%></a>
+			 <%=data.printableValue%><br/>
+			 <font style="color:#CC1111"><b>Error:</b></font> <%=data.error%><br/>
+			 <div class="article-data">
+				 <% if (authors.length > 0)  { %>
+				 	<a action="popup" link="article/profile.do?render-mode=popup&id=<%=data.article.id%>" title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>, <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 	</a>
+				 <% } %>
+				 <br/>
+				 <a action="popup" link="article/profile.do?render-mode=popup&id=<%=data.article.id%>" title="<%=data.article.title%>"><%=data.article.title.substr(0, 60)+"..."%></a><br/>
+				 <%=(data["art-mol-id"]) ? "N: "+data["art-mol-id"]+"&nbsp;" : "" %>
+				 <%=(data["art-page-num"]) ? "P: "+data["art-page-num"]+"&nbsp;" : "" %>
+				 <%=(data["art-table-num"]) ? "T: "+data["art-table-num"]+"&nbsp;" : "" %>
+				 <%=(data["art-line-num"]) ? "L: "+data["art-line-num"]+"&nbsp;" : "" %>
+				 <br/>
+				<%if (data.article.journal) {
+				var jrn = (data.article.journal.abbreviation) ? data.article.journal.abbreviation : data.article.journal.title;	
+				%><%=jrn%>
+				<%}%>
+						<b><%=data.article['publication-date'].year%></b>; <%=data.article.volume%> (<%=data.article.issue%>) <%=data.article.pageNumbers%>
+			</div>
+			<div class="right-label" nowrap="true" style="white-space: nowrap; position: relative; top: -5px;">
+			<i title="The OCHEM identifier of this record is R<%=data.id%>">R<%=data.id%></i><br/>
+			<span title="Created / Last modified" class="time">
+			<%=data["time-created"]%><% if (data.time != data["time-created"]) { %> / <%=data.time%><% } %></span><br/>
+			<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><%=data.introducer%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=record_<%=data.id%>" title="send message">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% } if(data.owner != undefined){%><%=data.owner%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=record_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+				</div>
+				<div class="molname" >
+				<% for (var i = 0; i < length; i++) { %>
+					<% if (names[i].validation == "1") { %> 
+						<font style="color:green" title="<%=colorinfo_green%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "2") { %> 
+						<font style="color:#994433" title="<%=colorinfo_red%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "3") { %> 
+						<font style="color:#6699CC" title="<%=colorinfo_blue%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "4") { %> 
+						<font style="color:#005C00" title="<%=colorinfo_dark_green%>"><%=names[i].name%></font>   		
+					<% } else { %>
+						<font style="color:black" title="<%=colorinfo_black%>"><%=names[i].name%></font>
+					<% } %>
+					<% if (i < (length -1)) { %>; <% } %>
+				<% } %>
+				<br/><i title="The OCHEM identifier of this molecule is M<%=data.molecule.mp2%>">M<%=data.molecule.mp2%></i> 	
+				</div>
+				<div class="molname" >
+				<b><%=data.externalId%></b>
+				</div>
+			<small><a href="epbrowser/show.do?id=<%=data.id%>" tab="Experimental property browser">open in the browser of experimental measurements</a></small>
+		</td>
+	</tr>
+</table>

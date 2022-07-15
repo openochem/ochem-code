@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<workflow name="KPLS" outsockets="4" insockets="4">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="mol-optimiser" task="Unspecified-Optimisation"/>
+		<node id="descriptors-processor" task="Descriptors" insockets="2"/>
+		<node id="descriptors-selector" task="Selection" outsockets="2"/>
+		<node id="method-node" task="KPLS" insockets="4" outsockets="2"/>
+	</nodes>
+	<connections>
+		<connection to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="mol-optimiser"/>
+		<connection from="mol-optimiser" to="descriptors-processor"/>
+		<connection from="mol-optimiser" to="method-node" toPort="2"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector" to="method-node"/>
+		
+		<!-- EXP VALUES -->
+		<connection fromPort="1" to="method-node" toPort="1"/>
+		
+		<!-- SDFs (a peculiarity of kernel methods..) -->
+		<connection fromPort="0" to="method-node" toPort="2"/>
+		
+		<!-- Obligatory conditions -->
+		<connection fromPort="2" to="method-node" toPort="3"/>
+		
+		<!-- Conditions, required for calculation of descriptors (ionisable center etc) -->
+		<connection fromPort="3" to="descriptors-processor" toPort="1"/>
+		
+		<!-- OUTPUTS -->
+		<connection from="method-node"/>
+		<connection from="method-node" fromPort="1" toPort="1"/>
+		<connection from="descriptors-selector" toPort="2"/>
+		<connection fromPort="1" from="descriptors-selector" toPort="3"/>
+	</connections>
+</workflow>

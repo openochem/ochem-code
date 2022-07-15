@@ -1,0 +1,12 @@
+<% if (data.id == -2) { %>
+<a href='javascript:void()' onclick='compoundBrowser.cadasterSearch(-1); return false;'>[cadaster substructure search]</a>
+<% } else { %>
+Filtered by substructure (Cadaster)<br/>
+<a href='javascript:void()' onclick='compoundBrowser.cadasterSearch(<%=data.id%>); return false;'>
+	<img id='<%=data.id%>' src='depiction.jsp?id=<%=data.id%>&w=50&h=50'/>
+</a>
+<input class="invisible" type="hidden" value='<%=data.id%>' filter='1' name='cadasterSearch'/><br/>
+<a href='javascript:void()' onclick='compoundBrowser.cadasterSearch(); return false;'>
+[clear substructure filter]
+</a>
+<% } %>

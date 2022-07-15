@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<workflow name="Docking" insockets="2">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="mol-optimiser" task="Corina"/>
+		<node id="mol-preparation" task="AutodockPrepareLigand"/>
+		<node id="vina-docking" task="AutodockVina"/>
+	</nodes>
+	<connections>
+		<connection from="in" to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="mol-optimiser"/>
+		<connection from="mol-optimiser" to="mol-preparation"/>
+		<connection from="mol-preparation" to="vina-docking"/>
+		
+		<connection from="vina-docking" to="out"/>
+	</connections>
+</workflow>

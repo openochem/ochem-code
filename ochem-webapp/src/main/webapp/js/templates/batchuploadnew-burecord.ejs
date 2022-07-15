@@ -1,0 +1,28 @@
+<table class="compact-item bu-item">
+	<tr>
+	<td>
+		<b><a href="batchuploadnew/originalfile.do?id=<%=data['id']%>&render-mode=popup"><%=data.fileName %></a><br/></b>
+		Uploaded: <i><%=data.lastActivity %></i><br/>
+		State: <%=data.state %><br/>
+	</td>
+	<td>
+		<table class="bu-item">
+		<tr><td colspan="2">All rows in the sheet</td><td>Count: <b><%=data.numRows %></b></td></tr>
+		<tr><td></td><td></td><td></td></tr>
+		<%
+		var aggregated = array(data.aggregatedRows);
+		for (i=0; i<aggregated.length; i++)
+		{
+			%>
+			<tr><td>Type: <i><%=aggregated[i].type %></i></td><td>Status: <i><%=aggregated[i].status %></i></td><td>Count: <b><%=aggregated[i].count %></b></td></tr>
+			<%
+		}
+		%>
+		</table>
+	</td>
+	<td>
+		Total: <a tab="Batch uploaded records" href="epbrowser/show.do?bu=<%=data['id']%>"> <%=data.numRecords %> records </a></br>
+		<% if (data.state == 'finished') { %><a href="batchuploadnew/report.do?id=<%=data['id']%>&render-mode=popup">Download report</a><% } %>
+	</td>
+	</tr>
+</table>

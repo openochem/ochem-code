@@ -1,0 +1,39 @@
+<%
+ 	if (model == null)
+ 	{
+%>          
+	        <div>
+	        	<a href="#" action="Update">[Update]</a>
+	        	Plz click to Update to see or add Molecule Name and Properties
+			</div>
+	        <div>
+	        	<a href="#" action="Update">[Update]</a>
+	        	Plz click to Update to see or add Molecule Name and Properties
+			</div>
+<% 	 
+ 	} else
+ 	{
+%>
+        <div>
+			<%  if (model.molecule)
+				if (model.molecule.mapping2.moleculeNames) 
+				for(var i=0; i<model.molecule.mapping2.moleculeNames.length; i++) 
+			    { 
+			 %>
+			 <li><%=model.molecule.mapping2.moleculeNames[i]["name"] %></li>
+			 <% }
+			 %>
+		</div> 
+        <div>
+			 <%	
+			 if (model.others)
+			 if (model.others.molecule)  
+			 for (var i=0; i<model.others.molecule.length; i++)
+			 	{ 
+			 %>
+				<a href="#" id='<%=model.others.molecule[i]["id"]%>' action="Get"><img src='depiction.jsp?id=<%=model.others.molecule[i]["id"]%>' width="100" height="100"/></a>
+			 <%
+			 	}
+			 %>
+		</div> 
+<% } %>

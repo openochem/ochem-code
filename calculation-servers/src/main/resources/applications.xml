@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<applications>
+
+	<!-- GPU -->
+	<application class="qspr.metaserver.cs.LSSVMGServer" name="LSSVMG">
+		<param name="EXE" value="%TOOLS_DIR%/lssvmg/run.py" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.IMGQSARServer" name="IMGQSAR">
+		<param name="EXE" value="%TOOLS_DIR%/imgqsar/run.py" />
+	</application>
+		
+	<application class="qspr.metaserver.cs.DNNServer" name="DNN">
+		<param name="EXE" value="%TOOLS_DIR%/dnn/" />
+	</application>
+
+	<application class="qspr.metaserver.cs.DEEPCHEMServer" name="DEEPCHEM">
+		<param name="EXE" value="%TOOLS_DIR%/deepchem/run.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.DLCAServer" name="DLCA">
+		<param name="EXE" value="%TOOLS_DIR%/dlca/dlca.py" />
+	</application>
+		
+	<application class="qspr.metaserver.cs.ATTFPServer"
+		name="ATTFP">
+		<param name="EXE" value="%TOOLS_DIR%/attfp/attentiveFP.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.TRANSNNServer"
+		name="TRANSNN">
+		<param name="EXE" value="%TOOLS_DIR%/transnn/transformer-cnn.py" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.CHEMNLPServer"
+		name="CHEMNLP">
+		<param name="EXE" value="%TOOLS_DIR%/chemnlp/ChemNLPAtt.py" />
+	</application>
+		
+	<application class="qspr.metaserver.cs.GNNServer"
+		name="GNN">
+		<param name="EXE" value="%TOOLS_DIR%/gnn/main.py" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.ChemPropServer"
+		name="ChemProp">
+		<param name="EXE" value="%TOOLS_DIR%/chemprop/train.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.EAGCNGServer"
+		name="EAGCNG">
+		<param name="EXE" value="%TOOLS_DIR%/eagcng/run.py" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.CNFServer"
+		name="CNF">
+		<param name="EXE" value="%TOOLS_DIR%/cnf/run.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.PyTorchServer"
+		name="PYTORCH">
+		<param name="EXE" value="%TOOLS_DIR%/pytorch/run.py" />
+	</application>
+						
+	<application class="qspr.metaserver.cs.DimenetPPServer"
+		name="DIMENET">
+		<param name="EXE" value="%TOOLS_DIR%/dimenet/DimenetPP.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.HAMNETServer"
+		name="HAMNET">
+		<param name="EXE" value="%TOOLS_DIR%/hamnet/run.py" />
+	</application>
+
+	<!-- GPU descriptors -->
+	<application class="qspr.metaserver.cs.CDDDDescriptorsServer" name="CDDD">
+			<param name="EXE" value="%TOOLS_DIR%/utils/filter.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.KGCNNServer"
+		name="KGCNN">
+		<param name="EXE" value="%TOOLS_DIR%/kgcnn/keras-gcn.py" />
+	</application>	
+
+	<!-- METHODS -->
+	<application class="qspr.metaserver.cs.ASNNServer" name="ASNN">
+		<param name="EXE" value="%TOOLS_DIR%/asnn/asnn-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/asnn/asnn-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/asnn/asnn-aarch64" />
+		<param name="DEBUG" value="false" />
+	</application>
+
+	<application class="qspr.metaserver.cs.ASNNPServer" name="ASNNP">
+		<param name="EXE" value="%TOOLS_DIR%/asnn/asnn-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/asnn/asnn-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/asnn/asnn-aarch64" />
+		<param name="DEBUG" value="false" />
+	</application>
+
+	<application class="qspr.metaserver.cs.XGBOOSTServer" name="XGBOOST">
+	</application>
+
+	<application class="qspr.metaserver.cs.RFRServer" name="RFR">
+	</application>
+	
+	<application class="qspr.metaserver.cs.SKLEARNServer" name="SKLEARN">
+		<param name="EXE" value="%TOOLS_DIR%/skl/run.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MLRAServer" name="MLRA">
+		<param name="EXE" value="%TOOLS_DIR%/mlra/mlra-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/mlra/mlra-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/mlra/mlra-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.FSMLRServer" name="FSMLR">
+		<param name="EXE" value="%TOOLS_DIR%/fsmlr/fsmlr-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/fsmlr/fsmlr-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/fsmlr/fsmlr-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.KNNServer" name="KNN">
+		<param name="EXE" value="%TOOLS_DIR%/knn/knn-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/knn/knn-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/knn/knn-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.KPLSServer" name="KPLS">
+		<param name="EXE" value="%TOOLS_DIR%/kpls/kpls-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/kpls/kpls-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/kpls/kpls-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.DEEPServer" name="DEEP">
+		<param name="EXE" value="%TOOLS_DIR%/deep/deep-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/deep/darwin-aarch64" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/deep/deep-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.J48Server" name="WEKA-J48">
+		<param name="EXE" value="%TOOLS_DIR%/weka/weka.jar" />
+	</application>
+
+	<application class="qspr.metaserver.cs.RFServer" name="WEKA-RF">
+		<param name="EXE" value="%TOOLS_DIR%/weka/weka.jar" />
+	</application>
+
+	<application class="qspr.metaserver.cs.LibSvmServer" name="LibSVM">
+		<param name="EXE" value="%TOOLS_DIR%/libsvm/svm-train-linux" />
+		<param name="PREDICT_EXE" value="%TOOLS_DIR%/libsvm/svm-predict-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/libsvm/svm-train-darwin" />
+		<param name="PREDICT_EXE" platform="mac" value="%TOOLS_DIR%/libsvm/svm-predict-darwin" />
+		<param name="EXE" platform="aarch64"  value="%TOOLS_DIR%/libsvm/svm-train-aarch64" />
+		<param name="PREDICT_EXE" platform="aarch64"  value="%TOOLS_DIR%/libsvm/svm-predict-aarch64" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.PLSServer" name="PLS" />
+
+	<application class="qspr.metaserver.cs.ConsensusModelServer"
+		name="Consensus">
+	</application>
+	
+	<!-- Descriptors -->
+
+	<application class="qspr.metaserver.cs.EPAServer" name="EPA">
+		<param name="EXE" value="%TOOLS_DIR%/epa/fixsmiles.xml" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MAP4DescriptorsServer" name="MAP4">
+		<param name="EXE" value="%TOOLS_DIR%/map4/map4.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MOLD2DescriptorsServer" name="MOLD2">
+		<param name="EXE" value="%TOOLS_DIR%/mold2/mold2-linux" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.SilicosItScaffoldServer"
+		name="SilicosItScaffold">
+		<param name="EXE" value="%TOOLS_DIR%/silicos-it/strip-it-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/silicos-it/strip-it-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/silicos-it/strip-it-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MolPrintServer"
+		name="MolPrint">
+		<param name="EXE" value="%TOOLS_DIR%/molprint/cfp.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.GSFragServer" name="GSFrag">
+		<param name="EXE" value="%TOOLS_DIR%/gsfrag/gsfrag-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/gsfrag/gsfrag-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/gsfrag/gsfrag-aarch64" />
+		
+		<param name="EXE1" value="%TOOLS_DIR%/gsfrag/gsfragl-linux" />
+		<param name="EXE1" platform="mac" value="%TOOLS_DIR%/gsfrag/gsfragl-darwin" />
+		<param name="EXE1" platform="aarch64" value="%TOOLS_DIR%/gsfrag/gsfragl-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.RDKITDescriptorsServer" name="RDKIT">
+		<param name="EXE" value="%TOOLS_DIR%/rdkit/run.py" />
+	</application>
+		
+	<application class="qspr.metaserver.cs.PyDescriptorsServer" name="PyDescriptor">
+			<param name="EXE" value="%TOOLS_DIR%/pydescriptor/PyDescriptor.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.AlvaServer"
+		name="alvaDesc">
+        <param name="EXE" value="/usr/local/talete/alva/v.2.0.4/alvaDescCLI" />
+	</application>
+
+	<application class="qspr.metaserver.cs.ALogPSServer" name="ALogPS">
+		<param name="EXE" value="%TOOLS_DIR%/alogps/alogps-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/alogps/alogps-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/alogps/alogps-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.FragmentorServer"
+		name="Fragmentor">
+		<param name="EXE" value="%TOOLS_DIR%/fragmentor/isida-fragmentor-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/fragmentor/isida-fragmentor-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/fragmentor/isida-fragmentor-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MeraServer" name="Mera">
+		<param name="EXE" value="%TOOLS_DIR%/mera/mera-linux" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MersyServer" name="Mersy">
+		<param name="EXE" value="%TOOLS_DIR%/mera/mersy-linux" />
+	</application>
+
+	<application class="qspr.metaserver.cs.PaDEL2DescriptorsServer"
+		name="PaDEL2">
+		<param name="EXE" value="%TOOLS_DIR%/padel2/PaDEL2-Descriptor.jar" />
+	</application>
+
+	<application class="qspr.metaserver.cs.CDK2DescriptorsServer"
+		name="CDK2">
+		<param name="EXE" value="%TOOLS_DIR%/cdk2" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.JPLOGPDescriptorsServer"
+		name="JPLOGP">
+		<param name="EXE" value="%TOOLS_DIR%/cdk2" />
+	</application>
+
+	<application class="qspr.metaserver.cs.MORDREDDescriptorsServer" name="MORDRED"/>
+	
+	<application class="qspr.metaserver.cs.OEstateServer" name="OEstate">
+		<param name="EXE" value="%TOOLS_DIR%/oestate/oestate-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/oestate/oestate-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/oestate/oestate-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.SpectrophoresServer"
+		name="Spectrophores" />
+
+	<application class="qspr.metaserver.cs.MOPAC2016Server"
+		name="MOPAC2016">
+		<param name="EXE" value="%TOOLS_DIR%/mopac2016/MOPAC2016-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/mopac2016/MOPAC2016-darwin" />
+	</application>
+
+	<application class="qspr.metaserver.cs.KRAKENXServer"
+		name="KRAKENX">
+		<param name="EXE" value="%TOOLS_DIR%/mopac2016/MOPAC2016-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/mopac2016/MOPAC2016-darwin" />
+	</application>
+
+	<application class="qspr.metaserver.cs.SIGMAServer"
+		name="SIGMA">
+		<param name="EXE" value="%TOOLS_DIR%/mopac2016/MOPAC2016-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/mopac2016/MOPAC2016-darwin" />
+	</application>
+	
+	<application class="qspr.metaserver.cs.MOPAC7Server" name="MOPAC">
+		<param name="EXE" value="%TOOLS_DIR%/mopac/mopac7-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/mopac/mopac7-darwin" />
+	</application>
+
+	<application class="qspr.metaserver.cs.InductiveDescriptorsServer"
+		name="InductiveDescriptors" />
+
+	<application class="qspr.metaserver.cs.ECFPServer" name="ECFP" >
+			<param name="EXE" value="%TOOLS_DIR%/rdkit/run.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.QNPRServer" name="QNPR" />
+
+	<application class="qspr.metaserver.cs.SIRMServer" name="SIRMS">
+		<param name="EXE" value="%TOOLS_DIR%/sirms-master/sirms.py" />
+	</application>
+
+	<application class="qspr.metaserver.cs.StructuralAlertServer"
+		name="StructuralAlerts" />
+
+	<application class="qspr.metaserver.cs.ConfCorinaLocalServer" name="CORINA">
+		<param name="EXE" value="/usr/local/corina/corina" />
+	</application>
+
+	<application class="qspr.metaserver.cs.ConfBabelServer"
+		name="OBABEL" />
+
+	<application class="qspr.metaserver.cs.ConfObgenServer"
+		name="OBGEN" />
+
+	<application class="qspr.metaserver.cs.ConfBalloonServer"
+		name="BALLOON">
+		<param name="EXE" value="%TOOLS_DIR%/balloon/balloon-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/balloon/balloon-darwin" />
+	</application>
+
+	<!-- helpers -->
+	<application class="qspr.metaserver.cs.CrossValidationServer"
+		name="CrossValidation" />
+	<application class="qspr.metaserver.cs.BaggingServer" name="Bagging" />
+	<application class="qspr.metaserver.cs.MetaCostServer"
+		name="Metacost" />
+
+	<application class="qspr.workflow.Workflow" name="Workflow">
+		<param name="DEBUG" value="false" />
+	</application>
+
+	<application class="qspr.metaserver.cs.SelectionServer"
+		name="Selection">
+		<param name="EXE" value="%TOOLS_DIR%/ufs/ufs-linux" />
+		<param name="EXE" platform="mac" value="%TOOLS_DIR%/ufs/ufs-darwin" />
+		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/ufs/ufs-aarch64" />
+	</application>
+
+	<application class="qspr.metaserver.cs.LeverageServer"
+		name="Leverage">
+	</application>
+
+	<application class="qspr.metaserver.cs.DescriptorsServer"
+		name="Descriptors" />
+
+	<application class="qspr.metaserver.cs.MolStandartizationServer"
+		name="MolStandartizer" />
+
+	<application class="qspr.metaserver.cs.CompareScaffolds"
+		name="CompareScaffolds" />
+
+	<application class="qspr.metaserver.cs.MMPFragServer" name="MMPFrag">
+			<param name="EXE" value="%TOOLS_DIR%/mmpfrag/rfrag.py" />
+	</application>
+		
+	<application class="qspr.metaserver.cs.RandomGenerationServer"
+		name="Random">
+	</application>
+
+	<application class="qspr.metaserver.cs.MacauServer" name="MACAU">
+		<param name="EXE" value="%TOOLS_DIR%/macau/run.py" />
+	</application>
+	
+</applications>

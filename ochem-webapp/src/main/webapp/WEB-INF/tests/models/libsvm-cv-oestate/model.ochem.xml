@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ochem-model>
+	<properties />
+	<method>LibSVM</method>
+	<attachment>
+		<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:type="cdsConfiguration">
+			<descriptors>
+				<types>
+					<type>OEstate</type>
+					<aromatize>none</aromatize>
+					<configuration xsi:type="descriptorsOEstateConfiguration">
+						<count>0</count>
+						<bond>0</bond>
+					</configuration>
+					<markUncachedAsErrors>false</markUncachedAsErrors>
+				</types>
+			</descriptors>
+			<selection>
+				<numDifferentValues>2</numDifferentValues>
+				<correlationThreshold>0.95</correlationThreshold>
+				<useUFS>false</useUFS>
+				<stdThreshold>0.01</stdThreshold>
+				<maximumValueThreshold>999999</maximumValueThreshold>
+			</selection>
+			<centerRequired>false</centerRequired>
+			<modelConfiguration xsi:type="libSvmConfiguration">
+            	<versionOCHEM>-999</versionOCHEM>
+				<scaleTypeX>RANGE</scaleTypeX>
+				<optionsNumber>1</optionsNumber>
+				<useNu>false</useNu>
+				<oneClass>false</oneClass>
+				<svm_type>-1</svm_type>
+				<kernel_type>2</kernel_type>
+				<degree>3</degree>
+				<coef0>0</coef0>
+				<nu>0.001</nu>
+				<cost>1.0</cost>
+				<epsilon>0.001</epsilon>
+				<svrEpsilon>0.001</svrEpsilon>
+				<seed>10666</seed>
+				<classWeightRatio>1.0</classWeightRatio>
+				<costMax>10.0</costMax>
+				<costMin>-10.0</costMin>
+				<costStep>2.0</costStep>
+				<gammaMax>10.0</gammaMax>
+				<gammaMin>-10.0</gammaMin>
+				<gammaStep>2.0</gammaStep>
+				<classWeightRatioMax>1.0</classWeightRatioMax>
+				<classWeightRatioMin>0.1</classWeightRatioMin>
+				<classWeightRatioStep>0.1</classWeightRatioStep>
+				<svrEpsilonMax>10.0</svrEpsilonMax>
+				<svrEpsilonMin>-16.0</svrEpsilonMin>
+				<svrEpsilonStep>2.0</svrEpsilonStep>
+				<useWeighting>false</useWeighting>
+				<gridSearch>false</gridSearch>
+				<gridSearchSetSize>0.1</gridSearchSetSize>
+			</modelConfiguration>
+		</configuration>
+		<protocol>
+			<crossValidationConfiguration>
+				<ensembleSize>5</ensembleSize>
+			</crossValidationConfiguration>
+		</protocol>
+		<standartization>
+			<desaltWith>CDK</desaltWith>
+			<neutralizeWith>CDK</neutralizeWith>
+			<standardizeWith>CDK</standardizeWith>
+			<cleanStructureWith>CDK</cleanStructureWith>
+			<addExplicitHydrogensWith>CDK</addExplicitHydrogensWith>
+			<dearomatizeWith>CDK</dearomatizeWith>
+		</standartization>
+		<datahandling>
+			<intervals>skip</intervals>
+			<greaterless>skip</greaterless>
+			<approximateequals>skip</approximateequals>
+			<handleRanges>false</handleRanges>
+		</datahandling>
+	</attachment>
+</ochem-model>

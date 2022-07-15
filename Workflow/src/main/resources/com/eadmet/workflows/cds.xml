@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<workflow name="CDS" insockets="4" outsockets="2">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="mol-optimiser" task="Unspecified-Optimisation"/>
+		<node id="descriptors-processor" task="Descriptors" insockets="2"/>
+		<node id="descriptors-selector" task="Selection"/>
+	</nodes>
+	<connections>
+		<connection to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="mol-optimiser"/>
+		<connection from="mol-optimiser" to="descriptors-processor"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector"/>
+		
+		<!-- Conditions, required for calculation of descriptors (ionisable center etc) -->
+		<connection fromPort="3" to="descriptors-processor" toPort="1"/>    
+		
+		<!-- OUTPUTS -->
+		<connection from="descriptors-selector" /> 				<!-- fromPort="0" toPort="0" -->
+		<connection from="mol-standardizer" toPort="1"/>			<!-- fromPort="0" toPort="1" -->
+	</connections>
+</workflow>
+
+
+<!-- template for pure descriptor calculation -->
+<!--
+		node: processing node in the workflow (Convertor, Descriptors, Selection, Model)
+		in/out-sockets: number of in and outgoing connections to a node
+		connnection: topology of nodes
+		
+		from/to-port begin and end ports of workflow
+		port 0 is defined by default connections
+-->

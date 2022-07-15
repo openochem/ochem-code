@@ -1,0 +1,129 @@
+<%
+	var conditions = data.conditions ? array(data.conditions['property-value']) : array(undefined);	
+	var authors = array(data.article.authors.author);
+	var mapping = data.molecule.mapping2 || {};
+	var predicate = data.predicate || "=";
+	var names = array(data.moleculenames.moleculename);
+	var namestr = "";
+	var colorinfo_black = "this name has not been verified yet with PubChem";
+	var colorinfo_red = "this name does not correspond to first structure hit in PubChem";
+	var colorinfo_dark_green = "this name corresponds to first structure hit in PubChem (ignoring stereoisomers)";
+	var colorinfo_green = "this name correspond to first structure hit in PubChem";
+	var colorinfo_blue = "for this name no structure could be found in PubChem";
+	var length = 3;
+	var unit = data.unit || {};
+	var valueInModelUnits = valueInModelUnits || "";
+	var printedValue = data.property.qualitive == "true" ? data.option.name : data.value;
+	if(names.length <= length)
+		length = names.length;
+	
+	var descriptorColumns = (data.descriptorList) ? array(data.descriptorList.columns.column) : array();
+	var descriptorRows = (data.descriptorList) ? array(data.descriptorList.rows.row) : array();	
+	var predictionVector = array(data.predictionVector);
+%>
+<table class="block-table ep" style="width: 98%">
+	<tr>
+		<td class="block-image">
+			<a action="zoom" title="<%=namestr%>"><img id="<%=data.molecule['id']%>" src="depiction.jsp?id=<%=data.molecule["id"]%>"/></a>
+			<a href="molecule/profile.do?depiction=<%=data.molecule["id"]%>" tab="Molecule profile">molecule profile</a>
+		</td>
+		<td class="block-content" valign="top">
+			<div class="conditions">
+				<% 
+				for (var i = 0; i < conditions.length; i++) { 
+					var condvalue = (conditions[i].property.qualitive == "true") ? conditions[i].option.name : conditions[i].value; %>
+					<nobr><%=conditions[i].property.name%><%=conditions[i].printableValueFull%></nobr><br/>
+				<% } %>
+			</div>
+			<% if (data["connected_id"] == data.id) { %><img src="img/icons/evidence_experimental.gif" title="Experimentally measured in this article"/>
+			<% } else if (data["connected_id"]) { %><img src="img/icons/evidence_referenced.gif" title="Measured in another article"/>
+			<% } else if (data["autoEvidence"]=="true") { %><img src="img/icons/evidence_similar.gif" title="Similar record exists"/>
+			<% } else { %><img src="img/icons/evidence_none.gif" title="No evidence specified"/>
+			<% } %>
+			 <nobr><a class="p-link" href="properties/edit.do?id=<%=data.property.id%>" tab="<%=data.property.name%> description"><%=data.property.name%></a>
+			<%=data.printableValue%>
+			 	<% if (data.property.type == "0" && unit.name != modelUnit.name) { %>  =  <%=valueInModelUnits.split(",")[0]%> <%=modelUnit.name%><% } %></nobr><br/>
+			 <% if (valueInModelUnits != undefined && valueInModelUnits.indexOf("_") != -1)
+			 {
+			 	var parts = valueInModelUnits.split("_");
+			 	%><font color="red">Warning: the measured value has been updated since the model calculation time:  <%=parts[0]%> <%=modelUnit.name%> != <%=parts[1]%> <%=modelUnit.name%></font><br/><%
+			 }%> 
+			 	
+			 Predicted value: <%=predictedInOriginalUnits%><% if (data.property.type == "0") { %> (in <%=unit.name%>)<% } %> 
+			 	<% if (data.property.type == "0" && unit.name != modelUnit.name) { %>  =  <%=data.predicted%> <%=modelUnit.name%><% } %><br/>
+			 	
+			 	<% if (predictionVector && predictionVector.length) { %>
+			 	<!--Prediction vector: <%= predictionVector.join() %>-->
+			 	<% } %>
+			 <% if (data.dmValue) { %>
+			 	<%=data.dmValue.dm%>: <%=data.dmValue.value%><br/>
+			 <% } %>
+			 <% if (data.correl) { %>
+			 	Correl/Distance: <%=data.correl%><br/>
+			 <% } %>
+			 
+			 <% if (descriptorColumns.length>0) { %>
+			 <br/><b>Descriptors</b><br/>
+			 <% } %>
+			 <% for (var i = 0; i<descriptorColumns.length; i++) {%>
+			 <%=descriptorColumns[i] %> = <%=descriptorRows[i].double%><br/>
+			 <% } %>			 
+			 <div class="article-data">
+				 <% if (authors.length > 0)  { %>
+				 	<a action="popup" link="article/edit.do?render-mode=popup&id=<%=data.article.id%>" title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>, <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 	</a>
+				 <% } %>
+				 <br/>
+				 <a action="popup" link="article/edit.do?render-mode=popup&id=<%=data.article.id%>" title="<%=data.article.title%>"><%=data.article.title.substr(0, 60)+"..."%></a><br/>
+				 <%=(data["art-mol-id"]) ? "N: "+data["art-mol-id"]+"&nbsp;" : "" %>
+				 <%=(data["art-page-num"]) ? "P: "+data["art-page-num"]+"&nbsp;" : "" %>
+				 <%=(data["art-table-num"]) ? "T: "+data["art-table-num"]+"&nbsp;" : "" %>
+				 <%=(data["art-line-num"]) ? "L: "+data["art-line-num"]+"&nbsp;" : "" %>
+				 <br/>
+				 <%if (data.article.journal) {
+				var jrn = (data.article.journal.abbreviation) ? data.article.journal.abbreviation : data.article.journal.title;	
+				%><%=jrn%>
+				<%}%>
+						<b><%=data.article['publication-date'].year%></b>; <%=data.article.volume%> (<%=data.article.issue%>) <%=data.article.pageNumbers%>
+				<br/>MoleculeID: <a href="molecule/profile.do?id=<%=data.molecule.mp2%>" tab="Molecule profile"><i title="The OCHEM identifier of this molecule is M<%=data.molecule.mp2%>">M<%=data.molecule.mp2%></i></a> 	
+			</div>
+			<div class="right-label" nowrap="true" style="white-space: nowrap;">
+			<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><%=data.introducer%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=record_<%=data.id%>" title="send message">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% } if(data.owner != undefined){%><%=data.owner%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=record_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+				</div>
+				<div class="molname" >
+				<% for (var i = 0; i < length; i++) { %>
+					<% if (names[i].validation == "1") { %> 
+						<font style="color:green" title="<%=colorinfo_green%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "2") { %> 
+						<font style="color:#994433" title="<%=colorinfo_red%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "3") { %> 
+						<font style="color:#6699CC" title="<%=colorinfo_blue%>"><%=names[i].name%></font>   		
+					<% } else if (names[i].validation == "4") { %> 
+						<font style="color:#005C00" title="<%=colorinfo_dark_green%>"><%=names[i].name%></font>   		
+					<% } else { %>
+						<font style="color:black" title="<%=colorinfo_black%>"><%=names[i].name%></font>
+					<% } %>
+					<% if (i < (length -1)) { %>, <% } %>
+				<% } %> 	
+			</div>
+			<a tab="Compound properties browser" href="epbrowser/show.do?id=<%=data.id%>">[open in browser]</a>
+			<% var suffix = (predictionVector && predictionVector.length) ? "&predictionVector=1" : "" %> 
+			<a tab="Prediction neighbors" href="modelneighbours/show.do?model_id=<%=getParams['model_id'] %>&mm_id=<%= getParams['mm_id'] %>&ep_id=<%=data.id %><%=suffix%>">[prediction neighbors]</a>
+		</td>
+		<td class="command-panel">
+			<a action="edit" title="Edit this record" class="no-trash"><img src="img/icons/edit.gif"/></a>
+			<%if(data.exclude == 'true'){%>
+				<a action="include" title="Include this record in training set" class="no-trash"><img src="img/icons/include.png"/></a>
+			<%}else{%>
+				<a action="exclude" title="Exclude this record from training set" class="no-trash"><img src="img/icons/exclude.png"/></a>
+			<%}%>
+		</td>
+	</tr>
+</table>

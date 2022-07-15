@@ -1,0 +1,36 @@
+# ignored at root
+/chemaxon-plugins
+/development-helpers
+/WfTools/ext-tools
+/WfTools/clients/
+/*/target
+/*/.classpath
+/debug_maven/output/
+/ochem-webapp/work/
+/ochem-webapp/src/main/webapp/WEB-INF/upload/
+/ochem-core/src/main/java/qspr/entities/ExtendedUser.java
+
+# helper scripts are not commited
+/*.sh
+
+# ignored at all levels
+.svn
+.DS_Store
+._.DS_Store
+.recommenders
+.metadata
+.project
+.settings
+*.cxl
+*.key
+#license.*
+.tomcatplugin
+.#webclasspath
+RemoteSystemsTempFiles
+*.pem
+*.log
+*.zip
+*.pid
+*.out
+*.tar
+*.tar.gz

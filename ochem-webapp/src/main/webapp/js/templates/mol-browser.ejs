@@ -1,0 +1,85 @@
+<%
+	var exp_property;
+	var nameString = new Array();
+	if(data["exp-property"])
+	 exp_property = array(data["exp-property"]);
+	var tags = array(data.tag);	
+%>
+<table class="block-table ep">
+	<tr>
+		<td class="block-image">
+			<a action="zoom" title="Click to zoom"><img id="<%=data['mol_id']%>" src="depiction.jsp?id=<%=data["mol_id"]%>"/></a>
+			<a href="molecule/profile.do?depiction=<%=data["mol_id"]%>" tab="Molecule profile">molecule profile</a>
+		</td>
+		<td class="block-content" valign="top">
+		 	<div class="property">
+			<%
+			if(exp_property)
+			{
+				for (var i = 0; i < exp_property.length; i++) {
+				var predicate = exp_property[i].predicate || "=";
+				var unit = exp_property[i].unit || {};
+				var optionName = (exp_property[i].option) ? exp_property[i].option.name : "UNDEFINED";
+				var printedValue = exp_property[i].property.qualitive == "true" ? optionName : exp_property[i].value;
+				var predicateInBetween = predicate == "+-" ? "&#x00B1;" : (predicate == "-" ? "&#x2013;" : undefined);
+				var names = array(exp_property[i].moleculenames.moleculename);
+				for(var n = 0; n < names.length; n++)
+				{
+					if(nameString.indexOf(names[n].name) == -1)
+						nameString.push(names[n].name);
+				}
+				if (exp_property[i]["connected_id"] == exp_property[i].id) { %>
+				<img src="img/icons/evidence_experimental.gif" title="Experimentally measured in this article"/>
+				<% } else if (exp_property[i]["connected_id"]) { %><img src="img/icons/evidence_referenced.gif" title="Measured in another article"/>
+				<% } else if (exp_property[i]["autoEvidence"]=="true") { %><img src="img/icons/evidence_similar.gif" title="Similar record exists"/>
+				<% } else { %><img src="img/icons/evidence_none.gif" title="No evidence specified"/>
+				<% } %>
+				<a class="p-link" href="properties/edit.do?id=<%=exp_property[i].property.id%>" tab="Property profile"><%=exp_property[i].property["name"]%></a>
+				<%=exp_property[i].printableValue%>...
+				<a action="popup" link="epbrowser/show.do?render-mode=popup&id=<%=exp_property[i]["id"]%>">more</a>
+				<br/>
+				<%}if(exp_property.length > 1){%>
+					<br/>
+					<a action="popup" link="epbrowser/show.do?render-mode=popup&sortby=property&order=1&similarmol=<%=data["mol_id"]%>">show all</a>
+				<%}
+				}else{%>
+				<b>No record found....</b>
+			<%}%>
+			</div>
+			<div class="molecule">
+				 Molecule ID: <i>M<%=data.mp2%></i><br/>
+				 <%if(nameString.length != 0){%>
+				 	Name: <%=nameString.join("; ")%><br/>
+				 <%}%>
+				 Molecular Weight: <%=data.MW%><br/>
+				 Molecular Formula: <%=data.MF%><br/>
+				 <%if(data.smiles){%>Smiles: <%=data.smiles%><br/><%}%>
+				 InChIKey: <%=inchikey%><br/>
+				 <% if (tags.length > 0) { %>
+				 	<img src="img/icons/tag16.png"/>
+					 <% for (i = 0; i < tags.length; i++) { %>
+						<%=tags[i].name%><!-- wiki_info --> <!-- <a tab="Wiki" href="wikipage/action.do?name=<%=tags[i].name%>"><%=tags[i].name%></a> -->&nbsp;<a action="removetag" ajax-data="tag=<%=tags[i].id%>" class="delete-link">[x]</a>&nbsp;&nbsp;
+					 <% } %>
+				 <% } %>
+				 <% if (data.isFragmented) { %>
+				 	<div class="fragmented" title="Available for substructure search">
+				 		<a href="fragmentbrowser/show.do?id=<%=data.id%>&render-mode=popup" tab="Fragments" title="Browse corresponding fragments for <%=data.id%>">
+				 			[Fragmented]
+				 		</a>
+				 	</div>
+				 <% } %>
+				 <a action="addtagselect">[add tag]</a>
+			</div>
+			
+		</td>
+		<td>
+			<a name="checked" action="toggleselect" title="Select/unselect this record">
+				<% if (data["selected"] == "true") { %>
+					<img name="checked" src="img/icons/checked.gif"/>
+				<% } else { %>
+					<img name="checked" src="img/icons/unchecked.gif"/>
+				<% } %>
+			</a>
+		</td>
+	</tr>
+</table>

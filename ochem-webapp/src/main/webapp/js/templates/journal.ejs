@@ -1,0 +1,44 @@
+<table class="compact-item">
+	<tr>
+	<td class="command-panel" width="40">
+		<% if (!(data["articlesCount"] > 0)) { %>
+		<a action="delete"><img src="img/icons/delete.gif"/></a>
+		<% } %>
+		<a action="edit" title="edit"><img src="img/icons/edit.gif"/></a>
+		<a action="select"><img src="img/icons/save.gif"/></a>
+	</td>
+	<td width="400">
+	<%if(data.link){%><a href="<%=data.link%>" target="_blank"><%=data.title%></a>
+	<%}else{%><%=data.title%>
+	<%}%>
+		<br/>
+		<small>
+			<% if (data['is_book'] == '1') { %>
+			<i>ISBN <%=data.issn %>, Publisher: <%=data.publisher %></i>
+			<% } else { %>
+			<i><%=data.abbreviation%>, ISSN <%=data.issn %></i>
+			<% } %>
+		</small> 
+	</td>
+	<td width="100">
+		<%if(data['articlesCount']){%>
+			<i><a tab="Journal's articles" href="article/show.do?journal_id=<%=data.id%>" title="Browse articles"><%=data['articlesCount']%> entries</a></i>
+			<% } %>
+	</td>
+	<td align="right">
+	<div class="right-label" nowrap="true" style="white-space: nowrap;">
+			<% if (data.introducer != undefined && data.introducer != data.owner) 
+			{ %><%=data.introducer%>
+			<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=article_<%=data.id%>" title="send message">
+				<img src="img/icons/email_icon.gif"/></a> / 
+			<% } 
+			if(data.owner != undefined)
+			{
+			%><%=data.owner%>
+			<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=article_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+			<%}%>
+		</div>
+	</td>
+	
+	</tr>
+</table>

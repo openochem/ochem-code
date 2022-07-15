@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<replace-set>
+<replace>O=N=O</replace>
+<replacement>[O-][N+]=O</replacement>
+</replace-set>

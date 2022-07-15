@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<title>OCHEM notification</title>
+</head>
+<body>
+
+<style type="text/css">
+body {
+	-webkit-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+}
+body {
+	margin: 0;
+	padding: 0;
+}
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+	mso-table-lspace: 0pt;
+	mso-table-rspace: 0pt;
+}
+table td {
+	border-collapse: collapse;
+}
+img {
+	border: 0;
+}
+html {
+	width: 100%;
+	height: 100%;
+}
+.applelinks a {
+	color: #545454 !important;
+	text-decoration: none !important;
+}
+
+.footer {
+	font-size: 70%;
+	color: #444;
+}
+
+.fb-button
+{
+	-webkit-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+	-moz-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+	box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+	background-color:#5B74A8;
+	border:1px solid #29447E;
+	font-family:'Lucida Grande',Tahoma,Verdana,Arial,sans-serif;
+	font-size:12px;
+	font-weight:700;
+	padding:2px 6px;
+	height:28px;
+	color:#FFFFFF !important;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	text-decoration: none;
+}
+
+		.fb-button:hover
+{
+	background-color:#6f8ece;	
+	text-decoration: none;
+}
+
+		.fb-button:active
+{
+	background-color:#86a6e7;	
+}
+			
+</style>
+
+%body%
+<br/><br/>
+<div class="footer">
+<font size="1">
+<a href="https://ochem.eu/">OCHEM</a> is a free platform for medicinal chemists, toxicologists and chemoinformaticians supported by <a href="http://bigchem.de/">BIGCHEM GmbH</a>.
+</font>
+</div>
+</body>
+</html>

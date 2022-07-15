@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>	
+		<property name="hibernate.connection.isolation">2</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
+		<property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property> 
+		<property name="hibernate.c3p0.acquire_increment">1</property> 
+		<property name="hibernate.c3p0.idle_test_period">30</property>
+		
+		<property name="hibernate.c3p0.min_size">1</property> 
+		<property name="hibernate.c3p0.max_size">50</property>
+		
+		<property name="hibernate.c3p0.maxConnectionAge">3600</property>
+		<property name="hibernate.c3p0.unreturnedConnectionTimeout">3600</property>
+		<property name="hibernate.c3p0.debugUnreturnedConnectionStackTraces">true</property>  
+		<property name="hibernate.c3p0.max_statements">0</property> 
+ 		<property name="hibernate.c3p0.acquireRetryAttempts">5</property>
+
+ 		<property name="c3p0.testConnectionOnCheckout">true</property>
+ 		<property name="c3p0.testConnectionOnCheckin">true</property>
+ 		
+ 		
+ 		<property name="hibernate.c3p0.timeout">3600</property> 
+		<property name="hibernate.c3p0.preferredTestQuery">SELECT 1</property> 
+
+   	
+        <mapping package="qspr.entities"/>
+        <mapping class="qspr.entities.MoleculeFormat" />
+        <mapping class="qspr.entities.Property" />
+        <mapping class="qspr.entities.Unit" />
+        <mapping class="qspr.entities.Model" />
+        <mapping class="qspr.entities.ModelTemplate" />
+        <mapping class="qspr.entities.ExperimentalProperty" />
+        <mapping class="qspr.entities.Author" />
+        <mapping class="qspr.entities.Article" />
+        <mapping class="qspr.entities.MoleculeName" />
+        <mapping class="qspr.entities.Journal" />
+        <mapping class="qspr.entities.User" />
+        <mapping class="qspr.entities.OAuthApp" />
+        <mapping class="qspr.entities.OAuthCode" />
+        <mapping class="qspr.entities.OAuthToken" />
+        <mapping class="qspr.entities.Group" />
+        <mapping class="qspr.entities.Session" />
+        <mapping class="qspr.entities.Mapping1" />
+        <mapping class="qspr.entities.Mapping2" />
+        <mapping class="qspr.entities.Mapping2Filter" />
+        <mapping class="qspr.entities.Action" />
+        <mapping class="qspr.entities.ConditionSet" />
+        <mapping class="qspr.entities.PropertyValue" />
+        <mapping class="qspr.entities.PropertyOption" />
+        <mapping class="qspr.entities.UnitCategory" />
+        <mapping class="qspr.entities.BasketEntry" />
+        <mapping class="qspr.entities.Basket" />
+        <mapping class="qspr.entities.ArticleUserPdf" />
+        <mapping class="qspr.entities.Descriptor" />
+        <mapping class="qspr.entities.CalculatedDescriptor" />
+        <mapping class="qspr.entities.ValidatedFact" />
+        <mapping class="qspr.entities.Tag" />
+        <mapping class="qspr.entities.Message" />
+        <mapping class="qspr.entities.UserAction" />
+		<mapping class="qspr.entities.Invite" />
+		<mapping class="qspr.entities.ColoredName" />
+		<mapping class="qspr.entities.Fragment" />
+		<mapping class="qspr.entities.PendingTask" />
+		<mapping class="qspr.entities.Predicate" />
+		<mapping class="qspr.entities.ModelMapping" />
+		<mapping class="qspr.entities.PeriodicTestResult" />
+		<mapping class="qspr.entities.ExportAction" />
+		<mapping class="qspr.entities.ShuffleKey" />
+		<mapping class="qspr.entities.BatchUpload" />
+		<mapping class="qspr.entities.BatchUploadRow" />
+		<mapping class="qspr.entities.Announcement" />
+		<mapping class="qspr.entities.ModelConfigurationTemplate" />
+		<mapping class="qspr.entities.CachedPrediction" />
+		<mapping class="qspr.entities.SubstructureAlert" />
+		<mapping class="qspr.entities.AlertSubstitutionVariable" />
+        <mapping class="qspr.entities.StructureQuery" />
+        <mapping class="qspr.entities.UserEvent" />
+        <mapping class="qspr.entities.UserAttachment" />
+        <mapping class="qspr.entities.ModelIdentity" />
+		
+		<mapping class="com.eadmet.mmpa.domain.MMPair" />
+		<mapping class="com.eadmet.mmpa.domain.MMPTransformation" />
+		<mapping class="com.eadmet.mmpa.domain.MMPFragment" />
+		<mapping class="com.eadmet.mmpa.domain.MMPIndex" />
+		<mapping class="com.eadmet.mmpa.domain.MMPTransformationAnnotation" />
+		<mapping class="com.eadmet.mmpa.domain.MMPAnnotationSet" />
+		
+        <mapping resource="mappings/AttachedFile.hbm.xml"/>
+        <mapping resource="mappings/OriginalMolecule.hbm.xml"/>
+        <mapping resource="mappings/Molecule.hbm.xml"/>
+		
+    </session-factory>
+    
+</hibernate-configuration>

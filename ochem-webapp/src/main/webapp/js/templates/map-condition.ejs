@@ -1,0 +1,102 @@
+<%
+	var sdfOptions = array(data.sdfSelect);
+	var units = array(data.property.unitCategory.unit);
+	var curUnit = data.unit || {};
+%>
+<input type="hidden" name="cond-id" send="1" value=""/>
+<input type="hidden" name="cond-name" send="1" value=""/>
+<table>
+	<tr>
+		<td class="first"></td>
+		<td class="db" nowrap="true" style="white-space: nowrap;">
+			<a action="editcondition" name="condition-link"><%=data.property["name"]%></a>
+			<a action="delete" class="delete-link">[x]</a>
+		</td>
+		<td class="map">&#8596;</td>
+		<td> 
+			<select class="sdf" name="condition" send="1">
+			<option value="ignored">ignored</option>
+			<% 	
+				for (var i = 0; i < sdfOptions.length; i++)  
+					{
+						var name = sdfOptions[i]; 
+			%><option value="<%=name%>"><%=name%>
+			</option>
+			<% 		
+					} 
+			%>
+			</select>
+		</td>
+		
+		<td class="defaultHere"> 
+			<span name="qualitive">
+				<select name="n-cond-option" send="1" value="" style="width:125px;">
+					<% 
+						if (data.multi == "false")
+						{
+							for (var i = 0; i < options.length; i++)  
+							{
+								var id = options[i].id; 
+					%>
+					<% 
+							}
+						} else
+						{
+					%>	
+					<option value="-1" selected="selected"> </option>
+					<%	
+							for (var i = 0; i < options.length; i++)  {
+								var id = options[i].id; 
+					%>
+					<option value="<%=id%>"><%=options[i].name%>
+					</option>
+					<% 
+							}
+						}
+					%>
+				</select>
+			</span>
+			<span name="numerical">
+			<%
+				if (data.multi == "false")
+				{
+			%>
+			<select name="n-cond-unit" send="1" class="invisible" style="width:125px;">
+			<% 
+					for (var i = 0; i < units.length; i++)  
+					{
+						var id = units[i].id; 
+			%>
+			<option value="<%=id%>" <% if (id == curUnit.id) { %>selected="selected"<% } %>><%=units[i]["name"]%>
+			</option>
+			<% 
+					} 
+			%>
+			</select>
+			<%
+				}
+					else
+				{
+			%>
+			<select name="n-cond-unit" send="1" class="invisible" style="width:125px;">
+			<option value="-1" selected="selected"> </option>
+				
+			<% 		for (var i = 0; i < units.length; i++)  
+					{
+						var id = units[i].id; 
+			%>
+			<option value="<%=id%>"><%=units[i]["name"]%>
+			</option>
+			<% 		
+					} 
+			%>
+			</select>
+			<%
+				}
+			%>
+			</span>
+		</td>
+		
+	</tr>
+</table>
+							

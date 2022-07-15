@@ -1,0 +1,103 @@
+<%var authors;
+	if (data.authors)
+	    authors = array(data.authors.author);	
+%>
+<table class='block-table'>
+	<tr>
+		<td>
+			<%if (data['pdf-available']) { %><a href="pdf/show.do?id=<%=data['id']%>&type=pdf"><img src='img/icons/pdf.png'/></a><% } 
+			else if(data['pdf-exist']) { %><img src='img/icons/pdfe.png'/><% }
+			else if(data.doi) { %><a href="http://dx.doi.org/<%=data.doi%>" target="_blank"><img src='img/icons/doi.gif'/></a><% }
+			else if(data.pmid) { %><a href="http://www.ncbi.nlm.nih.gov/pubmed/<%=data.pmid%>" target="_blank"><img src='img/icons/pubmed.png'/></a><% }
+			else if(data.parent) { %><img src='img/icons/book.png'/><% }
+			else if (data.url) { %><a href="<%=data.url%>" target="_blank"><img src='img/icons/pdfpreprint.gif'/></a><% }
+			else {%><img src='img/icons/book.png'/><% }%>
+		</td>
+		<td class='block-content'>
+			<p>
+			<small>
+				<%if(authors)for(var i = 0; i < authors.length; i++){ %><%= authors[i]['printed-name']%>;<%}%>
+			</small>
+			</p>
+			
+			<%if(data.parent)
+			{%>
+				<p><%=data.title%></p>
+				<p>chapter of <img src="img/icons/book24.png"/> <a href="article/show.do?id=<%=data.parent.id%>" tab="Parent Book"><%=data.parent.title%></a></p>
+				<p>
+				<small>
+					<%if (data.parent.publisher) {%><%=data.parent.publisher%><%}%>,
+					<b><%=data.parent['publication-date'].year%></b>; <%=data.parent.volume%> <i><%=data.parent.pageNumbers%></i>
+				</small>
+				</p>
+			<%}
+			else
+			{%>
+				<p><%=data.title%></p>
+				<p>
+				<small>
+					<%if (data.publisher) {%><%=data.publisher%><%}%>,
+					<b><%=data['publication-date'].year%></b>; <%=data.volume%> <i><%=data.pageNumbers%></i>
+				</small>
+				</p>
+			<%}%>
+			
+			<p>
+				<div class="actions">
+				<a action="edit">edit</a>
+				<a tab="Article's records" test="compoundBrowser" href="epbrowser/show.do?article=<%=data['id']%>&approval-status=all">browse <%=data['property-record']%> records </a>
+				<%if(data['model-list'] > 0){%>
+					<a tab="Article's models" test="ModelBrowser" href="model/select.do?article=<%=data['id']%>"><%=data['model-list']%> models </a>
+				<%}%>
+				
+				<%if(data['tasks-count'] > 0){%>
+					<a tab="Publication-related tasks" href="pendingtasks/published.do?article-id=<%=data['id']%>"><%=data['tasks-count']%> published tasks </a>
+				<%}%>
+				
+				<%if(data['structural-alerts'] > 0){%>
+					<a tab="Publication-related alerts" href="alerts/show.do?article=<%=data['id']%>&approval-status=all"><%=data['structural-alerts']%> alerts </a>
+				<%}%>				
+				</a>
+				<div class="right-label" nowrap="true" style="white-space: nowrap;">
+				<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><%=data.introducer%>
+					<a action="popup" title="New message" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=article_<%=data.id%>" title="send message">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% } 
+					if(data.owner != undefined)
+					{
+					%><%=data.owner%>
+					<a action="popup" title="New message" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=article_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+				</div>
+				<div align='right'>
+				<small>
+					<%if (data['batch-file']) { %><a href="pdf/show.do?id=<%=data['id']%>&type=excel">BatchFile</a> - <% }
+					if (data.doi) { %><a href="http://dx.doi.org/<%=data.doi%>" target="_blank">DOI</a> - <% }
+					if (data.pmid) { %><a href="http://www.ncbi.nlm.nih.gov/pubmed/<%=data.pmid%>" target="_blank">PubMed</a> - <% }
+					if (data.isbn13) { %>ISBN13: <a href="http://isbndb.com/search-all.html?kw=<%=data.isbn13%>" target="_blank"><%=data.isbn13%></a> - <%}
+					if (data.parent && data.parent.isbn13) { %> Parent ISBN13: <a href="http://isbndb.com/search-all.html?kw=<%=data.parent.isbn13%>" target="_blank"><%=data.parent.isbn13%></a> - <%}
+					if (data.isbn) { %>ISBN10: <a href="http://isbndb.com/search-all.html?kw=<%=data.isbn%>" target="_blank"><%=data.isbn%></a> - <%}
+					if (data.parent && data.parent.isbn) { %> Parent ISBN10: <a href="http://isbndb.com/search-all.html?kw=<%=data.parent.isbn%>" target="_blank"><%=data.parent.isbn%></a> - <%}
+					if (data.url) { %><a href="<%=data.url%>" target="_blank">PrePrint</a> - <% }%>
+					<span title="The OCHEM identifier of this book">OCHEM ID: A<%=data['id']%></span>
+				</small>
+				</div>
+				<div class="right-label" nowrap="true" style="white-space: nowrap;">
+				<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><%=data.introducer%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=book_<%=data.id%>" title="send message">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% } if(data.owner != undefined){%><%=data.owner%>
+					<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=book_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+				</div>
+			</p>
+		</td>
+		<td class="command-panel">
+			<a action="select"><img src="img/icons/save.gif"/></a>
+			<%if (data['property-record']==0){%><a action="delete"><img src="img/icons/delete.gif"/></a><%}%>
+			<img src="img/blank.gif" width="15" height="1"/>
+		</td>
+	</tr>
+</table>

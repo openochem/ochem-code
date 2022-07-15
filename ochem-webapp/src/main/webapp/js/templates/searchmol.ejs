@@ -1,0 +1,47 @@
+<%
+	var name = array(data.searchSynonymList);
+	
+	var names = "";
+	for (var i = 0; i < name.length; i++)
+	{
+		if(1 == name.length)
+			names += name[i];
+		else
+			names += name[i] + ", ";
+	}
+	
+%>
+
+<table class="block-table ep<% if (data.error) { %> error<% } %>">
+	<tr>
+		<td class="command-panel">
+			<a action="select"><img src="img/icons/save.gif"/></a>
+		</td>
+		
+		<% if (data.searchExistingMolId != undefined) { %>
+			<td nowrap class="block-image">
+				
+				<div>&nbsp;Existing molecule&nbsp;</div><br/>
+				<a href="javascript:void(0)" action="zoom" title="Click to zoom"><img id="<%=data.searchExistingMolId%>" alt="<%=name[0]%>" src="depiction.jsp?id=<%=data.searchExistingMolId%>"/></a>
+				<br/>
+				<a href="molecule/profile.do?depiction=<%=data.searchExistingMolId%>" tab="Molecule profile">molecule profile</a>
+				
+			</td>
+			<td class="block-image">
+				<p>&nbsp;<%=data.searchCompSign%>&nbsp;</p>
+			</td>
+		<% } %>
+		
+		<td nowrap class="block-image">
+			<div>&nbsp;Searched molecule&nbsp;</div><br/>
+			<a href="javascript:void(0)" action="zoom" title="Click to zoom"><img id="<%=data.id%>" alt="<%=name[0]%>" src="depiction.jsp?id=<%=data.id%>"/></a>
+			<br/>
+			<a href="molecule/profile.do?depiction=<%=data.id%>" tab="Molecule profile">molecule profile</a>
+		</td>
+		<td class="block-content" valign="top">
+			<div class="molname"><p>Names: <br/><font color="#000"><%=names%></font></p></div>
+			<div class="molname"><p>SMILES: <br/><font color="#000"><%=data.smile%></font></p></div>
+		</td>
+		
+	</tr>
+</table>

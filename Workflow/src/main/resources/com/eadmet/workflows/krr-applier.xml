@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<workflow name="KRR-Applier" outsockets="2">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="mol-optimiser" task="Unspecified-Optimisation"/>
+		<node id="descriptors-processor" task="Descriptors"/>
+		<node id="descriptors-selector" task="Selection"/>
+		<node id="method-node" task="KRR" insockets="2"/>
+	</nodes>
+	<connections>
+		<connection to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="mol-optimiser"/>
+		<connection from="mol-optimiser" to="descriptors-processor"/>
+		<connection from="mol-optimiser" fromPort="0" to="method-node" toPort="1"/> <!-- SDFs (graph kernels) -->
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector" to="method-node" toPort="0"/>  <!-- Descriptors -->
+		
+		<!-- OUTPUTS -->
+		<connection from="method-node"/>
+		<connection from="descriptors-selector" toPort="1"/>
+	</connections>
+</workflow>

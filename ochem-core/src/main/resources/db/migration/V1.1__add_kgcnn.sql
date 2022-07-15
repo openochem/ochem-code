@@ -1,0 +1,1 @@
+insert into ModelTemplate values (0,32000,31999,"KGCNN",1,0, "KGCNN collection of models from https://github.com/aimat-lab/gcnn_keras",1);

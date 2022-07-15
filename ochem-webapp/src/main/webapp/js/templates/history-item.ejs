@@ -1,0 +1,13 @@
+<%
+	var owner = data.session.user ? data.session.user.login : "Anonymous";
+	data.comment = data.comment.replace(/MolID ([0-9]+)/g, "<a tab='Molecule browser' href='molbrowser/show.do?id=$1'>MolID $1</a>");
+	data.comment = data.comment.replace(/MolID M([0-9]+)/g, "<a tab='Molecule profile' href='molecule/profile.do?id=$1'>MolID $1</a>");
+	data.comment = data.comment.replace(/Depiction ([0-9]+)/g, "<a tab='Molecule profile' href='molecule/profile.do?depiction=$1'>Depiction $1</a>");
+%>
+<table class="compact-item">
+<tr>
+	<td width="50"><%=owner%></td>
+	<td width="300"><%=data.time%></td>
+	<td><div class="comment"><pre><%=data.comment%></pre></div></td>
+</tr>
+</table>

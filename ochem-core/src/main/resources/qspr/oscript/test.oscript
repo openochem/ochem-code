@@ -1,0 +1,2 @@
+logPow[a>4] -> logPow_big
+logPow[a<4] -> logPow_small

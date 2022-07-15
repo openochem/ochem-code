@@ -1,0 +1,18 @@
+<table>
+	<tr>
+		<td class="block-image">
+			<a action="zoom" title="Click to zoom">
+				<img id="<%=data.fragment["id"]%>" src="depiction.jsp?w=150&h=150&frag_id=<%=data.fragment["id"]%>"/>
+			</a>
+		</td>
+		<td>
+			<div>&nbsp# occurences in this molecule: <%=data['fragment_count']%>
+			<div>
+				<a href="molbrowser/show.do?frag_id=<%=data.fragmentId%>&render-mode=popup" tab="Molecules" title="Browse corresponding molecules for <%=data.fragmentId%>">
+				occurences in other molecules
+				</a>
+			</div>
+ 		</a>
+		</td
+	</tr>
+</table>

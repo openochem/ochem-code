@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<workflow name="StandartCDSApplier" outsockets="2">
+	<nodes>
+		<node id="descriptors-processor" task="DescriptorsProcessor"/>
+		<node id="corina" task="Corina"/>
+		<node id="descriptors-selector" task="Selection"/>
+		<node id="method-node" task="KNN"/>
+	</nodes>
+	<connections>
+		<connection to="corina"/>
+		<connection from="corina" to="descriptors-processor"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector" to="method-node"/>
+		
+		<!-- OUTPUTS -->
+		<connection from="method-node"/>
+		<connection from="descriptors-selector" toPort="1"/>
+	</connections>
+</workflow>

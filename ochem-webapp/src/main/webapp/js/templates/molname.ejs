@@ -1,0 +1,32 @@
+<% if (data.id < 0) { %>
+	<input type="text" class="narrow" name="moleculename" value="<%=data.name%>" send="1"/>
+	<a action="search" class="search-name">[search]</a>
+	<a action="delete" class="delete-link">[x]</a>
+<% } else { %>
+	<% if (data.validation == 1) { %>
+		<div class="name_proof_match">
+	<% } else if (data.validation == 2){ %>
+		<div class="name_proof_match_nostereo">
+	<% } else if (data.validation == 3){ %>
+		<div class="name_proof_notfound">
+	<% } else if (data.validation == 4){ %>
+		<div class="name_proof_mismatch">
+	<% } else { %>
+		<div class="name_proof_unverified">
+	<% } %>
+		* <%=data.name%>
+		<input type="hidden" name="moleculename" value="<%=data.name%>" send="1"/>
+		<% if (data.validation > 1) { %>
+			<a action="validate" class="search-name" title="Validate that this name corresponds to the molecule">[v]</a>
+		<% } else if (data.validation != 0) {
+			   if(data.user) { %>
+				(<%=data.user%>)
+			<% } else { %>
+				(PubChem)
+			<% } %>
+			<a action="invalidate" class="delete-link" title="Invalidate that this name corresponds to the molecule">[i]</a>
+		<% } %>
+		<a action="search" class="search-name">[search]</a>
+		<a action="delete" class="delete-link" title="Delete this name">[x]</a>
+	</div>
+<% } %>

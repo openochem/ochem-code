@@ -1,0 +1,79 @@
+<%
+	var authors = array(data.article.authors.author);
+	var conditions = data.conditions ? array(data.conditions['property-value']) : array(undefined);	
+%>
+<table class="block-table ep" cellspacing="2">
+	<tr>
+	<td class="block-image">
+		<img src="alerts/image.do?id=<%=data.id%>&render-mode=popup&hasImage=<%=data.hasImage%>"/>
+	</td>
+	<td class="block-content">
+		<div class="conditions">
+				<% for (var i = 0; i < conditions.length; i++) { %>
+					<nobr><%=conditions[i].property.name%><%=conditions[i].printableValueFull%></nobr><br/>
+				<% } %>
+			</div>
+		<div class="smart" title="SMART template for this alert"><%=data.name%></div>
+		<div class="comment"><%=data.description%><br/><% if (data.comment) {%><%=data.comment%><br/><% } %><br/>SMARTS: <span class="smarts" title="<%=data.smartsDescription%>"><%=data.smart%></span></div>
+		Endpoint: <%=data.property.name%>
+		
+		<div class="article-data">
+				<% if (authors.length > 0)  { %>
+				 	<a action="popup" link="article/profile.do?render-mode=popup&id=<%=data.article.id%>" title="<% for (var i = 0; i < authors.length; i++) { %><%=authors[i]['printed-name']%>, <% } %>">
+				 		<%=authors[0]['printed-name']%>
+				 	</a>
+				<% } %>
+				<br/>
+				<% if (data.article.mediaType == "book") { %><img src="img/icons/book24.png"/><% } %>
+				<a action="popup" title="<%=data.article.title%>" link="article/profile.do?render-mode=popup&id=<%=data.article.id%>"><%=data.article.title.substr(0, 60)+"..."%></a><br/>
+				<div>
+				<span><%=(data["art-mol-id"]) ? "N: "+data["art-mol-id"]+"&nbsp;" : "" %></span>
+				<span><%=(data["art-page-num"]) ? "P: "+data["art-page-num"]+"&nbsp;" : "" %></span>
+				<span><%=(data["art-table-num"]) ? "T: "+data["art-table-num"]+"&nbsp;" : "" %></span>
+				<span><%=(data["art-line-num"]) ? "L: "+data["art-line-num"]+"&nbsp;" : "" %></span>
+				</div>
+				<%if (data.article.journal) {
+				var jrn = (data.article.journal.abbreviation) ? data.article.journal.abbreviation : data.article.journal.title;	
+				%><%=jrn%>
+				<%}%>
+				<b><%=data.article['publication-date'].year%></b>; <%=data.article.volume%>
+				<% if (data.article.mediaType == "article") { %>
+				 (<%=data.article.issue%>) <%=data.article.pageNumbers%>
+				 <% } %> 
+			</div>
+			
+			<div class="molname">
+				Alert ID: <i title="TA-identifier of the alert">TA<%=data.id%></i>
+			</div>
+		
+		<% if (approved != "true") { %>
+		 	<small style="color: #911;"><img src="img/icons/awaiting-approval.png" title="Awaiting approval"/> This alert is awaiting approval by OCHEM moderators</small>
+		 <% } %>
+		
+		<div class="right-label" nowrap="true" style="white-space: nowrap; position: relative; top: -5px;">
+				<span title="Created / Last modified" class="time">
+					<%=data["time-created"]%><% if (data.time != data["time-created"]) { %> / <%=data.time%><% } %></span><br/>
+				<% if (data.introducer != undefined && data.introducer != data.owner) 
+					{ %><a href="user/profile.do?render-mode=popup&login=<%=data.introducer%>" tab="User profile"><%=data.introducer%></a>
+					<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=record_<%=data.id%>">
+						<img src="img/icons/email_icon.gif"/></a> / 
+					<% }if(data.owner != undefined){%><a href="user/profile.do?render-mode=popup&login=<%=data.owner%>" tab="User profile"><%=data.owner%></a>
+					<a action="popup" title="Write message" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=record_<%=data.id%>"><img src="img/icons/email_icon.gif"/></a>
+					<%}%>
+			</div>
+	</td>
+	<td class="command-panel">
+		<a name="checked" action="toggleselect" title="Add/remove this alert from your selection">
+			<% if (data["selected"] == "true") { %>
+				<img name="checked" src="img/icons/checked.gif"/>
+			<% } else { %>
+				<img name="checked" src="img/icons/unchecked.gif"/>
+			<% } %>
+		</a>
+		<a action="edit" title="Edit this alert" class="no-trash"><img src="img/icons/edit.gif"/></a>
+		<a action="recordmenu" id="rm-<%=data.id%>"><img src="img/icons/computer.gif"/></a>
+		<a action="delete" title="Delete this alert" class="no-trash"><img src="img/icons/delete.gif"/></a>
+		<% if (data.rights == 0) { %><img src="img/icons/ghost.png" title="This a private alerts visible only to you"/><% } %>
+	</td>
+	</tr>
+</table>

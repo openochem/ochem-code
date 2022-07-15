@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<workflow name="LogPApplier">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="method-node" task="LogP"/>
+	</nodes>
+	<connections>
+		<connection to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="method-node"/>
+		<connection from="method-node"/>
+	</connections>
+</workflow>

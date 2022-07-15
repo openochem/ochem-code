@@ -1,0 +1,32 @@
+<%
+cl="";
+message="";
+if (data.status == "EXPECTED_NOT_FOUND")
+{
+	cl = " class='warning'";
+	message = "Warning! This descriptor was not among the calculated descriptors for the set. It is possible that it is misspelled.";
+} 
+%>
+<tr<%=cl%>>
+	<td width="20">
+		<a action="toggle">
+			<% if (data["selected"] == "true") { %>
+				<img name="checked" src="img/icons/checked.gif"/>
+			<% } else {%>
+				<img name="checked" src="img/icons/unchecked.gif"/>
+			<% } %>
+		</a>
+	</td>
+	<td width="100%" style="text-align: left">	
+		<%=data.name%>
+		<%
+		if (message != "")
+		{
+		%>
+		(<%=message%>)
+		<%
+		}
+		%>
+	</td>
+</tr>
+</table>

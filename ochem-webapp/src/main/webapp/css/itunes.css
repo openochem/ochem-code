@@ -1,0 +1,162 @@
+.itunes-up
+{
+	font-family: Tahoma, Arial;
+	border: 1px solid #CCC;
+	padding: 10px 15px 10px 15px !important;
+	font-size: 13px;
+	color: #777;
+	height: 70px;
+	vertical-align: center;
+}
+
+.silver
+{
+/* IE10 Consumer Preview */ 
+background-image: -ms-linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FEFEFE), color-stop(1, #EEEEEE));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(top, #FEFEFE 0%, #EEEEEE 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: linear-gradient(to bottom, #FEFEFE 0%, #EEEEEE 100%);
+}
+
+.itunes-up H1 A {color: #119;}
+
+.itunes-up h1
+{
+	font-size: 17px;
+	color: black;
+}
+
+.itunes-up IMG {align: left; float: left; margin: 0px 10px 0px 0px;}
+.itunes-up DIV.right {float: right; width: 200px; overflow: hidden; font-size: 8pt; font-color: #666;}
+A.greeny, A.greeny:visited, A.greeny:link {color: #292; pointer-events: none;}
+
+
+.itunes-left, .itunes-right
+{
+	spacing: 0px;
+	border: 1px solid #777;
+	padding: 0px 22px 10px 27px;
+	width: 150px;
+}
+
+.itunes-left {font-size: 80%;}
+
+.itunes-right
+{	
+	vertical-align: top;
+	background-color: white;
+	width: 100%;
+	padding-top: 10px;
+	height: 100%;
+}
+
+
+.itunes-left
+{
+	border-right: none;
+	vertical-align: top;
+	background-color: #D1D7E2;
+	height: 400px;
+}
+
+.itunes-left input[@type='text']
+{
+	display: block;
+	margin: 2px 0px 4px 0px;
+	border: 1px solid #404040;
+	font-size: 10px;
+	width: 160px;
+	padding: 1px 3px 1px 3px;
+}
+
+.itunes-left H1
+{
+	color: #505D6D;
+	font-size: 12px;
+	text-transform: uppercase;
+	margin: 15px 10px 1px -15px;
+	padding: 0px 0px 0px 0px;
+	display: block;
+	clear: both;
+	background-color: transparent;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.itunes-left div.autocomplete
+{
+	float: left;
+	width: 150px;
+}
+
+
+.itunes-right .autocomplete-input, .itunes-right .input-label
+{
+	background-color: transparent;
+	color: #505D6D;
+	border: 1px solid #9999FF;
+	width: 50px;
+	padding: 2px 4px 1px 4px;
+	read-only: true;
+	font-size: 12px;
+}
+
+.itunes-right .button-link
+{
+	background-color: #EEEEFF;
+	color: #222288;
+	border: 1px solid #666688;
+}
+
+.itunes-right H1
+{
+	font-family: Georgia, Verdana;
+	font-size: 13pt;
+	margin-bottom: 10px;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.itunes-right H2
+{
+	font-family: Verdana;
+	font-size: 12pt;
+	margin-bottom: 7px;
+	font-weight: bold;
+	margin-top: 10px;
+} 
+
+.itunes-right H1:first-child, .itunes-right H1.first
+{
+	margin-top: 0px;
+}
+
+.itunes-right .button-link:hover
+{
+	background-color: #CCCCFF;
+}
+
+.comp-button-link
+{
+	background-color: #CCC;
+	color:#333;
+	border: 1px solid #333;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 15px;
+}
+.comp-button-link:hover { background-color:#EEE; }
+
+

@@ -1,0 +1,59 @@
+<%
+	var mm;
+	
+	if (data.model && data.model.modelMappings)
+		mm = (data.model.modelMappings.length ? data.model.modelMappings[0] : data.model.modelMappings);
+	else
+		mm = {property: {name: "-"}};
+		
+	if (!data.model)
+		data.model = {template: {name: ""}};
+	var method = "";
+	method = data.model.template.name;
+%>
+<td>
+	<img src="img/icons/public.png" title="This task is publicly available."/>
+	<a tab="User profile for <%=data.session.user.login%>" href="user/profile.do?login=<%=data.session.user.login%>"><%=data.session.user.login%></a>
+</td>
+<td>
+	<%=taskTypeMap[data.type]%><!-- Task ID <%=data.taskId%>, Calculating server <%=data.calcServerId%>--><br/>
+	<small><%=data.timePosted%></small>
+</td>
+<td width="300">
+	<%=data.name %><br/>
+	<% if (data.article) {%>
+		<a href="article/profile.do?id=<%=data.article.id%>" tab="Article profile"><%=data.article.title%></a>
+	<% } %>
+</td>
+<td>
+	<% if (data.type == "MODEL_APPLICATION") { %>
+		<a href="model/profile.do?id=<%=data.model.id%>" tab="Model profile"><%=data.model.name%></a>
+	<% } else { %> 
+		<%=data.model.name%>
+	<% } %><!-- Model ID <%=data.model.id%>, public ID <%=data.model.publicId%>-->
+</td>
+<td>
+	<%=mm.property.name%><br/>
+	<% if (data.type == "MODEL_TRAINING") { %>
+		<a tab="Training set" href="basket/edit.do?id=<%=data.model["training-set"].id%>"><%=data.model["training-set"].name%></a>
+	<% } else if (data.setDescription) { %>
+		<%=data.setDescription %>
+	<% } else { %>
+		-
+	<% } %>
+</td>
+<td>
+	<%=method%>
+</td>
+<td>
+	<% if (data.type == "MODEL_TRAINING" || data.type == "MODEL_APPLICATION") { %>
+		<a action="showxml"><img src="img/icons/xml.jpg"/></a>
+	<% } %>
+	<% if (data.status == "ready") { %>
+		<a tab="Task results" title="Open the task profile" href="pendingtasks/profile.do?id=<%=data.id%>"><img src="img/icons/edit.gif"/></a>
+		<a tab="Task results" title="View the task results" href="pendingtasks/fetchnew.do?id=<%=data.id%>"><img src="img/icons/save.gif"/></a>
+	<% } %>
+	<div class="invisible">
+		<%=data.model.description %>
+	</div>
+</td>

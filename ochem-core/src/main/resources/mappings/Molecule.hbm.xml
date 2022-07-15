@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="qspr.entities.Molecule" table="Molecule">
+        <id name="id" column="molecule_id" access="field">
+            <generator class="native"/>
+        </id>
+        <property name="md5" type="java.lang.String" column="molecule_md5" access="field" unique="true"/>
+        <property name="pictureMd5" type="java.lang.String" column="picture_md5" access="field"/>
+        <property name="data" type="binary" column="molecule_data" access="field"/>
+        
+        <many-to-one name="mapping1" column="mapping1_id" class="qspr.entities.Mapping1" lazy="false" access="field"/>
+        <many-to-one name="mapping2" column="mapping2_id" class="qspr.entities.Mapping2" lazy="false" access="field"/>
+        <property name="molWeight" type="java.lang.Double" column="mol_weight" access="field"/>
+        <set name="experimentalProperties" access="field" lazy="true">
+        	<key column="molecule_id" />
+        	<one-to-many entity-name="qspr.entities.ExperimentalProperty" />
+        </set>
+                    
+    </class>
+</hibernate-mapping>

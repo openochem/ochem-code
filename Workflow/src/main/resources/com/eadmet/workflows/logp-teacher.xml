@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<workflow name="LinearUntypicalModel" insockets="2" outsockets="2">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="method-node" task="LogP" insockets="2" outsockets="2"/>
+	</nodes>
+	<connections>
+		<connection fromPort="1" to="method-node" toPort="1"/>
+		
+		<connection to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="method-node"/>
+		<connection from="method-node"/>
+		<connection from="method-node" fromPort="1" toPort="1"/>
+	</connections>
+</workflow>

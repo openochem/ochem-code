@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<style type="text/css">
+			BODY {padding: 40px;}
+			H1{ font-family: Georgia; font-size: 18pt; border-bottom: 1px solid black;}
+			H2 {font-family: arial; text-transform: uppercase; font-size: 12pt; color: #FF7700;}
+		</style>
+	</head>
+	<body>
+		<h1>OCHEM via web services</h1>
+		Web-services allow advanced users to use part of the OCHEM functionality in their automated workflows.
+		<h2>Basic info</h2>
+		OCHEM provides a SOAP web-service that allows to create and apply predictive models as well as to upload data.<br/>
+		WSDL descriptor for the service can be found at <a href="http://ochem.eu/services/ModelService?wsdl">http://ochem.eu/services/ModelService?wsdl</a>
+		
+		<br/><br/>Based on this WSDL, you can assemble your own clients or invoke the web-service via, e.g., KNIME. <br/>
+		<b>Please note, that web-service API can change and you will have to recompile your client.</b>
+		<h2>Java client example</h2>
+		<a href="ws-client-src.zip">Download an exemplary JAVA client</a>
+		<br/>
+		The client's code was automatically generated with Axis WSDL2Java Utility. 
+	</body>
+</html>

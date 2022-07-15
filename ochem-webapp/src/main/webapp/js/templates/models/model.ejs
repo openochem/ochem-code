@@ -1,0 +1,84 @@
+<%
+	if (data.description)
+		data.description = data.description.replace(/\n/g, "<br\/>");
+	var propList = array(data.modelMappings);
+	var property = new Array();
+	for(i=0; i < propList.length; i++)
+	{
+		var string = propList[i].property.name + ' <!-- wiki_info --> <!-- <a href="wikipage/action.do?entities=property&id='+propList[i].property.id+'" tab='+propList[i].property.name+'>'+propList[i].property.name+'</a> -->';
+		property.push(string);
+	}
+	
+	if (!data.session.user)
+		data.session.user = new Object();
+%>
+
+<table class="compact-item<% if (data.toBeDeleted) {%> red<% } %>">
+	<tr>
+	<td class="command-panel" width="70">
+		
+		<% if (data.template.name != "Uploaded model") { %>
+			<% if (getParams["single"] != undefined) { %>
+				<a action="selectsinglemodel"><img name="checked" src="img/icons/save.gif"/></a>
+			<% } else { %>
+				<a action="selectmodel"></a>
+			<% } %>		
+			
+			<a action="togglebasket">
+				<% if (data["selected"] == "true") { %>
+					<img name="checked" src="img/icons/checked.gif"/>
+				<% } else {%>
+					<img name="checked" src="img/icons/unchecked.gif"/>
+				<% } %>
+			</a>
+		
+		<% } %>
+		
+		<a tab="Export the model" title="Export descriptors and model parameters as Excel, CSV or SDF file" href="model/exportModel.do?id=<%=data.id%>"><img name="xls" src="img/icons/xls.gif"/></a>
+		<div class="invisible" id="xml-<%=data.id%>"><%=data.configurationXml%></div>
+		<a action="showxml">
+			<img src="img/icons/xml.jpg"/>
+		</a>
+		<% if ((data.owner == "true") && (data.published != "true")) { %>
+		<a action="delete"><img src="img/icons/delete.gif"/></a>
+		<% } %>
+		
+		
+	</td>
+	<td width="500">
+		<% if (window.callback && data.template.name != "Uploaded model") { %>
+			<a title="Select this model" action="select"><%=data["name"]%></a>
+		<% } else {%>
+			<a tab="Model profile" href="model/profile.do?id=<%=data.id%>&render-mode=popup"><%=data["name"]%></a>
+		<% } %>
+		<% if (data.published == "true") { %>
+			<% if (data.featuredName) { %>
+				<img src="img/icons/favorite-star.png" title="This is our featured model. It is also available in OCHEM predictor."/>
+			<% } %>
+			<i title="Public model ID is <%=data.publicId%>"><br/>published by <%=data.session.user.login%><% if (data.approved != "true") {%>, <b>not approved yet</b><% } %></i>
+			<% } else if (currentUser != data.session.user.login && currentUser) {%><i>, owned by <%=data.session.user.login%></i><% } %>
+	<% if (data.toBeDeleted) {%><br/>
+		<span title="This model is marked for automatic deletion. If you would like to keep this model, simply open it and it will be kept for another six months.">
+		<img src="img/icons/exclamation.gif"/>unused for a long time, marked for automatic deletion
+		</span>
+	<% } %>
+	</td>
+	<td width="100">
+		<% if (data.template.name != "Uploaded model") { %>
+			<a href="modelapplier/apply.do?model=<%=data.id %>" class="apply-model">apply the model</a>
+		<% } %>
+	</td>
+	<td width="350">
+		predicts <i><%=property.join(",")%></i><br/>
+		using <i><a href="basket/edit.do?id=<%=data["training-set"].id%>" tab="Training set"><%=data["training-set"].name%> (<%=data["training-set"].size%>)</a></i>
+		<% if (data["validation-set"]) { %> <br/>validated by <i><a href="basket/edit.do?id=<%=data["validation-set"].id%>" tab="Validation set"><%=data["validation-set"].name%> (<%=data["validation-set"].size%>)</a></i><% } %>
+	</td>
+	<td width="100" align="left">
+		<span title="<%=data.description%>"><%=data.template.name%></span>
+	</td>
+	<td width="100" align="right">
+		<i title="Created on <%=data.date%>, last access on <%=data["last-access"]%>"><%=data.date%></i>
+	</td>
+	
+	</tr>
+</table>

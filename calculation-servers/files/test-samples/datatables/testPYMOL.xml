@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><datatable id="mols"><columns><column>SDF</column></columns><rows><row><string>1
+2
+3
+  1  0  0  0  0  0            999 V2000
+    0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+M  END</string></row><row><string>1
+2
+3
+  1  0  0  0  0  0            999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+M  END</string></row></rows></datatable>

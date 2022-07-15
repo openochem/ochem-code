@@ -1,0 +1,27 @@
+<%
+	var shortenedName = data.fileName;
+	if (shortenedName.length > 45)
+		shortenedName = shortenedName.substring(0, 40) + "..."; 
+%>
+		<td><nobr><%= data.formattedTime %></nobr></td>
+		<td title="<%=data.fileName %>"><%=shortenedName %></td>
+		<td align="center"><%=data.format %></td>
+		<td align="center"><%=data.count %></td>
+		<% if (data.totalBonusPoints > 0) { %>
+			<td align="center"><%=data.totalBonusPoints %></td>
+			<% if (data.fileDownloaded == 'true') { %>
+				<td width="300" align="center"><%=data.freeBonusPointsUsed %></td><td>downloaded
+			<% } else { %>
+				<td width="300">-</td><td>not downloaded</td>
+			<% } %>
+		<% } else { %>
+			<td align="center">Free export</td><td>-</td><td>downloaded</td>
+		<% } %>
+		
+		<% if (data.running == "true") { %>
+			<td><%=data.status %></td>
+		<% } else if (data.failed == "true") { %>
+			<td>Failed: <%=data.status %></td>
+		<% }  else { %>
+			<td align="center"><a action="download"class="fancy-button" style="width:200px; text-align: center; padding:1px;">Download now</a></td>
+		<% } %>

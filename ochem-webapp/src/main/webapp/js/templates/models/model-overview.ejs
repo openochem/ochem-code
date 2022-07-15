@@ -1,0 +1,43 @@
+<%
+	var sets = array(data.set);
+%>
+<br/>
+<%if (sets[0].classificationSummary)
+	{%>
+	<table class="model-table">
+	<tr>
+		<td>Dataset</td>
+		<td>Accuracy</td>
+		<td>Balanced accuracy</td>
+		<td>AUC</td>
+	</tr>
+	<%for(var i=0; i < sets.length; i++){
+		var setname = sets[i].setId;%>
+	<tr>
+		<td id="<%=setname%>"><%=setname%></td>
+		<td><nobr><%=sets[i].classificationSummary.accuracyTotal["formatted-value"]%>% &plusmn; <%=sets[i].classificationSummary.accuracyTotal["formatted-std"]%></nobr></td>
+		<td><nobr><%=sets[i].classificationSummary.accuracyBalanced["formatted-value"]%>% &plusmn; <%=sets[i].classificationSummary.accuracyBalanced["formatted-std"]%></nobr></td>
+		<td><nobr><%=sets[i].classificationSummary.auc["formatted-value"]%> &plusmn; <%=sets[i].classificationSummary.auc["formatted-std"]%></nobr></td>
+	</tr>
+	<%}%>
+</table>
+<%}else{%>
+<table class="model-table">
+	<tr>
+		<td>Dataset</td>
+		<td>R<sup>2</sup></td>
+		<td>RMSE</td>
+		<td>MAE</td>
+	</tr>
+	<%for(var i=0; i < sets.length; i++){
+		var setname = sets[i].setId;%>
+	<tr>
+		<td id="<%=setname%>"><%=setname%></td>
+		<td><%=(1.0*sets[i].r2).toFixed(2)%></td>
+		<td><%=(1.0*sets[i].rmse).toFixed(2)%></td>
+		<td><%=(1.0*sets[i].mae).toFixed(2)%></td>
+	</tr>
+	<%}%>
+</table>
+<%}%>
+<br/>

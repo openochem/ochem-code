@@ -1,0 +1,40 @@
+<Configuration>
+
+  <Appenders>
+    <Console name="LogToConsole" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Logger name="org.apache.log4j.xml" level="INFO"/>
+    <Root level="INFO">
+      <AppenderRef ref="LogToConsole"/>
+    </Root>
+    
+    <Logger name="org.hibernate">
+        <level value="WARN" />
+    </Logger>
+    
+    <Logger name="org.apache">
+        <level value="WARN" />
+    </Logger>
+
+    <Logger name="org.mongodb">
+        <level value="WARN" />
+    </Logger>
+    
+    <Logger name="org.springframework">
+        <level value="WARN" />
+    </Logger>
+    
+    <Logger name="qspr">
+        <level value="INFO" />
+    </Logger>
+    
+     <Logger name="javax.xml">
+        <level value="INFO" />
+    </Logger>
+    
+  </Loggers>
+
+</Configuration>

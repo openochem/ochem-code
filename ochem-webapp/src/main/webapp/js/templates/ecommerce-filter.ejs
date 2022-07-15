@@ -1,0 +1,19 @@
+<%
+	var options = array(data.option);
+	var curOption = data.option || {};
+%>
+<table width="100%" nowrap="true" style="white-space: nowrap;">
+	<tr>
+		<td>
+			<a restrict="valuefilter" action="delete" class="delete-link">[x]</a>  <select name="vt-id<%= data.id %>" filter="1"/>
+			<span class="quant">			
+			is from <input type="text" name="low<%= data.id %>" value="" filter="1"/> to 
+			<input type="text" name="high<%= data.id %>" value="" filter="1"/>
+			</span>
+			<span class="qual invisible">
+			is <select name="qual<%= data.id %>" filter="1"/>
+			</span>
+			
+		</td>
+	</tr>
+</table>

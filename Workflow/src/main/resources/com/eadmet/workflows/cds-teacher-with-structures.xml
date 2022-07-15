@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<workflow name="CDS-Teacher" outsockets="4" insockets="4">
+	<nodes>
+		<node id="mol-standardizer" task="MolStandartizer"/>
+		<node id="mol-optimiser" task="Unspecified-Optimisation"/>
+		<node id="descriptors-processor" task="Descriptors" insockets="2"/>
+		<node id="descriptors-selector" task="Selection" insockets="2" outsockets="2"/>
+		<node id="method-node" task="Unspecified" insockets="3" outsockets="2"/>
+	</nodes>
+	<connections>
+		<connection to="mol-standardizer"/>
+		<connection from="mol-standardizer" to="mol-optimiser"/>
+		<connection from="mol-optimiser" to="descriptors-processor"/>
+		<connection from="descriptors-processor" to="descriptors-selector"/>
+		<connection from="descriptors-selector" to="method-node"/>
+		
+		<!-- Experimental values (labels) -->
+		<connection fromPort="1" to="method-node" toPort="1"/>
+		
+		<!-- SDFs -->
+		<connection fromPort="0" to="method-node" toPort="2"/>
+		
+		<!-- Obligatory conditions go as decriptors -->
+		<connection fromPort="2" to="descriptors-selector" toPort="1"/>
+		
+		<!-- Conditions, required for calculation of descriptors (ionisable center etc) -->
+		<connection fromPort="3" to="descriptors-processor" toPort="1"/>
+		
+		<!-- OUTPUTS -->
+		<connection from="method-node"/>
+		<connection from="method-node" fromPort="1" toPort="1"/>
+		<connection from="descriptors-selector" toPort="2"/>
+		<connection fromPort="1" from="descriptors-selector" toPort="3"/>
+	</connections>
+</workflow>

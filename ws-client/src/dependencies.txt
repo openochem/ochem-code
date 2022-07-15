@@ -1,0 +1,8 @@
+The web-service client needs the following dependencies
+
+Axis (1.4)
+Commons-discovery
+JAXRPC
+SAAJ
+Javax.WSDL
+Commons Logging

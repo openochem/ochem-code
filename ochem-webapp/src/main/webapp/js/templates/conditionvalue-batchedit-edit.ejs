@@ -1,0 +1,74 @@
+<%
+	var options = array(data.property.option);
+	var curOption = data.option || {};
+	var units = array(data.property.unitCategory.unit);
+	var curUnit = data.unit || {};
+	var noChange = "do not change"; // -- keep: \"" + ((data.option) ? data.option.name : data.unit.name) + "\"";
+%>
+<input type="hidden" name="cond-id" value="<%=data.property.id%>" send="1"/>
+<input type="hidden" name="old-cond-id" value="<%=data.property.id%>" send="1"/>
+<table width="80%">
+	<tr>
+		<td width="80"></td>
+		<td width="30">
+			<%  
+				if ( data.property.id > 0) 
+				{ 
+			%>
+					<a title="Apply this change to all records. Add condition if it is not there.">
+					<input type="checkbox" name="apply_cond_one_<%=data.property.id%>" send="1"/ title="Apply this change to all records. Add condition if it is not there.">
+					</a>
+			<% 	} 
+				else 
+				{
+			%>
+					<a title="No record contains this condition. It will be added to all.">
+					<input type="checkbox" checked="true" disabled="true" name="apply_cond_one_<%=data.property.id%>" send="1" title="No record contains this condition. It will be added to all."/> 
+					</a>
+			<% 	
+				} 
+			%>
+		
+		</td>
+		<td width="150" nowrap="true" style="white-space: nowrap;">
+			<a action="editcondition" name="condition-link"><%=data.property["name"]%></a>
+			<a action="delete" class="delete-link" title="Delete this condition here and it will be deleted from all records.">[x]</a>
+		</td>
+		<td> 
+			<span name="type-1" title="Put a value here to change this condition. Leave it blank to keep condition values untouched.">
+			<select name="cond-option" send="1" value="">
+				<option value="-1" selected="selected"><%=noChange%></option>
+			<%	
+				for (var i = 0; i < options.length; i++)  
+				{
+					var id = options[i].id; 
+			%>
+					<option value="<%=id%>"><%=options[i].name%>
+					</option>
+			<% 
+				}
+			%>
+				</select>
+			</span>
+			<span name="type-0" title="Put a value here to change this condition. Leave it blank to keep condition values untouched.">
+					<input type="text" send="1" name="cond-value" value="" class="w50 right"/>
+					<select name="cond-unit" send="1">
+					<option value="-1" selected="selected"><%=noChange%></option>	
+			<%
+					for (var i = 0; i < units.length; i++)  
+					{
+						var id = units[i].id; 
+			%>
+							<option value="<%=id%>"><%=units[i]["name"]%>
+							</option>
+			<%
+					} 
+			%>
+					</select>
+			</span>
+			<span name="type-2"  title="Put a value here to change this condition. Leave it blank to keep condition values untouched.">
+					<input type="text" class="cond-text-value" send="1" name="cond-text-value" value=""/>
+			</span>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,1164 @@
+Symbol	Definition	Category
+MW	Molecular weight	Constitutional
+AMW	Average molecular weight	Constitutional
+Sv	Sum of atomic van der Waals volumes (scaled on Carbon atom)	Constitutional
+Se	Sum of atomic Sanderson electronegativities (scaled on Carbon atom)	Constitutional
+Sp	Sum of atomic polarizabilities (scaled on Carbon atom)	Constitutional
+Ss	Sum of Kier-Hall electrotopological states	Constitutional
+Mv	Mean atomic van der Waals volume (scaled on Carbon atom)	Constitutional
+Me	Mean atomic Sanderson electronegativity (scaled on Carbon atom)	Constitutional
+Mp	Mean atomic polarizability (scaled on Carbon atom)	Constitutional
+Ms	Mean electrotopological state	Constitutional
+nAT	Number of atoms	Constitutional
+nSK	Number of non-H atoms	Constitutional
+nBT	Number of bonds	Constitutional
+nBO	Number of non-H bonds	Constitutional
+nBM	Number of multiple bonds	Constitutional
+SCBO	Sum of conventional bond orders (H-depleted)	Constitutional
+ARR	Aromatic ratio	Constitutional
+nCIC	Number of rings	Constitutional
+nCIR	Number of circuits	Constitutional
+nDB	Number of double bonds	Constitutional
+nTB	Number of triple bonds	Constitutional
+nAB	Number of aromatic bonds	Constitutional
+nH	Number of Hydrogen atoms	Constitutional
+nC	Number of Carbon atoms	Constitutional
+nN	Number of Nitrogen atoms	Constitutional
+nO	Number of Oxygen atoms	Constitutional
+nP	Number of Phosphorous atoms	Constitutional
+nS	Number of Sulfur atoms	Constitutional
+nF	Number of Fluorine atoms	Constitutional
+nCL	Number of Chlorine atoms	Constitutional
+nBR	Number of Bromine atoms	Constitutional
+nI	Number of Iodine atoms	Constitutional
+nB	Number of Boron atoms	Constitutional
+nX	Number of halogen atoms	Constitutional
+nR03	Number of 3-membered rings	Constitutional
+nR04	Number of 4-membered rings	Constitutional
+nR05	Number of 5-membered rings	Constitutional
+nR06	Number of 6-membered rings	Constitutional
+nR07	Number of 7-membered rings	Constitutional
+nR08	Number of 8-membered rings	Constitutional
+nR09	Number of 9-membered rings	Constitutional
+nR10	Number of 10-membered rings	Constitutional
+nR11	Number of 11-membered rings	Constitutional
+nR12	Number of 12-membered rings	Constitutional
+nBnz	Number of benzene-like rings	Constitutional
+x0	Simple zero order chi index	Chi Connectivity Indices 
+x1	Simple 1st order chi index	Chi Connectivity Indices 
+x2	Simple 2nd order chi index	Chi Connectivity Indices 
+xp3	Simple 3rd order path chi index	Chi Connectivity Indices 
+xp4	Simple 4th order path chi index	Chi Connectivity Indices 
+xp5	Simple 5th order path chi index	Chi Connectivity Indices 
+xp6	Simple 6th order path chi index	Chi Connectivity Indices 
+xp7	Simple 7th order path chi index	Chi Connectivity Indices 
+xp8	Simple 8th order path chi index	Chi Connectivity Indices 
+xp9	Simple 9th order path chi index	Chi Connectivity Indices 
+xp10	Simple 10th order path chi index	Chi Connectivity Indices 
+xc3	Simple 3rd order cluster chi index	Chi Connectivity Indices 
+xc4	Simple 4th order cluster chi index	Chi Connectivity Indices 
+xpc4	Simple 4th order path/cluster chi index	Chi Connectivity Indices 
+xch3	Simple 3rd order chain chi index	Chi Connectivity Indices 
+xch4	Simple 4th order chain chi index	Chi Connectivity Indices 
+xch5	Simple 5th order chain chi index	Chi Connectivity Indices 
+xch6	Simple 6th order chain chi index	Chi Connectivity Indices 
+xch7	Simple 7th order chain chi index	Chi Connectivity Indices 
+xch8	Simple 8th order chain chi index	Chi Connectivity Indices 
+xch9	Simple 9th order chain chi index	Chi Connectivity Indices 
+xch10	Simple 10th order chain chi index	Chi Connectivity Indices 
+knotp	Difference between chi cluster-3 and chi path/cluster-4	Chi Connectivity Indices 
+xv0	Valence zero order chi index	Chi Connectivity Indices 
+xv1	Valence 1st order chi index	Chi Connectivity Indices 
+xv2	Valence 2nd order chi index	Chi Connectivity Indices 
+xvp3	Valence 3rd order path chi index	Chi Connectivity Indices 
+xvp4	Valence 4th order path chi index	Chi Connectivity Indices 
+xvp5	Valence 5th order path chi index	Chi Connectivity Indices 
+xvp6	Valence 6th order path chi index	Chi Connectivity Indices 
+xvp7	Valence 7th order path chi index	Chi Connectivity Indices 
+xvp8	Valence 8th order path chi index	Chi Connectivity Indices 
+xvp9	Valence 9th order path chi index	Chi Connectivity Indices 
+xvp10	Valence 10th order path chi index	Chi Connectivity Indices 
+xvc3	Valence 3rd order cluster chi index	Chi Connectivity Indices 
+xvc4	Valence 4th order cluster chi index	Chi Connectivity Indices 
+xvpc4	Valence 4th order path/cluster chi index	Chi Connectivity Indices 
+xvch3	Valence 3rd order chain chi index	Chi Connectivity Indices 
+xvch4	Valence 4th order chain chi index	Chi Connectivity Indices 
+xvch5	Valence 5th order chain chi index	Chi Connectivity Indices 
+xvch6	Valence 6th order chain chi index	Chi Connectivity Indices 
+xvch7	Valence 7th order chain chi index	Chi Connectivity Indices 
+xvch8	Valence 8th order chain chi index	Chi Connectivity Indices 
+xvch9	Valence 9th order chain chi index	Chi Connectivity Indices 
+xvch10	Valence 10th order chain chi index	Chi Connectivity Indices 
+knotpv	Difference between chi valence cluster-3 and chi valence path/cluster-4.	Chi Connectivity Indices 
+k1	 First order kappa shape index 	Kappa Shape Indices
+k2	 Second order kappa shape index 	Kappa Shape Indices
+k3	 Third order kappa shape index 	Kappa Shape Indices
+ka1	 First order kappa alpha shape index 	Kappa Shape Indices
+ka2	 Second order kappa alpha shape index 	Kappa Shape Indices
+ka3	 Third order kappa alpha shape index 	Kappa Shape Indices
+phia	 Kappa flexibility index 	Kappa Shape Indices
+SsCH3	Sum of ( � CH3 ) E-States (SsCH3)	Electrotopological State Indices
+SdCH2	Sum of ( = CH2 ) E-States (SdCH2)	Electrotopological State Indices
+SssCH2	Sum of ( � CH2 � ) E-States (SssCH2)	Electrotopological State Indices
+StCH	Sum of ( tCH ) E-States (StCH)	Electrotopological State Indices
+SdsCH	Sum of ( = CH � ) E-States (SdsCH)	Electrotopological State Indices
+SaaCH	Sum of ( aaCH  ) E-States (SaaCH)	Electrotopological State Indices
+SsssCH	Sum of ( > CH � ) E-States (SsssCH)	Electrotopological State Indices
+SddC	Sum of ( = C = ) E-States (SddC)	Electrotopological State Indices
+StsC	Sum of ( tC � ) E-States (StsC)	Electrotopological State Indices
+SdssC	Sum of ( = C < ) E-States (SdssC)	Electrotopological State Indices
+SsaaC	Sum of ( saaC  ) E-States (SsaaC)	Electrotopological State Indices
+SaaaC	Sum of ( aaaC ) E-States (SaaaC)	Electrotopological State Indices
+SssssC	Sum of ( > C < ) E-States (SssssC)	Electrotopological State Indices
+SsNH2	Sum of ( � NH2 ) E-States (SsNH2)	Electrotopological State Indices
+SdNH	Sum of ( = NH ) E-States (SdNH)	Electrotopological State Indices
+SssNH	Sum of ( � NH � ) E-States (SssNH)	Electrotopological State Indices
+SaaNH	Sum of ( aaNH ) E-States (SaaNH)	Electrotopological State Indices
+StN	Sum of ( tN ) E-States (StN)	Electrotopological State Indices
+SdsN	Sum of ( = N � ) E-States (SdsN)	Electrotopological State Indices
+SaaN	Sum of ( aaN ) E-States (SaaN)	Electrotopological State Indices
+SsssN	Sum of ( > N � ) E-States (SsssN)	Electrotopological State Indices
+SaaaN	Sum of ( aaaN ) E-States (SaaaN)	Electrotopological State Indices
+SsaaN	Sum of ( saaN ) E-States (SsaaN)	Electrotopological State Indices
+SsNH3p	Sum of ( � NH3+ ) E-States (SsNH3p)	Electrotopological State Indices
+SssNH2p	Sum of ( � NH2+ � ) E-States (SssNH2p)	Electrotopological State Indices
+SsssNHp	Sum of ( > NH+ � ) E-States (SsssNHp)	Electrotopological State Indices
+SddNp	Sum of ( = N+ = ) E-States (SddNp)	Electrotopological State Indices
+StsNp	Sum of ( # N+ � ) E-States (StsNp)	Electrotopological State Indices
+SdNm	Sum of ( = N - ) E-States (SdNm)	Electrotopological State Indices
+SdssNp	Sum of ( = N+ < ) E-States (SdssNp)	Electrotopological State Indices
+SssssNp	Sum of ( > N+ < ) E-States (SssssNp)	Electrotopological State Indices
+SsaaNp	Sum of ( saaN+ ) E-States (SsaaNp)	Electrotopological State Indices
+SsOH	Sum of ( � OH ) E-States (SsOH)	Electrotopological State Indices
+SdO	Sum of ( = O ) E-States (SdO)	Electrotopological State Indices
+SssO	Sum of ( � O � ) E-States (SssO)	Electrotopological State Indices
+SaaO	Sum of ( aaO ) E-States (SaaO)	Electrotopological State Indices
+SsOm	Sum of ( � O- ) E-States (SsOm)	Electrotopological State Indices
+SsF	Sum of ( � F ) E-States (SsF)	Electrotopological State Indices
+SsCl	Sum of ( � Cl ) E-States (SsCl)	Electrotopological State Indices
+SsBr	Sum of ( � Br ) E-States (SsBr)	Electrotopological State Indices
+SsI	Sum of ( � I ) E-States (SsI)	Electrotopological State Indices
+SsSiH3	Sum of ( � SiH3 ) E-States (SsSiH3)	Electrotopological State Indices
+SssSiH2	Sum of ( � SiH2 � ) E-States (SssSiH2)	Electrotopological State Indices
+SsssSiH	Sum of ( > SiH � ) E-States (SsssSiH)	Electrotopological State Indices
+SssssSi	Sum of ( > Si < ) E-States (SssssSi)	Electrotopological State Indices
+SsssP	Sum of ( > P � ) E-States (SsssP)	Electrotopological State Indices
+SdsssP	Sum of (dsssP ) E-States (SdsssP)	Electrotopological State Indices
+SddsP	Sum of (ddsP ) E-States (SddsP)	Electrotopological State Indices
+SsssssP	Sum of ( sssssP ) E-States (SsssssP)	Electrotopological State Indices
+SdssPH	Sum of ( =PH< ) E-States (SdssPH)	Electrotopological State Indices
+SsPH2	Sum of ( � PH2 ) E-States (SsPH2)	Electrotopological State Indices
+SssPH	Sum of ( � PH � ) E-States (SssPH)	Electrotopological State Indices
+SsSH	Sum of ( � SH ) E-States (SsSH)	Electrotopological State Indices
+SdS	Sum of ( = S ) E-States (SdS)	Electrotopological State Indices
+SssS	Sum of ( � S � ) E-States (SssS)	Electrotopological State Indices
+SaaS	Sum of ( aaS ) E-States (SaaS)	Electrotopological State Indices
+SdssS	Sum of ( = S < ) E-States (SdssS)	Electrotopological State Indices
+SddssS	Sum of ( ddssS ) E-States (SddssS)	Electrotopological State Indices
+SssssssS	Sum of ( ssssssS ) E-States (SssssssS)	Electrotopological State Indices
+SsSnH3	Sum of ( � SnH3 ) E-States (SsSnH3)	Electrotopological State Indices
+SssSnH2	Sum of ( � SnH2 � ) E-States (SssSnH2)	Electrotopological State Indices
+SssSnH	Sum of ( > SnH � ) E-States (SssSnH)	Electrotopological State Indices
+SssssSn	Sum of ( > Sn < ) E-States (SssssSn)	Electrotopological State Indices
+SsPbH3	Sum of ( � PbH3 ) E-States (SsPbH3)	Electrotopological State Indices
+SssPbH2	Sum of ( � PbH2 � ) E-States (SssPbH2)	Electrotopological State Indices
+SsssPbH	Sum of ( > PbH � ) E-States (SsssPbH)	Electrotopological State Indices
+SssssPb	Sum of ( > Pb < ) E-States (SssssPb)	Electrotopological State Indices
+SsssAs	Sum of ( � As < ) E-States (SsssAs)	Electrotopological State Indices
+SdsssAs	Sum of ( dsssAs ) E-States (SdsssAs)	Electrotopological State Indices
+SddsAs	Sum of ( ddsAs ) E-States (SddsAs)	Electrotopological State Indices
+SsssssAs	Sum of ( sssssAs ) E-States (SsssssAs)	Electrotopological State Indices
+SsAsH2	Sum of (  � AsH2 ) E-States (SsAsH2)	Electrotopological State Indices
+SssAsH	Sum of ( � AsH � ) E-States (SssAsH)	Electrotopological State Indices
+SsHgp	Sum of ( � Hg+) E-States (SsHgp)	Electrotopological State Indices
+SssHg	Sum of ( � Hg �) E-States (SssHg)	Electrotopological State Indices
+SsHg	Sum of ( � Hg) E-States (SsHg)	Electrotopological State Indices
+SsCH3_acnt	Count of ( � CH3 )  (SsCH3_acnt)	Electrotopological State Indices
+SdCH2_acnt	Count of ( = CH2 )  (SdCH2_acnt)	Electrotopological State Indices
+SssCH2_acnt	Count of ( � CH2 � )  (SssCH2_acnt)	Electrotopological State Indices
+StCH_acnt	Count of ( tCH )  (StCH_acnt)	Electrotopological State Indices
+SdsCH_acnt	Count of ( = CH � )  (SdsCH_acnt)	Electrotopological State Indices
+SaaCH_acnt	Count of ( aaCH  )  (SaaCH_acnt)	Electrotopological State Indices
+SsssCH_acnt	Count of ( > CH � )  (SsssCH_acnt)	Electrotopological State Indices
+SddC_acnt	Count of ( = C = )  (SddC_acnt)	Electrotopological State Indices
+StsC_acnt	Count of ( tC � )  (StsC_acnt)	Electrotopological State Indices
+SdssC_acnt	Count of ( = C < )  (SdssC_acnt)	Electrotopological State Indices
+SsaaC_acnt	Count of ( saaC  )  (SsaaC_acnt)	Electrotopological State Indices
+SaaaC_acnt	Count of ( aaaC )  (SaaaC_acnt)	Electrotopological State Indices
+SssssC_acnt	Count of ( > C < )  (SssssC_acnt)	Electrotopological State Indices
+SsNH2_acnt	Count of ( � NH2 )  (SsNH2_acnt)	Electrotopological State Indices
+SdNH_acnt	Count of ( = NH )  (SdNH_acnt)	Electrotopological State Indices
+SssNH_acnt	Count of ( � NH � )  (SssNH_acnt)	Electrotopological State Indices
+SaaNH_acnt	Count of ( aaNH )  (SaaNH_acnt)	Electrotopological State Indices
+StN_acnt	Count of ( tN )  (StN_acnt)	Electrotopological State Indices
+SdsN_acnt	Count of ( = N � )  (SdsN_acnt)	Electrotopological State Indices
+SaaN_acnt	Count of ( aaN )  (SaaN_acnt)	Electrotopological State Indices
+SsssN_acnt	Count of ( > N � )  (SsssN_acnt)	Electrotopological State Indices
+SaaaN_acnt	Count of ( aaaN )  (SaaaN_acnt)	Electrotopological State Indices
+SsaaN_acnt	Count of ( saaN )  (SsaaN_acnt)	Electrotopological State Indices
+SsNH3p_acnt	Count of ( � NH3+ )  (SsNH3p_acnt)	Electrotopological State Indices
+SssNH2p_acnt	Count of ( � NH2+ � )  (SssNH2p_acnt)	Electrotopological State Indices
+SsssNHp_acnt	Count of ( > NH+ � )  (SsssNHp_acnt)	Electrotopological State Indices
+SddNp_acnt	Count of ( = N+ = )  (SddNp_acnt)	Electrotopological State Indices
+StsNp_acnt	Count of ( # N+ � )  (StsNp_acnt)	Electrotopological State Indices
+SdNm_acnt	Count of ( = N - )  (SdNm_acnt)	Electrotopological State Indices
+SdssNp_acnt	Count of ( = N+ < )  (SdssNp_acnt)	Electrotopological State Indices
+SssssNp_acnt	Count of ( > N+ < )  (SssssNp_acnt)	Electrotopological State Indices
+SsaaNp_acnt	Count of ( saaN+ )  (SsaaNp_acnt)	Electrotopological State Indices
+SsOH_acnt	Count of ( � OH )  (SsOH_acnt)	Electrotopological State Indices
+SdO_acnt	Count of ( = O )  (SdO_acnt)	Electrotopological State Indices
+SssO_acnt	Count of ( � O � )  (SssO_acnt)	Electrotopological State Indices
+SaaO_acnt	Count of ( aaO )  (SaaO_acnt)	Electrotopological State Indices
+SsOm_acnt	Count of ( � O- )  (SsOm_acnt)	Electrotopological State Indices
+SsF_acnt	Count of ( � F )  (SsF_acnt)	Electrotopological State Indices
+SsCl_acnt	Count of ( � Cl )  (SsCl_acnt)	Electrotopological State Indices
+SsBr_acnt	Count of ( � Br )  (SsBr_acnt)	Electrotopological State Indices
+SsI_acnt	Count of ( � I )  (SsI_acnt)	Electrotopological State Indices
+SsSiH3_acnt	Count of ( � SiH3 )  (SsSiH3_acnt)	Electrotopological State Indices
+SssSiH2_acnt	Count of ( � SiH2 � )  (SssSiH2_acnt)	Electrotopological State Indices
+SsssSiH_acnt	Count of ( > SiH � )  (SsssSiH_acnt)	Electrotopological State Indices
+SssssSi_acnt	Count of ( > Si < )  (SssssSi_acnt)	Electrotopological State Indices
+SsssP_acnt	Count of ( > P � )  (SsssP_acnt)	Electrotopological State Indices
+SdsssP_acnt	Count of (dsssP )  (SdsssP_acnt)	Electrotopological State Indices
+SddsP_acnt	Count of (ddsP )  (SddsP_acnt)	Electrotopological State Indices
+SsssssP_acnt	Count of ( sssssP )  (SsssssP_acnt)	Electrotopological State Indices
+SdssPH_acnt	Count of ( =PH< )  (SdssPH_acnt)	Electrotopological State Indices
+SsPH2_acnt	Count of ( � PH2 )  (SsPH2_acnt)	Electrotopological State Indices
+SssPH_acnt	Count of ( � PH � )  (SssPH_acnt)	Electrotopological State Indices
+SsSH_acnt	Count of ( � SH )  (SsSH_acnt)	Electrotopological State Indices
+SdS_acnt	Count of ( = S )  (SdS_acnt)	Electrotopological State Indices
+SssS_acnt	Count of ( � S � )  (SssS_acnt)	Electrotopological State Indices
+SaaS_acnt	Count of ( aaS )  (SaaS_acnt)	Electrotopological State Indices
+SdssS_acnt	Count of ( = S < )  (SdssS_acnt)	Electrotopological State Indices
+SddssS_acnt	Count of ( ddssS )  (SddssS_acnt)	Electrotopological State Indices
+SssssssS_acnt	Count of ( ssssssS )  (SssssssS_acnt)	Electrotopological State Indices
+SsSnH3_acnt	Count of ( � SnH3 )  (SsSnH3_acnt)	Electrotopological State Indices
+SssSnH2_acnt	Count of ( � SnH2 � )  (SssSnH2_acnt)	Electrotopological State Indices
+SssSnH_acnt	Count of ( > SnH � )  (SssSnH_acnt)	Electrotopological State Indices
+SssssSn_acnt	Count of ( > Sn < )  (SssssSn_acnt)	Electrotopological State Indices
+SsPbH3_acnt	Count of ( � PbH3 )  (SsPbH3_acnt)	Electrotopological State Indices
+SssPbH2_acnt	Count of ( � PbH2 � )  (SssPbH2_acnt)	Electrotopological State Indices
+SsssPbH_acnt	Count of ( > PbH � )  (SsssPbH_acnt)	Electrotopological State Indices
+SssssPb_acnt	Count of ( > Pb < )  (SssssPb_acnt)	Electrotopological State Indices
+SsssAs_acnt	Count of ( � As < )  (SsssAs_acnt)	Electrotopological State Indices
+SdsssAs_acnt	Count of ( dsssAs )  (SdsssAs_acnt)	Electrotopological State Indices
+SddsAs_acnt	Count of ( ddsAs )  (SddsAs_acnt)	Electrotopological State Indices
+SsssssAs_acnt	Count of ( sssssAs )  (SsssssAs_acnt)	Electrotopological State Indices
+SsAsH2_acnt	Count of (  � AsH2 )  (SsAsH2_acnt)	Electrotopological State Indices
+SssAsH_acnt	Count of ( � AsH � )  (SssAsH_acnt)	Electrotopological State Indices
+SsHgp_acnt	Count of ( � Hg+)  (SsHgp_acnt)	Electrotopological State Indices
+SssHg_acnt	Count of ( � Hg �)  (SssHg_acnt)	Electrotopological State Indices
+SsHg_acnt	Count of ( � Hg)  (SsHg_acnt)	Electrotopological State Indices
+SHsOH	Sum of ([� OH ]) hydrogen E-States (SHsOH)	Electrotopological State Indices
+SHdNH	Sum of ([= NH ]) hydrogen E-States (SHdNH)	Electrotopological State Indices
+SHsSH	Sum of ([� SH ]) hydrogen E-States (SHsSH)	Electrotopological State Indices
+SHsNH2	Sum of ([� NH2]) hydrogen E-States (SHsNH2)	Electrotopological State Indices
+SHssNH	Sum of ([� NH � ]) hydrogen E-States (SHssNH)	Electrotopological State Indices
+SHtCH	Sum of ([ tCH ]) hydrogen E-States (SHtCH)	Electrotopological State Indices
+SHother	Sum of (CH or CH2 with -F or -Cl attached) hydrogen E-State values (SHCHnX)	Electrotopological State Indices
+SHCHnX	Sum of hydrogen E-State values for other atom types (SHother)	Electrotopological State Indices
+Hmax	Maximum hydrogen E-State value in molecule.	Electrotopological State Indices
+Gmax	Maximum E-State value in molecule.	Electrotopological State Indices
+Hmin	Minimum hydrogen E-State value in molecule.	Electrotopological State Indices
+Gmin	Minimum E-State value in molecule.	Electrotopological State Indices
+Hmaxpos	Maximum positive hydrogen E-State value in molecule.	Electrotopological State Indices
+Hminneg	Minimum negative hydrogen E-State value in molecule.	Electrotopological State Indices
+ZM1	First Zagreb index M1 	Topological Descriptors
+ZM1V	First Zagreb index by valence vertex degrees 	Topological Descriptors
+ZM2	Second Zagreb index M2 	Topological Descriptors
+ZM2V	Second Zagreb index by valence vertex degrees 	Topological Descriptors
+J	Balaban distance connectivity index (pg 21 Todeschini book)	Topological Descriptors
+Jt	Jt index (pg 21 Todeschini book)	Topological Descriptors
+BAC	Balaban centric index 	Topological Descriptors
+Lop	Lopping centric index 	Topological Descriptors
+ICR	Radial centric information index 	Topological Descriptors
+TIE	E-state topological parameter 	Topological Descriptors
+MAXDN	Maximal electrotopological negative variation 	Topological Descriptors
+MAXDP	Maximal electrotopological positive variation 	Topological Descriptors
+DELS	Molecular electrotopological variation 	Topological Descriptors
+W	Wiener Index 	Topological Descriptors
+WA	Mean Wiener Index 	Topological Descriptors
+ACAC	ACAC fragment count	Molecular Fragments
+AN [attached to AN in same ring]	AN [attached to AN in same ring] fragment count	Molecular Fragments
+ANH [attached to AN in same ring]	ANH [attached to AN in same ring] fragment count	Molecular Fragments
+C=C=O	C=C=O fragment count	Molecular Fragments
+C=[N+][O-]	C=[N+][O-] fragment count	Molecular Fragments
+C=[N+]=[N-]	C=[N+]=[N-] fragment count	Molecular Fragments
+-N=S=O	-N=S=O fragment count	Molecular Fragments
+-N=[N+]=[N-]	-N=[N+]=[N-] fragment count	Molecular Fragments
+-[N+]#N	-[N+]#N fragment count	Molecular Fragments
+A[N+][O-]	A[N+][O-] fragment count	Molecular Fragments
+N+ [four single bonds]	N+ [four single bonds] fragment count	Molecular Fragments
+CH2=C(CH3)C(=O)O-	CH2=C(CH3)C(=O)O- fragment count	Molecular Fragments
+CH2=CHC(=O)O-	CH2=CHC(=O)O- fragment count	Molecular Fragments
+-N=C=S	-N=C=S fragment count	Molecular Fragments
+-SC(=S)S-	-SC(=S)S- fragment count	Molecular Fragments
+-SC(=S)O-	-SC(=S)O- fragment count	Molecular Fragments
+-SC(=O)S-	-SC(=O)S- fragment count	Molecular Fragments
+-SC(=O)O-	-SC(=O)O- fragment count	Molecular Fragments
+-OC(=S)O-	-OC(=S)O- fragment count	Molecular Fragments
+-C(=O)OC(=O)-	-C(=O)OC(=O)- fragment count	Molecular Fragments
+-NH- [3 membered ring]	-NH- [3 membered ring] fragment count	Molecular Fragments
+-N< [3 membered ring]	-N< [3 membered ring] fragment count	Molecular Fragments
+-NH2 [attached to P]	-NH2 [attached to P] fragment count	Molecular Fragments
+-NH- [attached to P]	-NH- [attached to P] fragment count	Molecular Fragments
+-N< [attached to P]	-N< [attached to P] fragment count	Molecular Fragments
+Sn=O	Sn=O fragment count	Molecular Fragments
+Sn [oxygen attach]	Sn [oxygen attach] fragment count	Molecular Fragments
+Sn [aromatic attach]	Sn [aromatic attach] fragment count	Molecular Fragments
+Sn	Sn fragment count	Molecular Fragments
+Si [aromatic attach]	Si [aromatic attach] fragment count	Molecular Fragments
+Si [oxygen, aromatic attach]	Si [oxygen, aromatic attach] fragment count	Molecular Fragments
+Si [oxygen attach]	Si [oxygen attach] fragment count	Molecular Fragments
+Si	Si fragment count	Molecular Fragments
+-S(=O)(=O)- [2 nitrogen attach]	-S(=O)(=O)- [2 nitrogen attach] fragment count	Molecular Fragments
+-S(=O)(=O)- [nitrogen, aromatic attach]	-S(=O)(=O)- [nitrogen, aromatic attach] fragment count	Molecular Fragments
+-S(=O)(=O)- [aromatic attach]	-S(=O)(=O)- [aromatic attach] fragment count	Molecular Fragments
+-S(=O)(=O)- [olefinic attach]	-S(=O)(=O)- [olefinic attach] fragment count	Molecular Fragments
+-S(=O)(=O)- [nitrogen, aliphatic attach]	-S(=O)(=O)- [nitrogen, aliphatic attach] fragment count	Molecular Fragments
+-S(=O)(=O)- [aliphatic attach]	-S(=O)(=O)- [aliphatic attach] fragment count	Molecular Fragments
+-S(=O)- [2 nitrogen attach]	-S(=O)- [2 nitrogen attach] fragment count	Molecular Fragments
+-S(=O)- [nitrogen, aromatic attach]	-S(=O)- [nitrogen, aromatic attach] fragment count	Molecular Fragments
+-S(=O)- [aromatic attach]	-S(=O)- [aromatic attach] fragment count	Molecular Fragments
+-S(=O)- olefinic attach]	-S(=O)- olefinic attach] fragment count	Molecular Fragments
+-S(=O)- [nitrogen, aliphatic attach]	-S(=O)- [nitrogen, aliphatic attach] fragment count	Molecular Fragments
+-S(=O)- [aliphatic attach]	-S(=O)- [aliphatic attach] fragment count	Molecular Fragments
+-OH [aromatic attach]	-OH [aromatic attach] fragment count	Molecular Fragments
+-SH [aromatic attach]	-SH [aromatic attach] fragment count	Molecular Fragments
+-N=O [aromatic attach]	-N=O [aromatic attach] fragment count	Molecular Fragments
+-ONO2	-ONO2 fragment count	Molecular Fragments
+-NO2 [aromatic attach]	-NO2 [aromatic attach] fragment count	Molecular Fragments
+-NO2 [olefinic attach]	-NO2 [olefinic attach] fragment count	Molecular Fragments
+-NO2 [nitrogen attach]	-NO2 [nitrogen attach] fragment count	Molecular Fragments
+-NO2 [aliphatic attach]	-NO2 [aliphatic attach] fragment count	Molecular Fragments
+-N=C=O [aromatic attach]	-N=C=O [aromatic attach] fragment count	Molecular Fragments
+-N=C=O [aliphatic attach]	-N=C=O [aliphatic attach] fragment count	Molecular Fragments
+-COOH [aromatic attach]	-COOH [aromatic attach] fragment count	Molecular Fragments
+-OC(=O)O-	-OC(=O)O- fragment count	Molecular Fragments
+-C(=O)O- [aromatic attach]	-C(=O)O- [aromatic attach] fragment count	Molecular Fragments
+-C(=O)SH [aromatic attach]	-C(=O)SH [aromatic attach] fragment count	Molecular Fragments
+-C(=O)S- [aromatic attach]	-C(=O)S- [aromatic attach] fragment count	Molecular Fragments
+-C(=S)SH [aromatic attach]	-C(=S)SH [aromatic attach] fragment count	Molecular Fragments
+-C(=S)S- [aromatic attach]	-C(=S)S- [aromatic attach] fragment count	Molecular Fragments
+-C(=S)OH [aromatic attach]	-C(=S)OH [aromatic attach] fragment count	Molecular Fragments
+-C(=S)O- [aromatic attach]	-C(=S)O- [aromatic attach] fragment count	Molecular Fragments
+-C(=S)- [nitrogen, aromatic attach]	-C(=S)- [nitrogen, aromatic attach] fragment count	Molecular Fragments
+-C(=S)- [aromatic attach]	-C(=S)- [aromatic attach] fragment count	Molecular Fragments
+-CHO [aromatic attach]	-CHO [aromatic attach] fragment count	Molecular Fragments
+-COOH [aliphatic attach]	-COOH [aliphatic attach] fragment count	Molecular Fragments
+HC(=O)O-	HC(=O)O- fragment count	Molecular Fragments
+-C(=O)O- [nitrogen attach]	-C(=O)O- [nitrogen attach] fragment count	Molecular Fragments
+-C(=O)O- [cyclic]	-C(=O)O- [cyclic] fragment count	Molecular Fragments
+-C(=O)O- [olefinic attach]	-C(=O)O- [olefinic attach] fragment count	Molecular Fragments
+-C(=O)O- [aliphatic attach]	-C(=O)O- [aliphatic attach] fragment count	Molecular Fragments
+-C(=O)SH [nitrogen attach]	-C(=O)SH [nitrogen attach] fragment count	Molecular Fragments
+-C(=O)SH [aliphatic attach]	-C(=O)SH [aliphatic attach] fragment count	Molecular Fragments
+-C(=O)S- [nitrogen attach]	-C(=O)S- [nitrogen attach] fragment count	Molecular Fragments
+-C(=O)S- [aliphatic attach]	-C(=O)S- [aliphatic attach] fragment count	Molecular Fragments
+-C(=S)SH [nitrogen attach]	-C(=S)SH [nitrogen attach] fragment count	Molecular Fragments
+-C(=S)SH [aliphatic attach]	-C(=S)SH [aliphatic attach] fragment count	Molecular Fragments
+-C(=S)OH [aliphatic attach]	-C(=S)OH [aliphatic attach] fragment count	Molecular Fragments
+-C(=S)O- [nitrogen attach]	-C(=S)O- [nitrogen attach] fragment count	Molecular Fragments
+-C(=S)O- [aliphatic attach]	-C(=S)O- [aliphatic attach] fragment count	Molecular Fragments
+-C(=S)S- [nitrogen attach]	-C(=S)S- [nitrogen attach] fragment count	Molecular Fragments
+-C(=S)S- [aliphatic attach]	-C(=S)S- [aliphatic attach] fragment count	Molecular Fragments
+-C(=S)- [2 nitrogen attach]	-C(=S)- [2 nitrogen attach] fragment count	Molecular Fragments
+-C(=S)- [nitrogen, aliphatic attach]	-C(=S)- [nitrogen, aliphatic attach] fragment count	Molecular Fragments
+-C(=S)- [aliphatic attach]	-C(=S)- [aliphatic attach] fragment count	Molecular Fragments
+-CF3 [aromatic attach]	-CF3 [aromatic attach] fragment count	Molecular Fragments
+-CCl3 [aromatic attach]	-CCl3 [aromatic attach] fragment count	Molecular Fragments
+-C#N [aromatic attach]	-C#N [aromatic attach] fragment count	Molecular Fragments
+-CH=NOH	-CH=NOH fragment count	Molecular Fragments
+-CH=NO	-CH=NO fragment count	Molecular Fragments
+>C=NOH	>C=NOH fragment count	Molecular Fragments
+>C=NO	>C=NO fragment count	Molecular Fragments
+-C([H])=N[H] [Nitrogen attach]	-C([H])=N[H] [Nitrogen attach] fragment count	Molecular Fragments
+-C([H])=N [Nitrogen attach]	-C([H])=N [Nitrogen attach] fragment count	Molecular Fragments
+>C=N[H] [2 Nitrogen attach]	>C=N[H] [2 Nitrogen attach] fragment count	Molecular Fragments
+>C=N[H] [Nitrogen attach]	>C=N[H] [Nitrogen attach] fragment count	Molecular Fragments
+>C(=N) [2 Nitrogen attach]	>C(=N) [2 Nitrogen attach] fragment count	Molecular Fragments
+>C(=N) [Nitrogen attach]	>C(=N) [Nitrogen attach] fragment count	Molecular Fragments
+-CH=NH	-CH=NH fragment count	Molecular Fragments
+>C=NH	>C=NH fragment count	Molecular Fragments
+CH2=N	CH2=N fragment count	Molecular Fragments
+-CH=N	-CH=N fragment count	Molecular Fragments
+>C=N	>C=N fragment count	Molecular Fragments
+-NHN=O	-NHN=O fragment count	Molecular Fragments
+>NN=O	>NN=O fragment count	Molecular Fragments
+-N(=O)	-N(=O) fragment count	Molecular Fragments
+-N=NH	-N=NH fragment count	Molecular Fragments
+-N=N-	-N=N- fragment count	Molecular Fragments
+-NH2 [nitrogen attach]	-NH2 [nitrogen attach] fragment count	Molecular Fragments
+-NH- [nitrogen attach]	-NH- [nitrogen attach] fragment count	Molecular Fragments
+-N< [nitrogen attach]	-N< [nitrogen attach] fragment count	Molecular Fragments
+-CHO [nitrogen attach]	-CHO [nitrogen attach] fragment count	Molecular Fragments
+-CHO [aliphatic attach]	-CHO [aliphatic attach] fragment count	Molecular Fragments
+-C(=O)- [halogen attach]	-C(=O)- [halogen attach] fragment count	Molecular Fragments
+-C(=O)- [2 aromatic attach]	-C(=O)- [2 aromatic attach] fragment count	Molecular Fragments
+-C(=O)- [nitrogen, aromatic attach]	-C(=O)- [nitrogen, aromatic attach] fragment count	Molecular Fragments
+-C(=O)- [aromatic attach]	-C(=O)- [aromatic attach] fragment count	Molecular Fragments
+-C(=O)- [2 nitrogen attach]	-C(=O)- [2 nitrogen attach] fragment count	Molecular Fragments
+-C(=O)- [nitrogen, aliphatic attach]	-C(=O)- [nitrogen, aliphatic attach] fragment count	Molecular Fragments
+-C(=O)- [phosphorus attach]	-C(=O)- [phosphorus attach] fragment count	Molecular Fragments
+-C(=O)- [olefinic attach]	-C(=O)- [olefinic attach] fragment count	Molecular Fragments
+C=O(ketone, aliphatic attach)	C=O(ketone, aliphatic attach) fragment count	Molecular Fragments
+C=O(non-ketone, aliphatic attach)	C=O(non-ketone, aliphatic attach) fragment count	Molecular Fragments
+-CCl3 [aliphatic attach]	-CCl3 [aliphatic attach] fragment count	Molecular Fragments
+-CF3 [aliphatic attach]	-CF3 [aliphatic attach] fragment count	Molecular Fragments
+-C#N [aliphatic nitrogen attach]	-C#N [aliphatic nitrogen attach] fragment count	Molecular Fragments
+-C#N [aliphatic sulfur attach]	-C#N [aliphatic sulfur attach] fragment count	Molecular Fragments
+-C#N [olefinic attach]	-C#N [olefinic attach] fragment count	Molecular Fragments
+-C#N [aliphatic attach]	-C#N [aliphatic attach] fragment count	Molecular Fragments
+P=NH	P=NH fragment count	Molecular Fragments
+P=N	P=N fragment count	Molecular Fragments
+P=S	P=S fragment count	Molecular Fragments
+P(=O)	P(=O) fragment count	Molecular Fragments
+As(=O)	As(=O) fragment count	Molecular Fragments
+-SH [aliphatic attach]	-SH [aliphatic attach] fragment count	Molecular Fragments
+-S- [three membered ring]	-S- [three membered ring] fragment count	Molecular Fragments
+-S- [sulfur attach]	-S- [sulfur attach] fragment count	Molecular Fragments
+-S- [arsenic attach]	-S- [arsenic attach] fragment count	Molecular Fragments
+-S- [phosphorus attach]	-S- [phosphorus attach] fragment count	Molecular Fragments
+-S- [nitrogen attach]	-S- [nitrogen attach] fragment count	Molecular Fragments
+-S- [2 aromatic attach]	-S- [2 aromatic attach] fragment count	Molecular Fragments
+-S- [aromatic attach]	-S- [aromatic attach] fragment count	Molecular Fragments
+-OH [sulfur attach]	-OH [sulfur attach] fragment count	Molecular Fragments
+-OH [oxygen attach]	-OH [oxygen attach] fragment count	Molecular Fragments
+-OH [arsenic attach]	-OH [arsenic attach] fragment count	Molecular Fragments
+-OH [phosphorus attach]	-OH [phosphorus attach] fragment count	Molecular Fragments
+-OH [nitrogen attach]	-OH [nitrogen attach] fragment count	Molecular Fragments
+-OH [aliphatic attach]	-OH [aliphatic attach] fragment count	Molecular Fragments
+-O- (epoxide)	-O- (epoxide) fragment count	Molecular Fragments
+-O- [2 aromatic attach]	-O- [2 aromatic attach] fragment count	Molecular Fragments
+-O- [phosphorus, aromatic attach]	-O- [phosphorus, aromatic attach] fragment count	Molecular Fragments
+-O- [2 phosphorus attach]	-O- [2 phosphorus attach] fragment count	Molecular Fragments
+-O- [phosphorus attach]	-O- [phosphorus attach] fragment count	Molecular Fragments
+-O- [arsenic attach]	-O- [arsenic attach] fragment count	Molecular Fragments
+-O- [nitrogen attach]	-O- [nitrogen attach] fragment count	Molecular Fragments
+-O- [sulfur attach]	-O- [sulfur attach] fragment count	Molecular Fragments
+-O- [oxygen attach]	-O- [oxygen attach] fragment count	Molecular Fragments
+-O- [aromatic attach]	-O- [aromatic attach] fragment count	Molecular Fragments
+-CH= [aromatic attach]	-CH= [aromatic attach] fragment count	Molecular Fragments
+>C= [aromatic attach]	>C= [aromatic attach] fragment count	Molecular Fragments
+-C# [aromatic attach]	-C# [aromatic attach] fragment count	Molecular Fragments
+-CH3 [aromatic attach]	-CH3 [aromatic attach] fragment count	Molecular Fragments
+-CH2- [aromatic attach]	-CH2- [aromatic attach] fragment count	Molecular Fragments
+-CH< [aromatic attach]	-CH< [aromatic attach] fragment count	Molecular Fragments
+>C< [aromatic attach]	>C< [aromatic attach] fragment count	Molecular Fragments
+-CH3 [aliphatic attach]	-CH3 [aliphatic attach] fragment count	Molecular Fragments
+-CH2- [aliphatic attach]	-CH2- [aliphatic attach] fragment count	Molecular Fragments
+-CH< [aliphatic attach]	-CH< [aliphatic attach] fragment count	Molecular Fragments
+>C< [aliphatic attach]	>C< [aliphatic attach] fragment count	Molecular Fragments
+=C=	=C= fragment count	Molecular Fragments
+=CH2 [aliphatic attach]	=CH2 [aliphatic attach] fragment count	Molecular Fragments
+=CH [aliphatic attach]	=CH [aliphatic attach] fragment count	Molecular Fragments
+=C [aliphatic attach]	=C [aliphatic attach] fragment count	Molecular Fragments
+#CH [aliphatic attach]	#CH [aliphatic attach] fragment count	Molecular Fragments
+#C [aliphatic attach]	#C [aliphatic attach] fragment count	Molecular Fragments
+-NH2 [aromatic attach]	-NH2 [aromatic attach] fragment count	Molecular Fragments
+-NH- [aromatic attach]	-NH- [aromatic attach] fragment count	Molecular Fragments
+-N< [aromatic attach]	-N< [aromatic attach] fragment count	Molecular Fragments
+-NH2 [aliphatic attach]	-NH2 [aliphatic attach] fragment count	Molecular Fragments
+-NH- [aliphatic attach]	-NH- [aliphatic attach] fragment count	Molecular Fragments
+-N< [aliphatic attach]	-N< [aliphatic attach] fragment count	Molecular Fragments
+Fused aromatic carbon	Fused aromatic carbon fragment count	Molecular Fragments
+Fused aromatic nitrogen	Fused aromatic nitrogen fragment count	Molecular Fragments
+ACH	ACH fragment count	Molecular Fragments
+ANH	ANH fragment count	Molecular Fragments
+AC	AC fragment count	Molecular Fragments
+AN	AN fragment count	Molecular Fragments
+AN+	AN+ fragment count	Molecular Fragments
+AO	AO fragment count	Molecular Fragments
+AS	AS fragment count	Molecular Fragments
+=O [other]	=O [other] fragment count	Molecular Fragments
+=S [other]	=S [other] fragment count	Molecular Fragments
+-[O-]	-[O-] fragment count	Molecular Fragments
+-O- [aliphatic attach]	-O- [aliphatic attach] fragment count	Molecular Fragments
+-S- [aliphatic attach]	-S- [aliphatic attach] fragment count	Molecular Fragments
+-F [aromatic attach]	-F [aromatic attach] fragment count	Molecular Fragments
+-Br [aromatic attach]	-Br [aromatic attach] fragment count	Molecular Fragments
+-Cl [aromatic attach]	-Cl [aromatic attach] fragment count	Molecular Fragments
+-I [aromatic attach]	-I [aromatic attach] fragment count	Molecular Fragments
+-Br [olefinic attach]	-Br [olefinic attach] fragment count	Molecular Fragments
+-Cl [olefinic attach]	-Cl [olefinic attach] fragment count	Molecular Fragments
+-F [olefinic attach]	-F [olefinic attach] fragment count	Molecular Fragments
+-I [olefinic attach]	-I [olefinic attach] fragment count	Molecular Fragments
+Halogen [Nitrogen attach]	Halogen [Nitrogen attach] fragment count	Molecular Fragments
+-Br [aliphatic attach]	-Br [aliphatic attach] fragment count	Molecular Fragments
+-Cl [aliphatic attach]	-Cl [aliphatic attach] fragment count	Molecular Fragments
+-F [aliphatic attach]	-F [aliphatic attach] fragment count	Molecular Fragments
+-I [aliphatic attach]	-I [aliphatic attach] fragment count	Molecular Fragments
+H [phosphorus attach]	H [phosphorus attach] fragment count	Molecular Fragments
+H [nitrogen attach]	H [nitrogen attach] fragment count	Molecular Fragments
+H [silicon attach]	H [silicon attach] fragment count	Molecular Fragments
+H [carbon attach]	H [carbon attach] fragment count	Molecular Fragments
+H [other]	H [other] fragment count	Molecular Fragments
+-Hg	-Hg fragment count	Molecular Fragments
+-Hg-	-Hg- fragment count	Molecular Fragments
+-Hg+	-Hg+ fragment count	Molecular Fragments
+Hg	Hg fragment count	Molecular Fragments
+Pb	Pb fragment count	Molecular Fragments
+B	B fragment count	Molecular Fragments
+P [+3 valence, all single bonds]	P [+3 valence, all single bonds] fragment count	Molecular Fragments
+P [+3 valence, all single bonds]	P [+3 valence, all single bonds] fragment count	Molecular Fragments
+P [+3 valence, all single bonds]	P [+3 valence, all single bonds] fragment count	Molecular Fragments
+P [+5 valence, one double bond]	P [+5 valence, one double bond] fragment count	Molecular Fragments
+P [+5 valence, two double bonds]	P [+5 valence, two double bonds] fragment count	Molecular Fragments
+P [+5 valence, all single bonds]	P [+5 valence, all single bonds] fragment count	Molecular Fragments
+P	P fragment count	Molecular Fragments
+As [+3 valence, one double bond]	As [+3 valence, one double bond] fragment count	Molecular Fragments
+As [+3 valence, all single bonds]	As [+3 valence, all single bonds] fragment count	Molecular Fragments
+As [+5 valence, one double bond]	As [+5 valence, one double bond] fragment count	Molecular Fragments
+As [+5 valence, two double bonds]	As [+5 valence, two double bonds] fragment count	Molecular Fragments
+As [+5 valence, all single bonds]	As [+5 valence, all single bonds] fragment count	Molecular Fragments
+As	As fragment count	Molecular Fragments
+numHBa	Number of hydrogen bond acceptors	2-D Molecular Properties
+numHBd	Number of hydrogen bond donors	2-D Molecular Properties
+numwHBd	Number of weak hydrogen bond donors (i.e. �CHX, where X = Cl, F)	2-D Molecular Properties
+SHHBa	Sum of E-State indices for hydrogen bond acceptors	2-D Molecular Properties
+SHHBd	Sum of E-State indices for hydrogen bond donors	2-D Molecular Properties
+SHwHBd	Sum of E-State indices for weak hydrogen bond donors	2-D Molecular Properties
+Qs	Molecular and group polarity index	2-D Molecular Properties
+Qv	Molecular and group polarity index	2-D Molecular Properties
+Qsv	Average of Qs and Qv	2-D Molecular Properties
+ib	Information bond index	Information Indices
+eim	Mean information content on the edge magnitude	Information Indices
+ic	Information content	Information Indices
+si	Mean information content or Shannon�s entropy	Information Indices
+I	Total information content	Information Indices
+maxic	Maximum information content	Information Indices
+ssi	Standardized Shannon Information  or standardized information content	Information Indices
+R	Brillouin redundancy index	Information Indices
+iadje	Total information content on the adjacency equality 	Information Indices
+iadjem	Mean information content on the adjacency equality 	Information Indices
+iadjm	Total information content on the adjacency magnitude 	Information Indices
+iadjmm	Mean information content on the adjacency magnitude 	Information Indices
+ivdem	Mean information content of the vertex degree equality 	Information Indices
+ivdmm	Mean information content of the vertex degree magnitude 	Information Indices
+ieadje	Total information content on the edge adjacency equality 	Information Indices
+ieadjem	Mean information content on the edge adjacency equality 	Information Indices
+ieadjm	Total information content on the edge adjacency magnitude 	Information Indices
+ieadjmm	Mean information content on the edge adjacency magnitude 	Information Indices
+ide	Total information content on the distance equality 	Information Indices
+idem	Mean information content on the distance equality 	Information Indices
+idm	Total information content on the distance magnitude 	Information Indices
+idmm	Mean information content on the distance magnitude 	Information Indices
+iddem	Mean information content on the distance degree equality 	Information Indices
+iddmm	Mean information content on the distance degree magnitude 	Information Indices
+iede	Total information content on the edge distance equality 	Information Indices
+iedem	Mean information content on the edge distance equality 	Information Indices
+We	Edge wiener index 	Information Indices
+iedm	Total information content on the edge distance magnitude 	Information Indices
+iedmm	Mean information content on the edge distance magnitude 	Information Indices
+tvc	Total vertex cyclicity 	Information Indices
+icyce	Total information on the vertex cycle matrix equality 	Information Indices
+icycem	Mean information on the vertex cycle matrix equality 	Information Indices
+icycm	Total information on the vertex cycle matrix magnitude 	Information Indices
+icycmm	Mean information on the vertex cycle matrix magnitude 	Information Indices
+tti	Total topological index 	Information Indices
+ttvi	Total topological valence index 	Information Indices
+MDEC11	Molecular distance edge between all primary carbons	Molecular Distance-Edge Vector
+MDEC12	Molecular distance edge between all primary and secondary carbons	Molecular Distance-Edge Vector
+MDEC13	Molecular distance edge between all primary and tertiary carbons	Molecular Distance-Edge Vector
+MDEC14	Molecular distance edge between all primary and quaternary carbons	Molecular Distance-Edge Vector
+MDEC22	Molecular distance edge between all secondary carbons	Molecular Distance-Edge Vector
+MDEC23	Molecular distance edge between all secondary and tertiary carbons	Molecular Distance-Edge Vector
+MDEC24	Molecular distance edge between all secondary and quaternary carbons	Molecular Distance-Edge Vector
+MDEC33	Molecular distance edge between all tertiary carbons	Molecular Distance-Edge Vector
+MDEC34	Molecular distance edge between all tertiary and quaternary carbons	Molecular Distance-Edge Vector
+MDEC44	Molecular distance edge between all quaternary carbons	Molecular Distance-Edge Vector
+MDEO11	Molecular distance edge between all primary oxygens	Molecular Distance-Edge Vector
+MDEO12	Molecular distance edge between all primary and secondary oxygens	Molecular Distance-Edge Vector
+MDEO22	Molecular distance edge between all secondary oxygens	Molecular Distance-Edge Vector
+MDEN11	Molecular distance edge between all primary nitrogens	Molecular Distance-Edge Vector
+MDEN12	Molecular distance edge between all primary and secondary nitrogens	Molecular Distance-Edge Vector
+MDEN13	Molecular distance edge between all primary and tertiary nitrogens	Molecular Distance-Edge Vector
+MDEN22	Molecular distance edge between all secondary nitrogens	Molecular Distance-Edge Vector
+MDEN23	Molecular distance edge between all secondary and tertiary nitrogens	Molecular Distance-Edge Vector
+MDEN33	Molecular distance edge between all tertiary nitrogens	Molecular Distance-Edge Vector
+BEHm1	Highest eigenvalue n. 1 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm2	Highest eigenvalue n. 2 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm3	Highest eigenvalue n. 3 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm4	Highest eigenvalue n. 4 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm5	Highest eigenvalue n. 5 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm6	Highest eigenvalue n. 6 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm7	Highest eigenvalue n. 7 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHm8	Highest eigenvalue n. 8 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm1	Lowest eigenvalue n. 1 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm2	Lowest eigenvalue n. 2 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm3	Lowest eigenvalue n. 3 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm4	Lowest eigenvalue n. 4 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm5	Lowest eigenvalue n. 5 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm6	Lowest eigenvalue n. 6 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm7	Lowest eigenvalue n. 7 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BELm8	Lowest eigenvalue n. 8 of Burden matrix / weighted by atomic masses 	Burden Eigenvalue Descriptors
+BEHv1	Highest eigenvalue n. 1 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv2	Highest eigenvalue n. 2 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv3	Highest eigenvalue n. 3 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv4	Highest eigenvalue n. 4 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv5	Highest eigenvalue n. 5 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv6	Highest eigenvalue n. 6 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv7	Highest eigenvalue n. 7 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHv8	Highest eigenvalue n. 8 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv1	Lowest eigenvalue n. 1 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv2	Lowest eigenvalue n. 2 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv3	Lowest eigenvalue n. 3 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv4	Lowest eigenvalue n. 4 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv5	Lowest eigenvalue n. 5 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv6	Lowest eigenvalue n. 6 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv7	Lowest eigenvalue n. 7 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BELv8	Lowest eigenvalue n. 8 of Burden matrix / weighted by atomic van der Waals volumes 	Burden Eigenvalue Descriptors
+BEHe1	Highest eigenvalue n. 1 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe2	Highest eigenvalue n. 2 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe3	Highest eigenvalue n. 3 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe4	Highest eigenvalue n. 4 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe5	Highest eigenvalue n. 5 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe6	Highest eigenvalue n. 6 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe7	Highest eigenvalue n. 7 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHe8	Highest eigenvalue n. 8 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe1	Lowest eigenvalue n. 1 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe2	Lowest eigenvalue n. 2 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe3	Lowest eigenvalue n. 3 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe4	Lowest eigenvalue n. 4 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe5	Lowest eigenvalue n. 5 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe6	Lowest eigenvalue n. 6 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe7	Lowest eigenvalue n. 7 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BELe8	Lowest eigenvalue n. 8 of Burden matrix / weighted by atomic Sanderson electronegativities 	Burden Eigenvalue Descriptors
+BEHp1	Highest eigenvalue n. 1 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp2	Highest eigenvalue n. 2 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp3	Highest eigenvalue n. 3 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp4	Highest eigenvalue n. 4 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp5	Highest eigenvalue n. 5 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp6	Highest eigenvalue n. 6 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp7	Highest eigenvalue n. 7 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BEHp8	Highest eigenvalue n. 8 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp1	Lowest eigenvalue n. 1 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp2	Lowest eigenvalue n. 2 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp3	Lowest eigenvalue n. 3 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp4	Lowest eigenvalue n. 4 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp5	Lowest eigenvalue n. 5 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp6	Lowest eigenvalue n. 6 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp7	Lowest eigenvalue n. 7 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+BELp8	Lowest eigenvalue n. 8 of Burden matrix / weighted by atomic polarizabilities 	Burden Eigenvalue Descriptors
+MWC01	Molecular walk count of order 1	Walk and Path Counts
+MWC02	Molecular walk count of order 2	Walk and Path Counts
+MWC03	Molecular walk count of order 3	Walk and Path Counts
+MWC04	Molecular walk count of order 4	Walk and Path Counts
+MWC05	Molecular walk count of order 5	Walk and Path Counts
+MWC06	Molecular walk count of order 6	Walk and Path Counts
+MWC07	Molecular walk count of order 7	Walk and Path Counts
+MWC08	Molecular walk count of order 8	Walk and Path Counts
+MWC09	Molecular walk count of order 9	Walk and Path Counts
+MWC10	Molecular walk count of order 10	Walk and Path Counts
+SRW01	Self-returning walk count of order 1	Walk and Path Counts
+SRW02	Self-returning walk count of order 2	Walk and Path Counts
+SRW03	Self-returning walk count of order 3	Walk and Path Counts
+SRW04	Self-returning walk count of order 4	Walk and Path Counts
+SRW05	Self-returning walk count of order 5	Walk and Path Counts
+SRW06	Self-returning walk count of order 6	Walk and Path Counts
+SRW07	Self-returning walk count of order 7	Walk and Path Counts
+SRW08	Self-returning walk count of order 8	Walk and Path Counts
+SRW09	Self-returning walk count of order 9	Walk and Path Counts
+SRW10	Self-returning walk count of order 10	Walk and Path Counts
+MPC01	Molecular path count of order 1	Walk and Path Counts
+MPC02	Molecular path count of order 2	Walk and Path Counts
+MPC03	Molecular path count of order 3	Walk and Path Counts
+MPC04	Molecular path count of order 4	Walk and Path Counts
+MPC05	Molecular path count of order 5	Walk and Path Counts
+MPC06	Molecular path count of order 6	Walk and Path Counts
+MPC07	Molecular path count of order 7	Walk and Path Counts
+MPC08	Molecular path count of order 8	Walk and Path Counts
+MPC09	Molecular path count of order 9	Walk and Path Counts
+MPC10	Molecular path count of order 10	Walk and Path Counts
+piPC01	Molecular multiple path count of order 01 (sum of conventional bond orders, SCBO)	Walk and Path Counts
+piPC02	Molecular multiple path count of order 02	Walk and Path Counts
+piPC03	Molecular multiple path count of order 03	Walk and Path Counts
+piPC04	Molecular multiple path count of order 04	Walk and Path Counts
+piPC05	Molecular multiple path count of order 05	Walk and Path Counts
+piPC06	Molecular multiple path count of order 06	Walk and Path Counts
+piPC07	Molecular multiple path count of order 07	Walk and Path Counts
+piPC08	Molecular multiple path count of order 08	Walk and Path Counts
+piPC09	Molecular multiple path count of order 09	Walk and Path Counts
+piPC10	Molecular multiple path count of order 10	Walk and Path Counts
+piID	Conventional bond order id number	Walk and Path Counts
+TWC	Total walk count	Walk and Path Counts
+TPC	Total path count	Walk and Path Counts
+CID	Randic Connectivity ID number	Walk and Path Counts
+CID2	Average Randic Connectivity ID number	Walk and Path Counts
+BID	Balaban ID number	Walk and Path Counts
+ATS1m	Broto-Moreau autocorrelation of a topological structure - lag 1 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS2m	Broto-Moreau autocorrelation of a topological structure - lag 2 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS3m	Broto-Moreau autocorrelation of a topological structure - lag 3 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS4m	Broto-Moreau autocorrelation of a topological structure - lag 4 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS5m	Broto-Moreau autocorrelation of a topological structure - lag 5 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS6m	Broto-Moreau autocorrelation of a topological structure - lag 6 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS7m	Broto-Moreau autocorrelation of a topological structure - lag 7 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS8m	Broto-Moreau autocorrelation of a topological structure - lag 8 / weighted by atomic masses	2D Autocorrelation Descriptors
+ATS1v	Broto-Moreau autocorrelation of a topological structure - lag 1 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS2v	Broto-Moreau autocorrelation of a topological structure - lag 2 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS3v	Broto-Moreau autocorrelation of a topological structure - lag 3 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS4v	Broto-Moreau autocorrelation of a topological structure - lag 4 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS5v	Broto-Moreau autocorrelation of a topological structure - lag 5 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS6v	Broto-Moreau autocorrelation of a topological structure - lag 6 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS7v	Broto-Moreau autocorrelation of a topological structure - lag 7 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS8v	Broto-Moreau autocorrelation of a topological structure - lag 8 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+ATS1e	Broto-Moreau autocorrelation of a topological structure - lag 1 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS2e	Broto-Moreau autocorrelation of a topological structure - lag 2 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS3e	Broto-Moreau autocorrelation of a topological structure - lag 3 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS4e	Broto-Moreau autocorrelation of a topological structure - lag 4 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS5e	Broto-Moreau autocorrelation of a topological structure - lag 5 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS6e	Broto-Moreau autocorrelation of a topological structure - lag 6 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS7e	Broto-Moreau autocorrelation of a topological structure - lag 7 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS8e	Broto-Moreau autocorrelation of a topological structure - lag 8 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+ATS1p	Broto-Moreau autocorrelation of a topological structure - lag 1 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS2p	Broto-Moreau autocorrelation of a topological structure - lag 2 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS3p	Broto-Moreau autocorrelation of a topological structure - lag 3 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS4p	Broto-Moreau autocorrelation of a topological structure - lag 4 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS5p	Broto-Moreau autocorrelation of a topological structure - lag 5 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS6p	Broto-Moreau autocorrelation of a topological structure - lag 6 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS7p	Broto-Moreau autocorrelation of a topological structure - lag 7 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ATS8p	Broto-Moreau autocorrelation of a topological structure - lag 8 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS1m	Moran autocorrelation - lag 1 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS2m	Moran autocorrelation - lag 2 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS3m	Moran autocorrelation - lag 3 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS4m	Moran autocorrelation - lag 4 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS5m	Moran autocorrelation - lag 5 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS6m	Moran autocorrelation - lag 6 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS7m	Moran autocorrelation - lag 7 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS8m	Moran autocorrelation - lag 8 / weighted by atomic masses	2D Autocorrelation Descriptors
+MATS1v	Moran autocorrelation - lag 1 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS2v	Moran autocorrelation - lag 2 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS3v	Moran autocorrelation - lag 3 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS4v	Moran autocorrelation - lag 4 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS5v	Moran autocorrelation - lag 5 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS6v	Moran autocorrelation - lag 6 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS7v	Moran autocorrelation - lag 7 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS8v	Moran autocorrelation - lag 8 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+MATS1e	Moran autocorrelation - lag 1 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS2e	Moran autocorrelation - lag 2 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS3e	Moran autocorrelation - lag 3 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS4e	Moran autocorrelation - lag 4 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS5e	Moran autocorrelation - lag 5 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS6e	Moran autocorrelation - lag 6 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS7e	Moran autocorrelation - lag 7 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS8e	Moran autocorrelation - lag 8 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+MATS1p	Moran autocorrelation - lag 1 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS2p	Moran autocorrelation - lag 2 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS3p	Moran autocorrelation - lag 3 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS4p	Moran autocorrelation - lag 4 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS5p	Moran autocorrelation - lag 5 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS6p	Moran autocorrelation - lag 6 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS7p	Moran autocorrelation - lag 7 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+MATS8p	Moran autocorrelation - lag 8 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS1m	Geary autocorrelation - lag 1 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS2m	Geary autocorrelation - lag 2 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS3m	Geary autocorrelation - lag 3 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS4m	Geary autocorrelation - lag 4 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS5m	Geary autocorrelation - lag 5 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS6m	Geary autocorrelation - lag 6 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS7m	Geary autocorrelation - lag 7 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS8m	Geary autocorrelation - lag 8 / weighted by atomic masses	2D Autocorrelation Descriptors
+GATS1v	Geary autocorrelation - lag 1 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS2v	Geary autocorrelation - lag 2 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS3v	Geary autocorrelation - lag 3 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS4v	Geary autocorrelation - lag 4 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS5v	Geary autocorrelation - lag 5 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS6v	Geary autocorrelation - lag 6 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS7v	Geary autocorrelation - lag 7 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS8v	Geary autocorrelation - lag 8 / weighted by atomic van der Waals volumes	2D Autocorrelation Descriptors
+GATS1e	Geary autocorrelation - lag 1 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS2e	Geary autocorrelation - lag 2 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS3e	Geary autocorrelation - lag 3 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS4e	Geary autocorrelation - lag 4 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS5e	Geary autocorrelation - lag 5 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS6e	Geary autocorrelation - lag 6 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS7e	Geary autocorrelation - lag 7 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS8e	Geary autocorrelation - lag 8 / weighted by atomic Sanderson electronegativities	2D Autocorrelation Descriptors
+GATS1p	Geary autocorrelation - lag 1 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS2p	Geary autocorrelation - lag 2 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS3p	Geary autocorrelation - lag 3 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS4p	Geary autocorrelation - lag 4 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS5p	Geary autocorrelation - lag 5 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS6p	Geary autocorrelation - lag 6 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS7p	Geary autocorrelation - lag 7 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+GATS8p	Geary autocorrelation - lag 8 / weighted by atomic polarizabilities	2D Autocorrelation Descriptors
+ALOGP	Ghose-Crippen octanol water coefficient	Molecular Properties
+ALOGP2	Ghose-Crippen octanol water coefficient squared	Molecular Properties
+XLOGP	Wang octanol water partition coefficient	Molecular Properties
+XLOGP2	Wang octanol water partition coefficient squared	Molecular Properties
+AMR	Ghose-Crippen molar refractivity	Molecular Properties
+Hy	hydrophilic factor	Molecular Properties
+Ui	unsaturation index	Molecular Properties
+MOMI1	X-principal component	MOMI
+MOMI2	Y-principal component	MOMI
+MOMI3	Z-principal component	MOMI
+MOMI4	X/Y ratio	MOMI
+MOMI5	X/Z ratio	MOMI
+MOMI6	Y/Z ratio	MOMI
+MOMI7	radius of gyration of	MOMI
+PNSA1	Partial negative surface area 	CPSA
+PPSA1	Partial positive surface area 	CPSA
+PNSA2	Total charge weighted negative surface area 	CPSA
+PPSA2	Total charge weighted positive surface area 	CPSA
+PNSA3	Atomic charge weighted negative surface area 	CPSA
+PPSA3	Atomic charge weighted positive surface area 	CPSA
+DPSA1	Difference in charged partial surface area 	CPSA
+DPSA2	Difference in total charge weighted surface area 	CPSA
+DPSA3	Difference in atomic charge weighted surface area 	CPSA
+FNSA1	Fractional charged partial negative surface area 1 	CPSA
+FNSA2	Fractional charged partial negative surface area 2 	CPSA
+FNSA3	Fractional charged partial negative surface area 3 	CPSA
+FPSA1	Fractional charged partial positive surface area 1 	CPSA
+FFSA2	Fractional charged partial positive surface area 2 	CPSA
+FPSA3	Fractional charged partial positive surface area 3 	CPSA
+WNSA1	Surface weighted charged partial negative surface area 1 	CPSA
+WNSA2	Surface weighted charged partial negative surface area 2 	CPSA
+WNSA3	Surface weighted charged partial negative surface area 3 	CPSA
+WPSA1	Surface weighted charged partial positive surface area 1 	CPSA
+WPSA2	Surface weighted charged partial positive surface area 2 	CPSA
+WPSA3	Surface weighted charged partial positive surface area 3 	CPSA
+RNCG	Relative negative charge 	CPSA
+RPCG	Relative positive charge 	CPSA
+RNCS	Relative negative charge surface area 	CPSA
+RPCS	Relative positive charge surface area 	CPSA
+THSA	Total hydrophobic surface area 	CPSA
+TPSA	Total polar surface area 	CPSA
+RHSA	Relative hydrophobic surface area 	CPSA
+RPSA	Relative polar surface area 	CPSA
+DP01	molecular profile no. 01	Randic molecular profile
+DP02	molecular profile no. 02	Randic molecular profile
+DP03	molecular profile no. 03	Randic molecular profile
+DP04	molecular profile no. 04	Randic molecular profile
+DP05	molecular profile no. 05	Randic molecular profile
+DP06	molecular profile no. 06	Randic molecular profile
+DP07	molecular profile no. 07	Randic molecular profile
+DP08	molecular profile no. 08	Randic molecular profile
+DP09	molecular profile no. 09	Randic molecular profile
+DP10	molecular profile no. 10	Randic molecular profile
+DP11	molecular profile no. 11	Randic molecular profile
+DP12	molecular profile no. 12	Randic molecular profile
+DP13	molecular profile no. 13	Randic molecular profile
+DP14	molecular profile no. 14	Randic molecular profile
+DP15	molecular profile no. 15	Randic molecular profile
+DP16	molecular profile no. 16	Randic molecular profile
+DP17	molecular profile no. 17	Randic molecular profile
+DP18	molecular profile no. 18	Randic molecular profile
+DP19	molecular profile no. 19	Randic molecular profile
+DP20	molecular profile no. 20	Randic molecular profile
+SP01	shape profile no. 01	Randic molecular profile
+SP02	shape profile no. 02	Randic molecular profile
+SP03	shape profile no. 03	Randic molecular profile
+SP04	shape profile no. 04	Randic molecular profile
+SP05	shape profile no. 05	Randic molecular profile
+SP06	shape profile no. 06	Randic molecular profile
+SP07	shape profile no. 07	Randic molecular profile
+SP08	shape profile no. 08	Randic molecular profile
+SP09	shape profile no. 09	Randic molecular profile
+SP10	shape profile no. 10	Randic molecular profile
+SP11	shape profile no. 11	Randic molecular profile
+SP12	shape profile no. 12	Randic molecular profile
+SP13	shape profile no. 13	Randic molecular profile
+SP14	shape profile no. 14	Randic molecular profile
+SP15	shape profile no. 15	Randic molecular profile
+SP16	shape profile no. 16	Randic molecular profile
+SP17	shape profile no. 17	Randic molecular profile
+SP18	shape profile no. 18	Randic molecular profile
+SP19	shape profile no. 19	Randic molecular profile
+SP20	shape profile no. 20	Randic molecular profile
+SHP2	average shape profile index of order 2 (SHP2)	Randic molecular profile
+L1u	1st component size directional WHIM index / unweighted	Whim
+L2u	2nd component size directional WHIM index / unweighted	Whim
+L3u	3rd component size directional WHIM index / unweighted	Whim
+P1u	1st component shape directional WHIM index / unweighted	Whim
+P2u	2nd component shape directional WHIM index / unweighted	Whim
+G1u	1st component symmetry directional WHIM index / unweighted	Whim
+G2u	2nd component symmetry directional WHIM index / unweighted	Whim
+G3u	3rd component symmetry directional WHIM index / unweighted	Whim
+E1u	1st component accessibility directional WHIM index / unweighted	Whim
+E2u	2nd component accessibility directional WHIM index / unweighted	Whim
+E3u	3rd component accessibility directional WHIM index / unweighted	Whim
+L1m	1st component size directional WHIM index / weighted by atomic masses	Whim
+L2m	2nd component size directional WHIM index / weighted by atomic masses	Whim
+L3m	3rd component size directional WHIM index / weighted by atomic masses	Whim
+P1m	1st component shape directional WHIM index / weighted by atomic masses	Whim
+P2m	2nd component shape directional WHIM index / weighted by atomic masses	Whim
+G1m	1st component symmetry directional WHIM index / weighted by atomic masses	Whim
+G2m	2nd component symmetry directional WHIM index / weighted by atomic masses	Whim
+G3m	3rd component symmetry directional WHIM index / weighted by atomic masses	Whim
+E1m	1st component accessibility directional WHIM index / weighted by atomic masses	Whim
+E2m	2nd component accessibility directional WHIM index / weighted by atomic masses	Whim
+E3m	3rd component accessibility directional WHIM index / weighted by atomic masses	Whim
+L1v	1st component size directional WHIM index / weighted by atomic van der Waals volumes	Whim
+L2v	2nd component size directional WHIM index / weighted by atomic van der Waals volumes	Whim
+L3v	3rd component size directional WHIM index / weighted by atomic van der Waals volumes	Whim
+P1v	1st component shape directional WHIM index / weighted by atomic van der Waals volumes	Whim
+P2v	2nd component shape directional WHIM index / weighted by atomic van der Waals volumes	Whim
+G1v	1st component symmetry directional WHIM index / weighted by atomic van der Waals volumes	Whim
+G2v	2nd component symmetry directional WHIM index / weighted by atomic van der Waals volumes	Whim
+G3v	3rd component symmetry directional WHIM index / weighted by atomic van der Waals volumes	Whim
+E1v	1st component accessibility directional WHIM index / weighted by atomic van der Waals volumes	Whim
+E2v	2nd component accessibility directional WHIM index / weighted by atomic van der Waals volumes	Whim
+E3v	3rd component accessibility directional WHIM index / weighted by atomic van der Waals volumes	Whim
+L1e	1st component size directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+L2e	2nd component size directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+L3e	3rd component size directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+P1e	1st component shape directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+P2e	2nd component shape directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+G1e	1st component symmetry directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+G2e	2nd component symmetry directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+G3e	3rd component symmetry directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+E1e	1st component accessibility directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+E2e	2nd component accessibility directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+E3e	3rd component accessibility directional WHIM index / weighted by atomic Sanderson electronegativities	Whim
+L1p	1st component size directional WHIM index / weighted by atomic polarizabilities	Whim
+L2p	2nd component size directional WHIM index / weighted by atomic polarizabilities	Whim
+L3p	3rd component size directional WHIM index / weighted by atomic polarizabilities	Whim
+P1p	1st component shape directional WHIM index / weighted by atomic polarizabilities	Whim
+P2p	2nd component shape directional WHIM index / weighted by atomic polarizabilities	Whim
+G1p	1st component symmetry directional WHIM index / weighted by atomic polarizabilities	Whim
+G2p	2nd component symmetry directional WHIM index / weighted by atomic polarizabilities	Whim
+G3p	3rd component symmetry directional WHIM index / weighted by atomic polarizabilities	Whim
+E1p	1st component accessibility directional WHIM index / weighted by atomic polarizabilities	Whim
+E2p	2nd component accessibility directional WHIM index / weighted by atomic polarizabilities	Whim
+E3p	3rd component accessibility directional WHIM index / weighted by atomic polarizabilities	Whim
+L1s	1st component size directional WHIM index / weighted by atomic electrotopological states	Whim
+L2s	2nd component size directional WHIM index / weighted by atomic electrotopological states	Whim
+L3s	3rd component size directional WHIM index / weighted by atomic electrotopological states	Whim
+P1s	1st component shape directional WHIM index / weighted by atomic electrotopological states	Whim
+P2s	2nd component shape directional WHIM index / weighted by atomic electrotopological states	Whim
+G1s	1st component symmetry directional WHIM index / weighted by atomic electrotopological states	Whim
+G2s	2nd component symmetry directional WHIM index / weighted by atomic electrotopological states	Whim
+G3s	3rd component symmetry directional WHIM index / weighted by atomic electrotopological states	Whim
+E1s	1st component accessibility directional WHIM index / weighted by atomic electrotopological states	Whim
+E2s	2nd component accessibility directional WHIM index / weighted by atomic electrotopological states	Whim
+E3s	3rd component accessibility directional WHIM index / weighted by atomic electrotopological states	Whim
+Tu	T total size index / unweighted	Whim
+Tm	T total size index / weighted by atomic masses	Whim
+Tv	T total size index / weighted by atomic van der Waals volumes	Whim
+Te	T total size index / weighted by atomic Sanderson electronegativities	Whim
+Tp	T total size index / weighted by atomic polarizabilities	Whim
+Ts	T total size index / weighted by atomic electrotopological states	Whim
+Au	A total size index / unweighted	Whim
+Am	A total size index / weighted by atomic masses	Whim
+Av	A total size index / weighted by atomic van der Waals volumes	Whim
+Ae	A total size index / weighted by atomic Sanderson electronegativities	Whim
+Ap	A total size index / weighted by atomic polarizabilities	Whim
+As	A total size index / weighted by atomic electrotopological states	Whim
+Vu	V total size index / unweighted	Whim
+Vm	V total size index / weighted by atomic masses	Whim
+Vv	V total size index / weighted by atomic van der Waals volumes	Whim
+Ve	V total size index / weighted by atomic Sanderson electronegativities	Whim
+Vp	V total size index / weighted by atomic polarizabilities	Whim
+Vs	V total size index / weighted by atomic electrotopological states	Whim
+Gu	G total symmetry index / unweighted	Whim
+Gm	G total symmetry index / weighted by atomic masses	Whim
+Gs	G total symmetry index / weighted by atomic electrotopological states	Whim
+Ku	K global shape index / unweighted	Whim
+Km	K global shape index / weighted by atomic masses	Whim
+Kv	K global shape index / weighted by atomic van der Waals volumes	Whim
+Ke	K global shape index / weighted by atomic Sanderson electronegativities	Whim
+Kp	K global shape index / weighted by atomic polarizabilities	Whim
+Ks	K global shape index / weighted by atomic electrotopological states	Whim
+Du	D total accessibility index / unweighted	Whim
+Dm	D total accessibility index / weighted by atomic masses	Whim
+Dv	D total accessibility index / weighted by atomic van der Waals volumes	Whim
+De	D total accessibility index / weighted by atomic Sanderson electronegativities	Whim
+Dp	D total accessibility index / weighted by atomic polarizabilities	Whim
+Ds	D total accessibility index / weighted by atomic electrotopological states	Whim
+HGM	geometric mean on the leverage magnitude	Getaway
+ITH	total information content on the leverage equality	Getaway
+ISH	standardized information content on the leverage equality	Getaway
+HIC	mean information content on the leverage magnitude	Getaway
+H0u	H autocorrelation of lag 0 / unweighted	Getaway
+H1u	H autocorrelation of lag 1 / unweighted	Getaway
+H2u	H autocorrelation of lag 2 / unweighted	Getaway
+H3u	H autocorrelation of lag 3 / unweighted	Getaway
+H4u	H autocorrelation of lag 4 / unweighted	Getaway
+H5u	H autocorrelation of lag 5 / unweighted	Getaway
+H6u	H autocorrelation of lag 6 / unweighted	Getaway
+H7u	H autocorrelation of lag 7 / unweighted	Getaway
+H8u	H autocorrelation of lag 8 / unweighted	Getaway
+HTu	H total index / unweighted	Getaway
+HATS0u	leverage-weighted autocorrelation of lag 0 / unweighted	Getaway
+HATS1u	leverage-weighted autocorrelation of lag 1 / unweighted	Getaway
+HATS2u	leverage-weighted autocorrelation of lag 2 / unweighted	Getaway
+HATS3u	leverage-weighted autocorrelation of lag 3 / unweighted	Getaway
+HATS4u	leverage-weighted autocorrelation of lag 4 / unweighted	Getaway
+HATS5u	leverage-weighted autocorrelation of lag 5 / unweighted	Getaway
+HATS6u	leverage-weighted autocorrelation of lag 6 / unweighted	Getaway
+HATS7u	leverage-weighted autocorrelation of lag 7 / unweighted	Getaway
+HATS8u	leverage-weighted autocorrelation of lag 8 / unweighted	Getaway
+HATSu	leverage-weighted total index / unweighted	Getaway
+H0m	H autocorrelation of lag 0 / weighted by atomic masses	Getaway
+H1m	H autocorrelation of lag 1 / weighted by atomic masses	Getaway
+H2m	H autocorrelation of lag 2 / weighted by atomic masses	Getaway
+H3m	H autocorrelation of lag 3 / weighted by atomic masses	Getaway
+H4m	H autocorrelation of lag 4 / weighted by atomic masses	Getaway
+H5m	H autocorrelation of lag 5 / weighted by atomic masses	Getaway
+H6m	H autocorrelation of lag 6 / weighted by atomic masses	Getaway
+H7m	H autocorrelation of lag 7 / weighted by atomic masses	Getaway
+H8m	H autocorrelation of lag 8 / weighted by atomic masses	Getaway
+HTm	H total index / weighted by atomic masses	Getaway
+HATS0m	leverage-weighted autocorrelation of lag 0 / weighted by atomic masses	Getaway
+HATS1m	leverage-weighted autocorrelation of lag 1 / weighted by atomic masses	Getaway
+HATS2m	leverage-weighted autocorrelation of lag 2 / weighted by atomic masses	Getaway
+HATS3m	leverage-weighted autocorrelation of lag 3 / weighted by atomic masses	Getaway
+HATS4m	leverage-weighted autocorrelation of lag 4 / weighted by atomic masses	Getaway
+HATS5m	leverage-weighted autocorrelation of lag 5 / weighted by atomic masses	Getaway
+HATS6m	leverage-weighted autocorrelation of lag 6 / weighted by atomic masses	Getaway
+HATS7m	leverage-weighted autocorrelation of lag 7 / weighted by atomic masses	Getaway
+HATS8m	leverage-weighted autocorrelation of lag 8 / weighted by atomic masses	Getaway
+HATSm	leverage-weighted total index / weighted by atomic masses	Getaway
+H0v	H autocorrelation of lag 0 / weighted by atomic van der Waals volumes	Getaway
+H1v	H autocorrelation of lag 1 / weighted by atomic van der Waals volumes	Getaway
+H2v	H autocorrelation of lag 2 / weighted by atomic van der Waals volumes	Getaway
+H3v	H autocorrelation of lag 3 / weighted by atomic van der Waals volumes	Getaway
+H4v	H autocorrelation of lag 4 / weighted by atomic van der Waals volumes	Getaway
+H5v	H autocorrelation of lag 5 / weighted by atomic van der Waals volumes	Getaway
+H6v	H autocorrelation of lag 6 / weighted by atomic van der Waals volumes	Getaway
+H7v	H autocorrelation of lag 7 / weighted by atomic van der Waals volumes	Getaway
+H8v	H autocorrelation of lag 8 / weighted by atomic van der Waals volumes	Getaway
+HTv	H total index / weighted by atomic van der Waals volumes	Getaway
+HATS0v	leverage-weighted autocorrelation of lag 0 / weighted by atomic van der Waals volumes	Getaway
+HATS1v	leverage-weighted autocorrelation of lag 1 / weighted by atomic van der Waals volumes	Getaway
+HATS2v	leverage-weighted autocorrelation of lag 2 / weighted by atomic van der Waals volumes	Getaway
+HATS3v	leverage-weighted autocorrelation of lag 3 / weighted by atomic van der Waals volumes	Getaway
+HATS4v	leverage-weighted autocorrelation of lag 4 / weighted by atomic van der Waals volumes	Getaway
+HATS5v	leverage-weighted autocorrelation of lag 5 / weighted by atomic van der Waals volumes	Getaway
+HATS6v	leverage-weighted autocorrelation of lag 6 / weighted by atomic van der Waals volumes	Getaway
+HATS7v	leverage-weighted autocorrelation of lag 7 / weighted by atomic van der Waals volumes	Getaway
+HATS8v	leverage-weighted autocorrelation of lag 8 / weighted by atomic van der Waals volumes	Getaway
+HATSv	leverage-weighted total index / weighted by atomic van der Waals volumes	Getaway
+H0e	H autocorrelation of lag 0 / weighted by atomic Sanderson electronegativities	Getaway
+H1e	H autocorrelation of lag 1 / weighted by atomic Sanderson electronegativities	Getaway
+H2e	H autocorrelation of lag 2 / weighted by atomic Sanderson electronegativities	Getaway
+H3e	H autocorrelation of lag 3 / weighted by atomic Sanderson electronegativities	Getaway
+H4e	H autocorrelation of lag 4 / weighted by atomic Sanderson electronegativities	Getaway
+H5e	H autocorrelation of lag 5 / weighted by atomic Sanderson electronegativities	Getaway
+H6e	H autocorrelation of lag 6 / weighted by atomic Sanderson electronegativities	Getaway
+H7e	H autocorrelation of lag 7 / weighted by atomic Sanderson electronegativities	Getaway
+H8e	H autocorrelation of lag 8 / weighted by atomic Sanderson electronegativities	Getaway
+HTe	H total index / weighted by atomic Sanderson electronegativities	Getaway
+HATS0e	leverage-weighted autocorrelation of lag 0 / weighted by atomic Sanderson electronegativities	Getaway
+HATS1e	leverage-weighted autocorrelation of lag 1 / weighted by atomic Sanderson electronegativities	Getaway
+HATS2e	leverage-weighted autocorrelation of lag 2 / weighted by atomic Sanderson electronegativities	Getaway
+HATS3e	leverage-weighted autocorrelation of lag 3 / weighted by atomic Sanderson electronegativities	Getaway
+HATS4e	leverage-weighted autocorrelation of lag 4 / weighted by atomic Sanderson electronegativities	Getaway
+HATS5e	leverage-weighted autocorrelation of lag 5 / weighted by atomic Sanderson electronegativities	Getaway
+HATS6e	leverage-weighted autocorrelation of lag 6 / weighted by atomic Sanderson electronegativities	Getaway
+HATS7e	leverage-weighted autocorrelation of lag 7 / weighted by atomic Sanderson electronegativities	Getaway
+HATS8e	leverage-weighted autocorrelation of lag 8 / weighted by atomic Sanderson electronegativities	Getaway
+HATSe	leverage-weighted total index / weighted by atomic Sanderson electronegativities	Getaway
+H0p	H autocorrelation of lag 0 / weighted by atomic polarizabilities	Getaway
+H1p	H autocorrelation of lag 1 / weighted by atomic polarizabilities	Getaway
+H2p	H autocorrelation of lag 2 / weighted by atomic polarizabilities	Getaway
+H3p	H autocorrelation of lag 3 / weighted by atomic polarizabilities	Getaway
+H4p	H autocorrelation of lag 4 / weighted by atomic polarizabilities	Getaway
+H5p	H autocorrelation of lag 5 / weighted by atomic polarizabilities	Getaway
+H6p	H autocorrelation of lag 6 / weighted by atomic polarizabilities	Getaway
+H7p	H autocorrelation of lag 7 / weighted by atomic polarizabilities	Getaway
+H8p	H autocorrelation of lag 8 / weighted by atomic polarizabilities	Getaway
+HTp	H total index / weighted by atomic polarizabilities	Getaway
+HATS0p	leverage-weighted autocorrelation of lag 0 / weighted by atomic polarizabilities	Getaway
+HATS1p	leverage-weighted autocorrelation of lag 1 / weighted by atomic polarizabilities	Getaway
+HATS2p	leverage-weighted autocorrelation of lag 2 / weighted by atomic polarizabilities	Getaway
+HATS3p	leverage-weighted autocorrelation of lag 3 / weighted by atomic polarizabilities	Getaway
+HATS4p	leverage-weighted autocorrelation of lag 4 / weighted by atomic polarizabilities	Getaway
+HATS5p	leverage-weighted autocorrelation of lag 5 / weighted by atomic polarizabilities	Getaway
+HATS6p	leverage-weighted autocorrelation of lag 6 / weighted by atomic polarizabilities	Getaway
+HATS7p	leverage-weighted autocorrelation of lag 7 / weighted by atomic polarizabilities	Getaway
+HATS8p	leverage-weighted autocorrelation of lag 8 / weighted by atomic polarizabilities	Getaway
+HATSp	leverage-weighted total index / weighted by atomic polarizabilities	Getaway
+RCON	Randic-type R matrix connectivity	Getaway
+RARS	R matrix average row sum	Getaway
+REIG	first eigenvalue of the R matrix	Getaway
+R1u	R autocorrelation of lag 1 / unweighted	Getaway
+R2u	R autocorrelation of lag 2 / unweighted	Getaway
+R3u	R autocorrelation of lag 3 / unweighted	Getaway
+R4u	R autocorrelation of lag 4 / unweighted	Getaway
+R5u	R autocorrelation of lag 5 / unweighted	Getaway
+R6u	R autocorrelation of lag 6 / unweighted	Getaway
+R7u	R autocorrelation of lag 7 / unweighted	Getaway
+R8u	R autocorrelation of lag 8 / unweighted	Getaway
+RTu	R total index / unweighted	Getaway
+R1uplus	R maximal autocorrelation of lag 1 / unweighted	Getaway
+R2uplus	R maximal autocorrelation of lag 2 / unweighted	Getaway
+R3uplus	R maximal autocorrelation of lag 3 / unweighted	Getaway
+R4uplus	R maximal autocorrelation of lag 4 / unweighted	Getaway
+R5uplus	R maximal autocorrelation of lag 5 / unweighted	Getaway
+R6uplus	R maximal autocorrelation of lag 6 / unweighted	Getaway
+R7uplus	R maximal autocorrelation of lag 7 / unweighted	Getaway
+R8uplus	R maximal autocorrelation of lag 8 / unweighted	Getaway
+RTuplus	R maximal index / unweighted	Getaway
+R1m	R autocorrelation of lag 1 / weighted by atomic masses	Getaway
+R2m	R autocorrelation of lag 2 / weighted by atomic masses	Getaway
+R3m	R autocorrelation of lag 3 / weighted by atomic masses	Getaway
+R4m	R autocorrelation of lag 4 / weighted by atomic masses	Getaway
+R5m	R autocorrelation of lag 5 / weighted by atomic masses	Getaway
+R6m	R autocorrelation of lag 6 / weighted by atomic masses	Getaway
+R7m	R autocorrelation of lag 7 / weighted by atomic masses	Getaway
+R8m	R autocorrelation of lag 8 / weighted by atomic masses	Getaway
+RTm	R total index / weighted by atomic masses	Getaway
+R1mplus	R maximal autocorrelation of lag 1 / weighted by atomic masses	Getaway
+R2mplus	R maximal autocorrelation of lag 2 / weighted by atomic masses	Getaway
+R3mplus	R maximal autocorrelation of lag 3 / weighted by atomic masses	Getaway
+R4mplus	R maximal autocorrelation of lag 4 / weighted by atomic masses	Getaway
+R5mplus	R maximal autocorrelation of lag 5 / weighted by atomic masses	Getaway
+R6mplus	R maximal autocorrelation of lag 6 / weighted by atomic masses	Getaway
+R7mplus	R maximal autocorrelation of lag 7 / weighted by atomic masses	Getaway
+R8mplus	R maximal autocorrelation of lag 8 / weighted by atomic masses	Getaway
+RTmplus	R maximal index / weighted by atomic masses	Getaway
+R1v	R autocorrelation of lag 1 / weighted by atomic van der Waals volumes	Getaway
+R2v	R autocorrelation of lag 2 / weighted by atomic van der Waals volumes	Getaway
+R3v	R autocorrelation of lag 3 / weighted by atomic van der Waals volumes	Getaway
+R4v	R autocorrelation of lag 4 / weighted by atomic van der Waals volumes	Getaway
+R5v	R autocorrelation of lag 5 / weighted by atomic van der Waals volumes	Getaway
+R6v	R autocorrelation of lag 6 / weighted by atomic van der Waals volumes	Getaway
+R7v	R autocorrelation of lag 7 / weighted by atomic van der Waals volumes	Getaway
+R8v	R autocorrelation of lag 8 / weighted by atomic van der Waals volumes	Getaway
+RTv	R total index / weighted by atomic van der Waals volumes	Getaway
+R1vplus	R maximal autocorrelation of lag 1 / weighted by atomic van der Waals volumes	Getaway
+R2vplus	R maximal autocorrelation of lag 2 / weighted by atomic van der Waals volumes	Getaway
+R3vplus	R maximal autocorrelation of lag 3 / weighted by atomic van der Waals volumes	Getaway
+R4vplus	R maximal autocorrelation of lag 4 / weighted by atomic van der Waals volumes	Getaway
+R5vplus	R maximal autocorrelation of lag 5 / weighted by atomic van der Waals volumes	Getaway
+R6vplus	R maximal autocorrelation of lag 6 / weighted by atomic van der Waals volumes	Getaway
+R7vplus	R maximal autocorrelation of lag 7 / weighted by atomic van der Waals volumes	Getaway
+R8vplus	R maximal autocorrelation of lag 8 / weighted by atomic van der Waals volumes	Getaway
+RTvplus	R maximal index / weighted by atomic van der Waals volumes	Getaway
+R1e	R autocorrelation of lag 1 / weighted by atomic Sanderson electronegativities	Getaway
+R2e	R autocorrelation of lag 2 / weighted by atomic Sanderson electronegativities	Getaway
+R3e	R autocorrelation of lag 3 / weighted by atomic Sanderson electronegativities	Getaway
+R4e	R autocorrelation of lag 4 / weighted by atomic Sanderson electronegativities	Getaway
+R5e	R autocorrelation of lag 5 / weighted by atomic Sanderson electronegativities	Getaway
+R6e	R autocorrelation of lag 6 / weighted by atomic Sanderson electronegativities	Getaway
+R7e	R autocorrelation of lag 7 / weighted by atomic Sanderson electronegativities	Getaway
+R8e	R autocorrelation of lag 8 / weighted by atomic Sanderson electronegativities	Getaway
+RTe	R total index / weighted by atomic Sanderson electronegativities	Getaway
+R1eplus	R maximal autocorrelation of lag 1 / weighted by atomic Sanderson electronegativities	Getaway
+R2eplus	R maximal autocorrelation of lag 2 / weighted by atomic Sanderson electronegativities	Getaway
+R3eplus	R maximal autocorrelation of lag 3 / weighted by atomic Sanderson electronegativities	Getaway
+R4eplus	R maximal autocorrelation of lag 4 / weighted by atomic Sanderson electronegativities	Getaway
+R5eplus	R maximal autocorrelation of lag 5 / weighted by atomic Sanderson electronegativities	Getaway
+R6eplus	R maximal autocorrelation of lag 6 / weighted by atomic Sanderson electronegativities	Getaway
+R7eplus	R maximal autocorrelation of lag 7 / weighted by atomic Sanderson electronegativities	Getaway
+R8eplus	R maximal autocorrelation of lag 8 / weighted by atomic Sanderson electronegativities	Getaway
+RTeplus	R maximal index / weighted by atomic Sanderson electronegativities	Getaway
+R1p	R autocorrelation of lag 1 / weighted by atomic polarizabilities	Getaway
+R2p	R autocorrelation of lag 2 / weighted by atomic polarizabilities	Getaway
+R3p	R autocorrelation of lag 3 / weighted by atomic polarizabilities	Getaway
+R4p	R autocorrelation of lag 4 / weighted by atomic polarizabilities	Getaway
+R5p	R autocorrelation of lag 5 / weighted by atomic polarizabilities	Getaway
+R6p	R autocorrelation of lag 6 / weighted by atomic polarizabilities	Getaway
+R7p	R autocorrelation of lag 7 / weighted by atomic polarizabilities	Getaway
+R8p	R autocorrelation of lag 8 / weighted by atomic polarizabilities	Getaway
+RTp	R total index / weighted by atomic polarizabilities	Getaway
+R1pplus	R maximal autocorrelation of lag 1 / weighted by atomic polarizabilities	Getaway
+R2pplus	R maximal autocorrelation of lag 2 / weighted by atomic polarizabilities	Getaway
+R3pplus	R maximal autocorrelation of lag 3 / weighted by atomic polarizabilities	Getaway
+R4pplus	R maximal autocorrelation of lag 4 / weighted by atomic polarizabilities	Getaway
+R5pplus	R maximal autocorrelation of lag 5 / weighted by atomic polarizabilities	Getaway
+R6pplus	R maximal autocorrelation of lag 6 / weighted by atomic polarizabilities	Getaway
+R7pplus	R maximal autocorrelation of lag 7 / weighted by atomic polarizabilities	Getaway
+R8pplus	R maximal autocorrelation of lag 8 / weighted by atomic polarizabilities	Getaway
+RTpplus	R maximal index / weighted by atomic polarizabilities	Getaway

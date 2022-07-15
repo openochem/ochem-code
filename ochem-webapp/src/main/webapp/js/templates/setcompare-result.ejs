@@ -1,0 +1,42 @@
+<%
+	var class1 = "gray";
+	var class2 = "gray";
+	if (1*data.pValue1 > 0)
+		class1 = "green";
+	else
+		class2 = "green";
+		
+	var perc1 = data.inSet1 / inSet1Total;
+	var perc2 = data.inSet2 / inSet2Total;
+		
+%>
+
+<td>
+	<% if (data.href) { %><a tab="<%=data.displayName%>" href="<%=data.href%>"><% } %>
+	<% if (data.depictionPath) { %>
+		<img src="<%=data.depictionPath%>" title="<%=data.displayName%>"/>
+	<% } else { %>
+		<%=data.name %>
+	<% } %>
+	<% if (data.href) { %></a><% } %>
+</td>
+
+<td align="center" class="<%=class1%>">
+	<a href="setcomparison/molecules.do?name=<%=URLEncode(data.name)%>&set=1" tab="<%=data.displayName%> in set 1"><%=data.inSet1 %></a> 
+	<br/>(<%=(100.0 * perc1).toFixed(1) %>%)
+</td>
+
+<td align="center" class="<%=class2%>">
+	<a href="setcomparison/molecules.do?name=<%=URLEncode(data.name)%>&set=2" tab="<%=data.displayName%> in set 2"><%=data.inSet2 %></a>
+	<br/>(<%=(100.0 * perc2).toFixed(1) %>%)
+</td>
+
+<td align="center">
+	<% if (Math.min(perc1, perc2) == 0) { %>Inf.<% } else { %>
+	<%= (Math.max(perc1, perc2) / Math.min(perc1, perc2)).toFixed(1) %>
+	<% } %>
+</td>
+
+<td>
+	<%=data.pValue1 %>
+</td>

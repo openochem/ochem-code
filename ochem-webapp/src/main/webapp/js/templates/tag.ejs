@@ -1,0 +1,44 @@
+<table class="compact-item">
+	<tr>
+		<td class="command-panel" width="120">
+			<!-- wiki_info -->
+			<!-- <a href="wikipage/action.do?name=<%=data.name%>" tab="<%=data.name%> tag description"><img title="Wikipedia" alt="Wikipedia" src="img/icons/wiki.gif"/></a> -->
+			<%if(data.type == "property"){%>
+			<a action="profile"><img src="img/icons/computer.gif"/></a>
+			<%}%>
+			<a action="export" class="icon" title="Export tagged molecules"><img src="img/icons/xls.gif"/></a>
+			<a action="delete"><img src="img/icons/delete.gif"/></a>
+			<a action="edit" title="edit"><img src="img/icons/edit.gif"/></a>
+			<a action="select" tag="select"><img src="img/icons/save.gif"/></a>
+		</td>
+		<td width="230">
+			<% if (window.callback) { %>
+				<a action="select" title="Click to select this tag"><%=data.name%></a>
+			<% } else { %>
+				<%=data.name%>
+			<% } %>
+		</td>
+		<td width="110">
+		<% if (data["tag-molecule"]) { %>
+			<a action="show_mol"><%=data["tag-molecule"]%> molecules</a>
+		<% } %>
+		</td>
+		<td width="300">
+		<% if (data.description) { %>
+			<i title="<%=data.description%>"><%=data.description.substring(0, 30)%> ...</i>
+		<% } %>
+		</td>
+		<td align="right">
+		<div class="right-label" nowrap="true" style="white-space: nowrap;">
+			<% if (data.introducer != undefined && data.introducer != data.owner) 
+			{ %><%=data.introducer%>
+			<a action="popup" link="dialogue/dialogue.do?user=<%=data.introducer%>&subject=tag_<%=data.id%>" title="send message">
+				<img src="img/icons/email_icon.gif"/></a> / 
+			<% }if(data.owner != undefined){%><%=data.owner%>
+				<a action="popup" link="dialogue/dialogue.do?user=<%=data.owner%>&subject=tag_<%=data.id%>" title="send message"><img src="img/icons/email_icon.gif"/></a>
+			<%}%>
+		</div>
+		</td>
+		
+	</tr>
+</table>

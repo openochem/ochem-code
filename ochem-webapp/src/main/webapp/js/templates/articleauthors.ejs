@@ -1,0 +1,7 @@
+<% if (data.id < 0) { %>
+	<input type="text" class="narrow" name="name" value="" send="1"/>
+<% } else { %>
+	<input type="text" class="narrow" au-id="<%=data['id']%>" name="name" value="<%=data['printed-name']%>" disabled="disabled" send="1"/>
+<% } %>
+<a action="editauthor" title="Edit this author name"><img src="img/icons/edit.gif"/></a>
+<a action="delete" class="delete-link">[x]</a>&nbsp;

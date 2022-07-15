@@ -1,0 +1,168 @@
+Binary files hibernate-distribution-3.5.3-Final/project/.DS_Store and hibernate-distribution-3.5.3-Final-Mod/project/.DS_Store differ
+diff -rupN hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/Criteria.java hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/Criteria.java
+--- hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/Criteria.java	2010-02-09 22:01:00.000000000 +0100
++++ hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/Criteria.java	2010-06-25 14:21:41.000000000 +0200
+@@ -418,6 +418,14 @@ public interface Criteria extends Criter
+ 	public Criteria setComment(String comment);
+ 
+ 	/**
++	 * Add a SQL hint to query
++	 *
++	 * @param hint an SQL query hint
++	 * @return this (for method chaining)
++	 */
++	public Criteria setHint(String hint);
++	
++	/**
+ 	 * Override the flush mode for this particular query.
+ 	 *
+ 	 * @param flushMode The flush mode to use.
+diff -rupN hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/impl/CriteriaImpl.java hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/impl/CriteriaImpl.java
+--- hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/impl/CriteriaImpl.java	2010-02-09 22:01:00.000000000 +0100
++++ hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/impl/CriteriaImpl.java	2010-06-25 14:52:50.000000000 +0200
+@@ -75,6 +75,7 @@ public class CriteriaImpl implements Cri
+ 	private boolean cacheable;
+ 	private String cacheRegion;
+ 	private String comment;
++	private String hint;
+ 
+ 	private FlushMode flushMode;
+ 	private CacheMode cacheMode;
+@@ -330,7 +331,15 @@ public class CriteriaImpl implements Cri
+ 		this.comment = comment;
+ 		return this;
+ 	}
+-
++	
++	public String getHint() {
++		return hint;
++	}
++	
++	public Criteria setHint(String hint) {
++		this.hint = hint;
++		return this;
++	}
+ 	public Criteria setFlushMode(FlushMode flushMode) {
+ 		this.flushMode = flushMode;
+ 		return this;
+@@ -614,6 +623,11 @@ public class CriteriaImpl implements Cri
+ 			CriteriaImpl.this.setComment(comment);
+ 			return this;
+ 		}
++		
++		public Criteria setHint(String hint) {
++			CriteriaImpl.this.setHint(hint);
++			return this;
++		}
+ 
+ 		public Criteria setProjection(Projection projection) {
+ 			CriteriaImpl.this.projection = projection;
+diff -rupN hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/loader/AbstractEntityJoinWalker.java hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/loader/AbstractEntityJoinWalker.java
+--- hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/loader/AbstractEntityJoinWalker.java	2009-12-02 10:41:22.000000000 +0100
++++ hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/loader/AbstractEntityJoinWalker.java	2010-06-25 14:38:57.000000000 +0200
+@@ -142,7 +142,8 @@ public abstract class AbstractEntityJoin
+ 						ojf.toWhereFragmentString() + getWhereFragment()
+ 				)
+ 				.setOrderByClause( orderBy( associations, orderBy ) )
+-				.setGroupByClause( groupBy );
++				.setGroupByClause( groupBy )
++				.setHint(getHint());
+ 
+ 		if ( getFactory().getSettings().isCommentsEnabled() ) {
+ 			select.setComment( getComment() );
+@@ -189,6 +190,11 @@ public abstract class AbstractEntityJoin
+ 	}
+ 
+ 	public abstract String getComment();
++	
++	public String getHint()
++	{
++		return "";
++	}
+ 
+ 	protected final Loadable getPersister() {
+ 		return persister;
+diff -rupN hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java
+--- hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java	2010-04-27 16:55:50.000000000 +0200
++++ hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/loader/criteria/CriteriaJoinWalker.java	2010-06-25 14:38:27.000000000 +0200
+@@ -64,6 +64,7 @@ public class CriteriaJoinWalker extends 
+ 	//these are not the actual "physical" SQL aliases
+ 	private final String[] userAliases;
+ 	private final List userAliasList = new ArrayList();
++	private String hint;
+ 
+ 	public Type[] getResultTypes() {
+ 		return resultTypes;
+@@ -94,7 +95,7 @@ public class CriteriaJoinWalker extends 
+ 		super( persister, factory, loadQueryInfluencers, alias );
+ 
+ 		this.translator = translator;
+-
++		this.hint = criteria.getHint();
+ 		querySpaces = translator.getQuerySpaces();
+ 
+ 		if ( translator.hasProjection() ) {
+@@ -234,6 +235,11 @@ public class CriteriaJoinWalker extends 
+ 	public String getComment() {
+ 		return "criteria query";
+ 	}
++	
++	public String getHint()
++	{
++		return this.hint;
++	}
+ 
+ 	protected String getWithClause(String path) {
+ 		return translator.getWithClause(path); 
+diff -rupN hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/sql/Select.java hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/sql/Select.java
+--- hibernate-distribution-3.5.3-Final/project/core/src/main/java/org/hibernate/sql/Select.java	2009-12-02 10:41:22.000000000 +0100
++++ hibernate-distribution-3.5.3-Final-Mod/project/core/src/main/java/org/hibernate/sql/Select.java	2010-06-25 15:23:46.000000000 +0200
+@@ -44,6 +44,7 @@ public class Select {
+ 	private String orderByClause;
+ 	private String groupByClause;
+ 	private String comment;
++	private String hint;
+ 	private LockOptions lockOptions = new LockOptions();
+ 	public final Dialect dialect;
+ 
+@@ -62,7 +63,10 @@ public class Select {
+ 			buf.append("/* ").append(comment).append(" */ ");
+ 		}
+ 		
+-		buf.append("select ").append(selectClause)
++		if (hint == null)
++			hint = "";
++		
++		buf.append("select ").append(hint).append(selectClause)
+ 				.append(" from ").append(fromClause);
+ 		
+ 		if ( StringHelper.isNotEmpty(outerJoinsAfterFrom) ) {
+@@ -167,6 +171,14 @@ public class Select {
+ 		this.guesstimatedBufferSize += comment.length();
+ 		return this;
+ 	}
++	
++	public Select setHint(String hint)
++	{
++		this.hint = hint;
++		if (hint != null)
++			this.guesstimatedBufferSize += hint.length();
++		return this;		
++	}
+ 
+ 	/**
+ 	 * Get the current lock mode
+Binary files hibernate-distribution-3.5.3-Final/project/distribution/.DS_Store and hibernate-distribution-3.5.3-Final-Mod/project/distribution/.DS_Store differ
+Binary files hibernate-distribution-3.5.3-Final/project/documentation/.DS_Store and hibernate-distribution-3.5.3-Final-Mod/project/documentation/.DS_Store differ
+diff -rupN hibernate-distribution-3.5.3-Final/project/jdbc4-testing/src/test/java/org/hibernate/engine/jdbc/jdbc4/JdbcSupportTest.java hibernate-distribution-3.5.3-Final-Mod/project/jdbc4-testing/src/test/java/org/hibernate/engine/jdbc/jdbc4/JdbcSupportTest.java
+--- hibernate-distribution-3.5.3-Final/project/jdbc4-testing/src/test/java/org/hibernate/engine/jdbc/jdbc4/JdbcSupportTest.java	2009-11-13 18:45:28.000000000 +0100
++++ hibernate-distribution-3.5.3-Final-Mod/project/jdbc4-testing/src/test/java/org/hibernate/engine/jdbc/jdbc4/JdbcSupportTest.java	2010-06-25 13:21:35.000000000 +0200
+@@ -233,7 +233,7 @@ public class JdbcSupportTest extends Tes
+ 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+ 			final String methodName = method.getName();
+ 			if ( "getJDBCMajorVersion".equals( methodName ) ) {
+-				return jdbcVersion;
++				return new Integer(jdbcVersion);
+ 			}
+ 			return null;
+ 		}

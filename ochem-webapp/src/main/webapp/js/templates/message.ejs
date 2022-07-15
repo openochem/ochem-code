@@ -1,0 +1,79 @@
+<%
+	var subject = data.subject || "";
+	var link;
+	if(subject.match("record_"))
+	{
+		var re = new RegExp("record_[0-9]+");
+  		var m = re.exec(subject);
+  		if(m != null)
+  		{
+	  		var id = m[0];
+			id = id.substr(7,m[0].length);
+			link = "epbrowser/show.do?render-mode=popup&id="+id;
+		}
+	}
+	if(subject.match("book_")||subject.match("article_"))
+	{
+		var re = new RegExp("(book|icle)_[0-9]+");
+  		var m = re.exec(subject);
+  		if(m != null)
+  		{
+	  		var id = m[0];
+			id = id.substr(5,m[0].length);
+			link = "article/show.do?render-mode=popup&id="+id;
+		}
+	}
+	if(subject.match("property_")||subject.match("condition_"))
+	{
+		var re = new RegExp("(rty|ion)_[0-9]+");
+  		var m = re.exec(subject);
+  		if(m != null)
+  		{
+	  		var id = m[0];
+			id = id.substr(4,m[0].length);
+			link = "properties/show.do?render-mode=popup&id="+id;
+		}
+	}
+	if(subject.match("unit_"))
+	{
+		var re = new RegExp("unit_[0-9]+");
+  		var m = re.exec(subject);
+  		if(m != null)
+  		{
+	  		var id = m[0];
+			id = id.substr(5,m[0].length);
+			link = "unit/show.do?render-mode=popup&id="+id;
+		}
+	}
+%>
+
+<div class="message-block">
+<i><%=data.time%></i>
+	<b>From: </b><%if(data.sender)
+					{if(data.sender != data["login"]){%>
+						<%=data.sender%>
+					<%}else{%>
+						me
+					<%}
+				}else{%>
+					anonymous users
+				<%}%><br/>
+	<b>To: </b><%if(data.receiver != data["login"]){%><%=data.receiver%><%}else{%>me<%}%><br/>
+	<b>Subject:</b>
+	<%if(link != undefined){%>
+		<a action="popup" title="Subject" link="<%=link%>"><%=data.subject%></a>
+	<%}else{%><%=data.subject%><%}%>
+	<br/>
+	<div class="message-body">
+		Dear <%=data.receivername%>,<br/>
+		<%=data.body%><br/>
+		Sincerely,<br/>
+		<%=data.sendername%>
+	</div>
+	<%if(data.sender != data["login"]){%>
+	<a action="popup" link="dialogue/dialogue.do?user=<%=data.sender%>&subject=Re:<%=data.subject%>&org_msg_id=<%=data["org_message_id"]%>" title="answer this message" >[reply]</a>
+		<%if(data.isRead != "true"){%>
+		<a action="read" title="mark as a read">[mark read]</a>
+		<%}%>
+	<%}%>
+</div>

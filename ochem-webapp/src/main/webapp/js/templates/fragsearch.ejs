@@ -1,0 +1,12 @@
+<% if (data.id == -2) { %>
+<a href='javascript:void()' onclick='compoundBrowser.fragSearch(-1); return false;'>[search by fragment]</a>
+<% } else { %>
+Filtered by fragment<br/>
+<a href='javascript:void()' onclick='compoundBrowser.fragSearch(<%=data.id%>); return false;'>
+	<img id='<%=data.id%>' src='depiction.jsp?id=<%=data.id%>&w=50&h=50'/>
+</a>
+<input class="invisible" type="hidden" value='<%=data.id%>' filter='1' name='fragSearch'/><br/>
+<a href='javascript:void()' onclick='compoundBrowser.fragSearch(); return false;'>
+[clear fragment filter]
+</a>
+<% } %>

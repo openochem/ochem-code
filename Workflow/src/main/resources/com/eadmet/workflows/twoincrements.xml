@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<workflow name="DoubleIncrement(Workflow testing)" insockets="1" outsockets="1">
+	<nodes>
+		<node id="inc1" task="Increment"/>
+		<node id="inc2" task="Increment"/>
+	</nodes>
+	<connections>
+		<connection to="inc1"/>
+		<connection from="inc1" to="inc2"/>
+		<connection from="inc2"/>
+	</connections>
+</workflow>
