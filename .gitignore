@@ -36,3 +36,4 @@ RemoteSystemsTempFiles
 *.out
 *.tar
 *.tar.gz
+lib
