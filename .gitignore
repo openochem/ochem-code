@@ -38,3 +38,4 @@ RemoteSystemsTempFiles
 *.tar
 *.tar.gz
 lib
+mvn_dependencies.pl
