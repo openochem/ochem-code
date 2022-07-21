@@ -11,7 +11,7 @@
 	</application>
 		
 	<application class="qspr.metaserver.cs.DNNServer" name="DNN">
-		<param name="EXE" value="%TOOLS_DIR%/dnn/" />
+		<param name="EXE" value="%TOOLS_DIR%/dnn/train.py" />
 	</application>
 
 	<application class="qspr.metaserver.cs.DEEPCHEMServer" name="DEEPCHEM">
