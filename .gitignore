@@ -6,6 +6,7 @@
 /WfTools/clients/
 /*/target
 /*/.classpath
+/ochem-webapp/src/main/webapp/exports/
 /debug_maven/output/
 /ochem-webapp/work/
 /ochem-webapp/src/main/webapp/WEB-INF/upload/
