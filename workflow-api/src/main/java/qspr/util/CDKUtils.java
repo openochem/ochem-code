@@ -22,16 +22,21 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.inchi.InChIGeneratorFactory;
+import org.openscience.cdk.inchi.InChIToStructure;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.io.INChIPlainTextReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.ReaderFactory;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import net.sf.jniinchi.INCHI_RET;
+
 public class CDKUtils {
-	
+
 	static public IAtomContainer readOneMoleculeInAnyFormat(String anyFormatData) throws IOException{
 
 		Reader r = null;
@@ -53,15 +58,38 @@ public class CDKUtils {
 				}catch (Exception ee){
 					throw new IOException(ee.getMessage().replaceAll("(\\r|\\n)", ""));
 				};
-			}else
-				mol = reader.read(builder.newAtomContainer());
+			}else 
+				if(reader instanceof INChIPlainTextReader)
+				{
+					InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+							
+					InChIToStructure intostruct = factory.getInChIToStructure(anyFormatData, DefaultChemObjectBuilder.getInstance());
+
+					INCHI_RET ret = intostruct.getReturnStatus();
+					if (ret == INCHI_RET.WARNING) {
+						// Structure generated, but with warning message
+						System.out.println("InChI warning: " + intostruct.getMessage());
+					} else if (ret != INCHI_RET.OKAY) {
+						// Structure generation failed
+						throw new Exception("Structure generation failed failed: " + ret.toString()
+						+ " [" + intostruct.getMessage() + "]");
+					}
+
+					mol = intostruct.getAtomContainer();
+				}
+
+
+				else {
+					IAtomContainer cont = builder.newAtomContainer();
+					mol = reader.read(cont);
+				}
 
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-//			try{
-//				AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-//			}catch(Error e){
-//				System.out.println(e.getMessage());
-//			}
+			//			try{
+			//				AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+			//			}catch(Error e){
+			//				System.out.println(e.getMessage());
+			//			}
 			StructureDiagramGenerator gen = new StructureDiagramGenerator();
 			gen.generateCoordinates(mol);
 

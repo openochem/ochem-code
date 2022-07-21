@@ -145,14 +145,15 @@ public abstract class LoginByProviderHandler {
 		User user = getUser(accessToken);
 		if (user != null) {
 			caller.loginUser(user);
-			logUserLogin(user, req);
 		} else {
 			user = createUser(accessToken);
-			Globals.session().save(user);
-			caller.loginUser(user);
 			logUserCreate(user, req);
-			logUserLogin(user, req);
 		}
+		
+		Globals.session().save(user);
+		caller.loginUser(user);
+		logUserLogin(user, req);
+		
 		
 		return caller.redirect(getOChemStartURL() + "&login=" + user.login);
 	};

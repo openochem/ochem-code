@@ -103,6 +103,9 @@ public class ChemDAOImplCDK extends ChemDAO {
 
 	@Override
 	public String guessFormat(String anyFormatData) {
+		
+		if(anyFormatData.startsWith("InChI="))return "inchi";
+		
 		Reader r = null;
 		try {
 			r = new StringReader(anyFormatData);
@@ -130,7 +133,9 @@ public class ChemDAOImplCDK extends ChemDAO {
 	public double getMassImp(String anyFormatData){
 		try {
 			IAtomContainer molecule = CDKUtils.readOneMoleculeInAnyFormat(anyFormatData);
-			return molecule == null? 0.0: NumericalValueStandardizer.getSignificantDigitsDouble(AtomContainerManipulator.getNaturalExactMass(molecule), NumericalValueStandardizer.SIGNIFICANT_DIGITS+1);
+			Double mas = molecule == null? 0.0: AtomContainerManipulator.getMass(molecule);
+			if(mas.isNaN())mas = AtomContainerManipulator.getMass(molecule,AtomContainerManipulator.MonoIsotopic);
+			return NumericalValueStandardizer.getSignificantDigitsDouble(mas, NumericalValueStandardizer.SIGNIFICANT_DIGITS+1);
 		}catch(IOException e) {
 			return 0;
 		}
