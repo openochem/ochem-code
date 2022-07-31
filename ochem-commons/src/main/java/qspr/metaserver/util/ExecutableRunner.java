@@ -542,7 +542,7 @@ public class ExecutableRunner
 
 				case QSPRConstants.SDF: 
 				case QSPRConstants.SDFH: 
-				case QSPRConstants.SDFNOH: 
+				case QSPRConstants.SDFNOAROM_NOH: 
 				case QSPRConstants.SDFAROM_BASIC_WITHH: 
 				case QSPRConstants.SDFAROM_BASIC_NOH:
 				case QSPRConstants.SDFAROM_GENERAL_WITHH:

@@ -174,8 +174,10 @@ public class DescriptorsServer extends WorkflowNodeServer
 				if(configuration.mixtures == null) // will be required later for correct validation
 					row.addAttachment(QSPRConstants.MIXTURE_ATTACHMENT, new MixtureAttachment(sdf));
 
-				smiles = Various.molecule.convertToFormat(MetalBondParserSdf.substituteMetalBondwithSingleBond(sdf), QSPRConstants.SMILESH);
-				row.addAttachment(QSPRConstants.SMILES_ATTACHMENT, smiles); // Full kekulized SMILES without H atoms
+				if(row.getAttachment(QSPRConstants.SMILES_ATTACHMENT)==null) {// for mixtures already done
+					smiles = Various.molecule.convertToFormatFixMetal(sdf, QSPRConstants.SMILESH);
+					row.addAttachment(QSPRConstants.SMILES_ATTACHMENT, smiles); // Full kekulized SMILES without H atoms
+				}
 
 			}catch(Throwable e) { // do not add if there is an error
 				System.out.println(e.getMessage());

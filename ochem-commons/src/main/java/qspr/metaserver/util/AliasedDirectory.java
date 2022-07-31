@@ -102,7 +102,7 @@ public class AliasedDirectory
 		alias(dirSource,dirSource.list());
 		// Add developer code directory
 		File developer = developerDir(dirSource);
-		if(developer.exists())
+		if(developer.exists() && !developer.getAbsolutePath().equals(dirSource.getAbsolutePath()))
 			alias(developer,developer.list());
 	}
 

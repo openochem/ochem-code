@@ -32,6 +32,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import qspr.Globals;
+import qspr.dao.ChemDAO;
 import qspr.dao.Repository;
 import qspr.dao.Various;
 import qspr.entities.Molecule;
@@ -218,8 +219,6 @@ class Searcher {
 
 			foundMol.searchExistingMolId = existingMoleculeID;
 
-
-
 			if (foundMol.mapping1.id.intValue() == existMol.mapping1.id.intValue()) {
 				if (foundMol.mapping2.id.longValue() == existMol.mapping2.id.longValue()) {
 					foundMol.searchCompSign = "=";
@@ -228,8 +227,16 @@ class Searcher {
 					foundMol.searchCompSign = "~"; //almostEqual;
 				}
 			}
-			else { 
-				foundMol.searchCompSign = "!=";
+			else {
+				String key1 = Various.molecule.getInChiKeyDeSault(foundMol.getData());
+				String key2 = Various.molecule.getInChiKeyDeSault(existMol.getData());
+				if(key1.equals(QSPRConstants.ERROR))foundMol.searchCompSign = "!=";
+				else
+					if(key1.equals(key2))foundMol.searchCompSign = "=salt=";
+					else
+						if(ChemDAO.getInChIKeyNoSteroPart(key1).equals(ChemDAO.getInChIKeyNoSteroPart(key2)))foundMol.searchCompSign = "~salt~";
+						else
+							foundMol.searchCompSign = "!=";
 			}
 		}
 	}

@@ -194,7 +194,6 @@ abstract public class ExportWriter
 				break;
 			case NAMES:
 				row.add(eMol.name);
-				row.add(eMol.name2);
 				break;
 			case CASRN:
 				row.add(eMol.casRN);
@@ -369,7 +368,6 @@ abstract public class ExportWriter
 				columns.add("TABLE");
 				break;
 			case NAMES:
-				columns.add("NAME");
 				columns.add("NAME");
 				break;
 			case EXP_VALUE:

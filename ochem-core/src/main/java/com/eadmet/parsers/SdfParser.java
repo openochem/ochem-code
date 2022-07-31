@@ -81,8 +81,9 @@ public class SdfParser extends SimpleParser
 
 		AbstractDataRow row = allData.getRow(rowNum);
 
-		for(int i=0; i< row.size(); i++)
+		for(int i=0; i< row.size(); i++)try{
 			values.add((String)row.getValue(i));
+		}catch(Exception e) {}
 
 		return values;	
 	}

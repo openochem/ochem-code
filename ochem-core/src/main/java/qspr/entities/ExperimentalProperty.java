@@ -59,6 +59,7 @@ import org.hibernate.criterion.Restrictions;
 import qspr.Globals;
 import qspr.ThreadScope;
 import qspr.annotations.Loggable;
+import qspr.dao.MetalBondParserSdf;
 import qspr.dao.Repository;
 import qspr.dao.Various;
 import qspr.metaserver.util.MixtureAttachment;
@@ -730,7 +731,7 @@ public class ExperimentalProperty implements Serializable, UserContributedEntity
 				throw new IOException("Two identical solvents are not allowed : " + name);
 			else {
 				ma.fractions.put(mol.mapping1.inchi1, val);
-				ma.smiles.add(""+mol.mapping2.id);
+				ma.smiles.add(Various.molecule.convertToFormatFixMetal(mol.getData(),QSPRConstants.SMILESH));
 			}
 
 		}

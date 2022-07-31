@@ -20,12 +20,12 @@ package qspr.metaserver.cs;
 import java.util.HashMap;
 import java.util.Map;
 
-import qspr.dao.MetalBondParserSdf;
 import qspr.dao.Various;
 import qspr.metaserver.configurations.DescriptorsAbstractConfiguration;
 import qspr.metaserver.configurations.DescriptorsQNPRConfiguration;
 import qspr.workflow.datatypes.DataTable;
 import qspr.workflow.datatypes.WorkflowNodeData;
+import qspr.workflow.utils.QSPRConstants;
 
 import com.eadmet.exceptions.UserFriendlyException;
 
@@ -65,7 +65,7 @@ public class QNPRServer extends DescriptorsAbstractServer
 			try {
 				// Workaround to enable use of coordination bonds with QNPRF
 
-				smiles = Various.molecule.convertToCanonicalSMILES(MetalBondParserSdf.substituteMetalBondwithSingleBond(sdf));
+				smiles = Various.molecule.convertToFormatFixMetal(sdf,QSPRConstants.SMILESUniqueNoHAromatic);
 				smiles = smiles.replaceAll("[0123456789]+", "\u00A7");	
 
 			} catch (Exception e) {

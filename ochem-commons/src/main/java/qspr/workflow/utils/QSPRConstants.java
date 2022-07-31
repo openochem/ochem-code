@@ -29,7 +29,7 @@ public class QSPRConstants
 	public static final String PDB = "PDB";
 	public static final String SDF = "SDF";
 	public static final String SDFH = "SDF:H"; //add all  hydrogens
-	public static final String SDFNOH = "SDF:-H"; //remove all  hydrogens
+	public static final String SDFNOAROM_NOH = "SDF:-a-H"; //remove all  hydrogens, KEKULE representation
 	public static final String SDFNOAROM_WITHH = "SDF:-a+H"; // added implicit hydrogens
 	public static final String SDFAROM_BASIC_WITHH = "SDF:a_bas+H"; // aromatized basic with hydrogens basic
 	public static final String SDFAROM_BASIC_NOH = "SDF:a_bas-H"; // aromatized basic without hydrogens basic

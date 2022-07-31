@@ -30,6 +30,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import qspr.Globals;
+import qspr.dao.MetalBondParserSdf;
 import qspr.dao.Repository;
 import qspr.dao.Various;
 import qspr.entities.Basket;
@@ -42,6 +43,7 @@ import qspr.entities.PropertyValue;
 import qspr.interfaces.ProvidedConditions;
 import qspr.metaserver.configurations.MaximalSizeRestriction;
 import qspr.metaserver.configurations.MultiLearningAbstractConfiguration;
+import qspr.metaserver.util.MixtureAttachment;
 import qspr.metaserver.util.ShortCondition;
 import qspr.modelling.configurations.CDSConfiguration;
 import qspr.modelling.configurations.ExternalCondition;
@@ -357,7 +359,15 @@ abstract public class BasicModelProcessor extends ModelProcessor
 					Long val = model.getMappedOption(pv.option.id);
 					if(ProvidedConditions.isReplaceableCondition(condition.getName()) != null) {
 						try{
-							dtConditions.getCurrentRow().addAttachment(QSPRConstants.SOLVENT_ATTACHMENT, ExperimentalProperty.createSolventAttachment(pv.option.name)); // do not need to be added
+							MixtureAttachment at = ExperimentalProperty.createSolventAttachment(pv.option.name);
+							dtConditions.getCurrentRow().addAttachment(QSPRConstants.SOLVENT_ATTACHMENT, at); // do not need to be added
+							// we also add SMILES for later use
+							
+							String smiles = 
+									Various.molecule.convertToFormatFixMetal(data.getSDF(dtConditions.currentRow),QSPRConstants.SMILESH)  + "." + at.smiles();
+							
+							data.getRow(dtConditions.currentRow).addAttachment(QSPRConstants.SMILES_ATTACHMENT,smiles);
+						
 						}catch(Exception e) {
 							data.getRow(dtConditions.currentRow).setError(e.getMessage());
 						}

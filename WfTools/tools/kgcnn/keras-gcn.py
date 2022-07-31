@@ -7,7 +7,7 @@ import argparse
 import json
 from copy import deepcopy
 from tensorflow_addons import optimizers
-from sklearn.model_selection import KFold
+#from sklearn.model_selection import KFold
 import kgcnn.training.schedule
 import kgcnn.training.scheduler
 import kgcnn.training.callbacks
@@ -917,9 +917,12 @@ if TRAIN == "True":
     if isClass:
         hyperparams['model']["config"]['output_mlp']['activation'][-1] = 'sigmoid'
 
-    kf = KFold(**k_fold_info)
-    split_indices = kf.split(X=np.arange(data_length - 1)[:, None])
-
+    #kf = KFold(**k_fold_info)
+    #split_indices = kf.split(X=np.arange(data_length - 1)[:, None])
+    split_indices = np.uint8(np.floor(np.random.uniform(0,10,size=data_length))) 
+    test = split_indices==0
+    train = ~test
+    
     # hyper_fit and epochs
     hyper_fit = hyperparams['training']['fit']
     epo = hyper_fit['epochs']
@@ -944,11 +947,21 @@ if TRAIN == "True":
 
     # data extraction is define here for a given Kfold => make them like in OCHEM classical call
     # TODO so just use the first split provided by KFold for the moment
-    for train_index, test_index in split_indices:
+    #for train_index, test_index in split_indices:
         # Select train and test data.
-        xtrain, ytrain = dataset[train_index].tensor(inputs), labels[train_index]
-        xtest, ytest = dataset[test_index].tensor(inputs), labels[test_index]
-        break
+    #    xtrain, ytrain = dataset[train_index].tensor(inputs), labels[train_index]
+    #    xtest, ytest = dataset[test_index].tensor(inputs), labels[test_index]
+    #    break
+
+     # data extraction is define here for a given Kfold => make them like in OCHEM classical call TODO so just use the first split provided by KFold for the moment
+    testidx = np.transpose(np.where(test==True))
+    trainidx = np.transpose(np.where(train==True))
+    print("*"*10)
+    print(data_length,np.sum(train), len(trainidx),np.sum(test), len(testidx))
+    print("*"*10)
+    xtrain, ytrain = dataset[trainidx].tensor(inputs), labels[trainidx]
+    xtest, ytest = dataset[testidx].tensor(inputs), labels[testidx]
+    print(len(xtrain),len(xtest))
 
     opt = tfa.optimizers.RectifiedAdam(learning_rate=0.001)
     # need to change this for class / regression 

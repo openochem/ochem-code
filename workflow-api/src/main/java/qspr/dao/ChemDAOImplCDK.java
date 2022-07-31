@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collections;
@@ -69,8 +68,6 @@ import org.openscience.cdk.io.SDFWriter;
 import org.openscience.cdk.io.formats.IChemFormat;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptor;
-import org.openscience.cdk.qsar.descriptors.molecular.HBondDonorCountDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.similarity.Tanimoto;
 import org.openscience.cdk.smiles.SmiFlavor;
@@ -126,7 +123,7 @@ public class ChemDAOImplCDK extends ChemDAO {
 	@Override
 	public String convertToSDFUnblockedImp(String anyFormatData) throws IOException {
 		IAtomContainer mol = CDKUtils.readOneMoleculeInAnyFormat(anyFormatData);
-		return convertToAnyFormat(mol,QSPRConstants.SDF);
+		return convertToAnyFormat(mol,QSPRConstants.SDFNOAROM_NOH);
 	}
 
 	@Override
@@ -232,15 +229,21 @@ public class ChemDAOImplCDK extends ChemDAO {
 				//				   new PropertiesListener(customSettings);
 				//				 writer.addChemObjectIOListener(listener);
 				break;
-			case QSPRConstants.SDFNOH:
+			case QSPRConstants.SDFNOAROM_NOH:
+				mol = dearomatize(mol);
+				Kekulization.kekulize(mol);
 				AtomContainerManipulator.suppressHydrogens(mol);
 				writer = new SDFWriter(bos);
-				writer.getSetting("WriteAromaticBondTypes").setSetting("true");
+				writer.getSetting("WriteAromaticBondTypes").setSetting("false");
 				break;
 			case QSPRConstants.SDFNOAROM_WITHH:
 				mol = dearomatize(mol);
 				Kekulization.kekulize(mol);
-			case QSPRConstants.SDFH:
+				AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
+				writer = new SDFWriter(bos);
+				writer.getSetting("WriteAromaticBondTypes").setSetting("false");
+				break;
+				case QSPRConstants.SDFH:
 				addImplicitHydrogens(mol);
 				AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 				writer = new SDFWriter(bos);
@@ -738,8 +741,8 @@ public class ChemDAOImplCDK extends ChemDAO {
 				}break;
 
 			case HB: 
-				HBondAcceptorCountDescriptor hbacalc = new HBondAcceptorCountDescriptor();
-				HBondDonorCountDescriptor hbdcalc = new HBondDonorCountDescriptor();
+				//HBondAcceptorCountDescriptor hbacalc = new HBondAcceptorCountDescriptor();
+				//HBondDonorCountDescriptor hbdcalc = new HBondDonorCountDescriptor();
 				for (int i=0; i < count; ++i) {
 					IAtom atm = mol.getAtom(i);
 					int acceptor = getHAcceptorCount(atm);

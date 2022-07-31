@@ -88,7 +88,7 @@ public class SIRMServer extends DescriptorsAbstractExecutableServer{
 
 		setStatus("saving molecules");
 
-		saveMolecules(mol, datain + ".sdf", conf.ignoreH() ?QSPRConstants.SDFNOH : QSPRConstants.SDFH, 0, batchSize);
+		saveMolecules(mol, datain + ".sdf", conf.ignoreH() ?QSPRConstants.SDFNOAROM_NOH : QSPRConstants.SDFNOAROM_WITHH, 0, batchSize);
 
 		if(conf.minFragment > conf.maxFragment) throw new IOException("Min value " + conf.minFragment + "  > " + conf.maxFragment);
 

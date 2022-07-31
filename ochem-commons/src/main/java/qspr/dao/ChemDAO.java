@@ -156,6 +156,10 @@ abstract public class ChemDAO {
 	// FIXME: this is inefficient for large data -> we should also have an iterator version
 	abstract public List<String> readSDFMolsFromFile(String filePath) throws IOException;
 
+	public String convertToFormatFixMetal(String molecule, String format) throws IOException {
+		return convertToFormat(MetalBondParserSdf.substituteMetalBondwithSingleBond(molecule),format);
+	}
+
 	/**
 	 * Simple save to one of output formats
 	 * @param molecule
@@ -172,9 +176,12 @@ abstract public class ChemDAO {
 
 	protected abstract String getMaxComponent(String molecule) throws IOException;
 
-	public String getInChIKeyNoStero(String molecule) throws IOException{
-		String inchi = getInChiKey(molecule);
+	static public String getInChIKeyNoSteroPart(String inchi){
 		return inchi.equals(QSPRConstants.ERROR)?QSPRConstants.ERROR:inchi.substring(0,14);
+	}
+
+	public String getInChIKeyNoStero(String molecule) throws IOException{
+		return getInChIKeyNoSteroPart(getInChiKey(molecule));
 	}
 
 	public String getInChiKey(String molecule){
@@ -199,16 +206,20 @@ abstract public class ChemDAO {
 		}
 	}
 
-	public String getInChiKeyNoStereoDeSault(String molecule){
+	public String getInChiKeyDeSault(String molecule){
 		try {
 			String smile = Various.molecule.getPropety(molecule, QSPRConstants.RDF_SMILES);
 			if(smile != null) molecule = smile;
 			molecule = MetalBondParserSdf.eliminateMetalBond(molecule);
 			molecule = getMaxComponent(molecule); // sdf
-			return getInChIKeyNoStero(molecule);
+			return getInChiKey(molecule);
 		}catch(IOException e) {
 			return QSPRConstants.ERROR;
 		}
+	}
+
+	public String getInChiKeyNoStereoDeSault(String molecule){
+		return getInChIKeyNoSteroPart(getInChiKeyDeSault(molecule));
 	}
 
 	public List<String> getInChiKeys(List<String> sdfs)

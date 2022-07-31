@@ -62,10 +62,11 @@ public class MoleculePeer
 
 		if (original != null && original.molecule != null){ // 
 			if(OCHEMConfiguration.verboseMode >= 2) logger.info("Original stored molecule found in DB");
-			return original.molecule;
+			if(original.molecule.md5.length() != 32)
+				return original.molecule;
 		}
-
-		original = new OriginalMolecule(data);
+		else
+			original = new OriginalMolecule(data);
 
 		// 2. THIS ORIGINAL IS NOT IN DB, OR WAS NOT YET CONVERTED TO SDF
 

@@ -105,7 +105,7 @@ public class MMPFragment
 		carbonChain = smiles.replaceAll("\\[Al\\]", "").matches("C+");
 
 		try {
-			int atomCount = Various.molecule.getAtomCount(Various.molecule.convertToFormat(smiles, QSPRConstants.SDFNOH));
+			int atomCount = Various.molecule.getAtomCount(Various.molecule.convertToFormat(smiles, QSPRConstants.SDFNOAROM_NOH));
 			int alCount = StringUtils.countMatches(smiles, "Al");
 			size = Byte.valueOf("" + (atomCount - alCount));
 		} catch (NumberFormatException e) {

@@ -54,7 +54,6 @@ public class ExportableMolecule
 	public String molNum;
 	public Integer moleculeId;
 	public String name;
-	public String name2;
 	public String sdf;
 	public Article article;
 	public String introducer, modifier;
@@ -72,7 +71,7 @@ public class ExportableMolecule
 
 	public void clearSensitive() {
 		moleculeId = null;
-		casRN = name = name2 = sdf = inhouseRecordId =inchiKey =  comments = null;
+		casRN = name = sdf = inhouseRecordId =inchiKey =  comments = null;
 	}
 
 	/**
@@ -159,13 +158,15 @@ public class ExportableMolecule
 				{
 					if ( ! parent.selectedColumns.contains(ExportableColumn.CASRN))
 						parent.selectedColumns.add(ExportableColumn.CASRN);
-					casRN = mName.name;
+					if(casRN == null) {
+						casRN = mName.name;
+						continue;
+					}
 				}
+				if (name == null)
+					name = mName.name;
 				else
-					if (name == null)
-						name = mName.name;
-					else
-						name2 = mName.name;
+					name = name + "; "+ mName.name;
 			}
 		}
 	}
@@ -195,7 +196,7 @@ public class ExportableMolecule
 		try
 		{
 			smiles = 
-				Various.molecule.convertToSmilesOrSmart(MetalBondParserSdf.substituteMetalBondwithSingleBond(sdf));
+					Various.molecule.convertToSmilesOrSmart(MetalBondParserSdf.substituteMetalBondwithSingleBond(sdf));
 		}catch(Exception e)
 		{
 			setErrorMolecule();

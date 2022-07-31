@@ -31,7 +31,7 @@ public class MOLD2DescriptorsServer extends DescriptorsAbstractExecutableServer
 	{
 		if (receivedConfiguration == null || !(receivedConfiguration instanceof DescriptorsMOLD2Configuration))
 			throw new Exception("Invalid configuration passed, should be instance of DescriptorsMold2Configuration");
-		saveMolecules(dtMolecules, datain, QSPRConstants.SDFNOH, start, size);
+		saveMolecules(dtMolecules, datain, QSPRConstants.SDFNOAROM_NOH, start, size);
 		String commands[]={getExeFile(),"-i",getAliasedFileName(datain),"-o",dataout,"<",datain};
 		executeBinaryBash(commands, dataout, 15*size);
 		return readStandardOutputResults(getResults(),dataout,false);

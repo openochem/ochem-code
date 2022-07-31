@@ -169,7 +169,7 @@ public class MMPTransformation
 	
 	static double getMass(String smiles) throws Exception {
 		try {
-			return Various.molecule.getMass(Various.molecule.convertToFormat(smiles, QSPRConstants.SDFNOH));
+			return Various.molecule.getMass(Various.molecule.convertToFormat(smiles, QSPRConstants.SDFNOAROM_NOH));
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new Exception("Failed to calculate mass.");
