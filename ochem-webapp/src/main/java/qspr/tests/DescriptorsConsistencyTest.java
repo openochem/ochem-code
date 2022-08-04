@@ -342,8 +342,7 @@ public class DescriptorsConsistencyTest
 				if(diff == 0 || diff < average*INCONSISTENCIES_TOLERANCE)continue;
 
 				if(first){   // only one message per molecule
-					String str = " new prediction " + newRes + " != " + oldRes + 
-							" for mapping2: M"  + basket.entries.get(i).ep.molecule.mapping2.id + " n = " + i + " descriptor: " + newPredictions.getColumn(j);
+					String str = " new prediction " + newRes + " != " + oldRes + " for basket entry: " + i + " descriptor: " + newPredictions.getColumn(j);
 					messages.put(Math.abs(diff), str); 
 					logger.info("DESCRIPTORS: " + configuration + str);
 					first = false;

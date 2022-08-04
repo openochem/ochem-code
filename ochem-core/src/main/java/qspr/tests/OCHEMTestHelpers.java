@@ -543,7 +543,8 @@ public class OCHEMTestHelpers
 				"delete cs from ConditionSet cs " +
 						"left join PropertyValue pv on cs.con_set_id = pv.con_set_id " +
 						"left join ExperimentalProperty ep on cs.con_set_id = ep.con_set_id " + 
-				"where pv.propertyvalue_id is null and ep.exp_property_id is null").executeUpdate();
+						"left join SubstructureAlert sa on cs.con_set_id = sa.con_set_id " + 
+				"where pv.propertyvalue_id is null and ep.exp_property_id is null and sa.sa_id is null").executeUpdate();
 
 		List<Article> articles = Globals.session().createQuery("from Article where introducer=:user").setParameter("user", deletedUser).list();
 		for (Article article : articles)
