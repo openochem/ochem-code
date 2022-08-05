@@ -22,8 +22,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 
-import com.eadmet.utils.OSType;
-
 import qspr.metaserver.configurations.DescriptorsAbstractConfiguration;
 import qspr.metaserver.configurations.DescriptorsConfiguration;
 import qspr.metaserver.util.ExecutableRunner.CONDA;
@@ -43,8 +41,10 @@ public class CDDDDescriptorsServer extends DescriptorsAbstractExecutableServer
 		try {
 			int mol = prepareData(dtMolecules, start, size);
 			if(mol > 0) {
-				String commands[]={"export","CUDA_VISIBLE_DEVICES="+gpuCard+";",
-						OSType.isMac()?OSType.getHome()+QSPRConstants.TETKO_ANACONDA +"/bin/activate cddd; cddd":"/etc/cddd/bin/cddd", "--input", getAliasedFileName(datain+".smi"), "--output",  getAliasedFileName(dataout),"--model_dir","/etc/cddd/cddd"};
+				String commands[]={"export",
+						QSPRConstants.RDKITPYTHON, "/opt/conda/envs/map4/bin/cddd" + " --input", getAliasedFileName(datain+".smi"), "--output",  
+						getAliasedFileName(dataout),"--model_dir","/etc/source/cddd"
+				};				
 				runPython(commands, dataout, CONDA.CDDD, 50);
 				return readResults(dataout,dtMolecules,start,size);
 			}

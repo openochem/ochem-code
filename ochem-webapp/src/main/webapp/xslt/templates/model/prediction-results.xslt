@@ -59,7 +59,7 @@
 			<tr><td class="itunes-right">
 				<xsl:if test="//modelApplierSummary/results">
 					<div id="stats">
-						<b>Predicted accuracy for the set</b><br/>
+						<b>Predicted (simulated) accuracy for the set</b><br/>
 						<xsl:for-each select="//modelApplierSummary/results">
 							<a tab="Model profile" href="model/profile.do?mapping_id={modelMapping/@id}" title="Open model profile"><xsl:value-of select="modelMapping/property/@name"/></a> for <xsl:value-of select="simulatedStatistics/@matchedPoints"/> compounds
 							<div style="padding-left: 10px;">
@@ -70,6 +70,8 @@
 								</xsl:when>
 								<xsl:otherwise>
 									Accuracy = <xsl:value-of select="simulatedStatistics/classificationSummary/accuracyTotal/@formatted-value"/>%<br/>
+									Balanced Accuracy = <xsl:value-of select="simulatedStatistics/classificationSummary/accuracyBalanced/@formatted-value"/>%<br/>
+									MCC = <xsl:value-of select="simulatedStatistics/classificationSummary/mcc/@formatted-value"/>%<br/>
 								</xsl:otherwise>
 							</xsl:choose>
 							</div>

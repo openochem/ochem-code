@@ -39,7 +39,7 @@ public class MAP4DescriptorsServer extends DescriptorsAbstractExecutableServer{
 
 		saveMolecules(dtMolecules, datain , QSPRConstants.SMILES_FORMAT, start, size);
 
-		String[] commands = new String[] { "export RDBASE=/opt/conda/envs/map4/lib/python3.6/site-packages/rdkit; export PYTHONPATH=/opt/conda/envs/map4/lib/python3.6/site-packages/rdkit; /opt/conda/envs/map4/bin/python", getExeFile(), "-i", datain, "-o", dataout ,  "--dimensions", ""+ conf.dimensions,"--radius",  ""+conf.radius};
+		String[] commands = new String[] {QSPRConstants.RDKITPYTHON, getExeFile(), "-i", datain, "-o", dataout ,  "--dimensions", ""+ conf.dimensions,"--radius",  ""+conf.radius};
 
 		runPython(commands, dataout, null, dtMolecules.getRowsSize() > 1000 ? dtMolecules.getRowsSize()/100 : dtMolecules.getRowsSize() > 50 ? dtMolecules.getRowsSize() : 50);
 		return readResults(dataout,dtMolecules,start,size,configuration);

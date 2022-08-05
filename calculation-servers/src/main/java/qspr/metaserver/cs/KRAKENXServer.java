@@ -49,8 +49,8 @@ public class KRAKENXServer extends MOPAC7Server{
 
 	@Override
 	String getOutputFile() throws IOException{
-		FileUtils.saveStringToFile("FOR005.out",getAliasedFileName("mopac.txt"));
-		FileUtils.saveStringToFile("FOR005.sdf",getAliasedFileName("mols.txt"));
+		//FileUtils.saveStringToFile("FOR005.out",getAliasedFileName("mopac.txt"));
+		//FileUtils.saveStringToFile("FOR005.sdf",getAliasedFileName("mols.txt"));
 		return FILENAME+".out";
 	}
 

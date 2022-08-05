@@ -285,5 +285,7 @@ public class QSPRConstants
 	public static final String EXTENDED_USER = "qspr.entities.ExtendedUser";
 	public static final String DEFAULT_USER = "qspr.entities.User";
 
+	public static final String PYTHON36 = "/opt/conda/envs/map4/bin/python3.6";
+	public static final String RDKITPYTHON ="export RDBASE=/opt/conda/envs/map4/share/RDKit/; export PYTHONPATH=/opt/conda/envs/map4/include/rdkit; " + PYTHON36;
 
 }

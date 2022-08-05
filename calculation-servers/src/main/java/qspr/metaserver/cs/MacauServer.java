@@ -44,8 +44,7 @@ public class MacauServer extends MultiLearningAbstractServer{
 
 	final String DESCRIPTORS = "descrs.csv";
 	final String PROPERTIES = "prop.csv";
-	final String PYTHON="/opt/conda/envs/map4/bin/python";
-	
+
 	boolean saveValues;
 
 	@Override
@@ -59,7 +58,7 @@ public class MacauServer extends MultiLearningAbstractServer{
 		saveConfig(conf);
 
 		saveAggregatedData(getAliasedFileName("/"),dtDescriptors, dtExpValues, receivedConf);
-		String [] commands = {PYTHON,getExeFile(),"--training"}; // N.B.! FIX works only for linux for very specific setting
+		String [] commands = {QSPRConstants.PYTHON36,getExeFile(),"--training"}; // N.B.! FIX works only for linux for very specific setting
 		executeBinaryBash(commands, MODEL);
 
 		receivedConf.storeModel(getAliasedFile(MODEL));
@@ -90,7 +89,7 @@ public class MacauServer extends MultiLearningAbstractServer{
 
 		saveModelToFile(receivedConf, getAliasedFileName(MODEL));
 
-		String [] commands = {PYTHON,getExeFile(),"--prognosis"};
+		String [] commands = {QSPRConstants.PYTHON36,getExeFile(),"--prognosis"};
 
 		runPythonWithConda(commands, PREDICTIONS,CONDA.RDKIT);
 		DataTable res = readResultValues(PREDICTIONS,receivedConf);
