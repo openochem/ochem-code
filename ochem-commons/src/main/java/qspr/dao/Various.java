@@ -55,6 +55,10 @@ public class Various {
 			default:
 				throw new CriticalException("Engine is unavailable: " + engine);			
 			}
+			
+			imp.testItself();
+
+			
 			cache.put(engine, imp);
 			return imp;
 		}catch(Exception e) {

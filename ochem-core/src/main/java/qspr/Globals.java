@@ -81,6 +81,7 @@ import qspr.util.PreCollectionUpdateListener;
 import qspr.util.UpdateListener;
 import qspr.workflow.utils.QSPRConstants;
 
+import com.eadmet.exceptions.CriticalException;
 import com.eadmet.exceptions.UserFriendlyException;
 import com.eadmet.utils.OCHEMUtils;
 import com.eadmet.utils.config.GlobalConfigurator;
@@ -156,6 +157,9 @@ public class Globals
 			ChemInfEngine engine = OCHEMConfiguration.getCheminfEngine();
 			Various.molecule = Various.getCheminfImpl(engine);
 
+			if(Various.molecule == null) throw new CriticalException("No Cheminf engine is available");
+
+			
 			if (!OCHEMConfiguration.disableDB)
 			{
 				// Configure DB

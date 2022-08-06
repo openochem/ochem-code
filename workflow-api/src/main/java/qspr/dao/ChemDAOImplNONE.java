@@ -32,6 +32,10 @@ public class ChemDAOImplNONE extends ChemDAO{
 	public ChemInfEngine engine() {
 		return ChemInfEngine.NONE;
 	}
+	
+	void testItself() {
+	}
+
 
 	@Override
 	public String aromatize(String molecule, Aromatisation type) throws IOException {

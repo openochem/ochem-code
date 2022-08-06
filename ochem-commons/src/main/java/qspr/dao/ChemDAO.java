@@ -92,6 +92,10 @@ abstract public class ChemDAO {
 
 	}
 
+	void testItself() throws IOException {
+		convertToFormat("C",QSPRConstants.INCHIKEYS); // check that engine is functional
+	}
+	
 	abstract public String aromatize(String molecule, Aromatisation type) throws IOException;
 
 	public String convertToSmilesOrSmart(String molecule) throws IOException{
