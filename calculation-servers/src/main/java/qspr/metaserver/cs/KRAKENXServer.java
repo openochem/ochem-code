@@ -31,8 +31,6 @@ public class KRAKENXServer extends MOPAC7Server{
 
 	final static String output = "mols_desc.txt";
 
-	//String ignore[] = {"MOPAC_POINTGROUP","MOPAC_POL_ALPHA","MOPAC_POL_BETA","MOPAC_POL_GAMMA","CPSA_RPCG"};
-
 	public KRAKENXServer()
 	{
 		supportedTaskType = DescriptorsConfiguration.KRAKENX;
@@ -49,8 +47,8 @@ public class KRAKENXServer extends MOPAC7Server{
 
 	@Override
 	String getOutputFile() throws IOException{
-		//FileUtils.saveStringToFile("FOR005.out",getAliasedFileName("mopac.txt"));
-		//FileUtils.saveStringToFile("FOR005.sdf",getAliasedFileName("mols.txt"));
+		FileUtils.saveStringToFile("FOR005.out",getAliasedFileName("mopac.txt"));
+		FileUtils.saveStringToFile("FOR005.sdf",getAliasedFileName("mols.txt"));
 		return FILENAME+".out";
 	}
 
