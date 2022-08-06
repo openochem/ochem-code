@@ -28,7 +28,6 @@ import java.util.Set;
 import com.eadmet.exceptions.UserFriendlyException;
 import com.eadmet.utils.FileUtils;
 
-import qspr.dao.ChemInfEngine;
 import qspr.dao.Various;
 import qspr.metaserver.configurations.DescriptorsAbstractConfiguration;
 import qspr.metaserver.configurations.MMPFragConfiguration;
@@ -89,17 +88,11 @@ public class MMPFragServer extends  DescriptorsAbstractExecutableServer
 	protected DataTable calculateDescriptors(DataTable dtMolecules, DescriptorsAbstractConfiguration configuration,
 			int start, int batchSize) throws Exception {
 
-		
-		Various.molecule = Various.getCheminfImpl(ChemInfEngine.CHEMAXON);
-		
+				
 		getResults().addRow().addAttachment(QSPRConstants.MOLECULE_ID_STEREOCHEM, dtMolecules.getRow(start).getAttachment(QSPRConstants.MOLECULE_ID_STEREOCHEM));
 
-		//dtMolecules.setValue(0, QSPRConstants.SDF_COLUMN, "[Br-].CN2C=[N+](CC(=O)C1=CC=CC=C1)C3=CC(Cl)=CC=C23");
-
 		String mols[] = Various.molecule.splitOrderedByChargeAndSize((String)dtMolecules.getValue(start,QSPRConstants.SDF_COLUMN));
-
 		String kekule = Various.molecule.convertToKekuleSMILES((String)dtMolecules.getValue(start,QSPRConstants.SDF_COLUMN));
-
 		System.out.println("got: " + kekule);
 
 		if(kekule.contains(ALL))
