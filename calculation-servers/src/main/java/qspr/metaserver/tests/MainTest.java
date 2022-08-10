@@ -208,20 +208,15 @@ public class MainTest {
 	@Test(timeout = MULTIPLIER * 5 * 15000)
 	@TaskTest(DescriptorsConfiguration.EPA)
 	public void EPATest() throws Exception {
-		try {
-			DescriptorsAbstractConfiguration epa = (DescriptorsAbstractConfiguration) Class.forName("qspr.metaserver.configurations.DescriptorsEPAConfiguration").newInstance();
-			DataTable dtResult = runTest(epa, wnd_molecules);
-			if(dtResult.errorCount() > 0) {
-				String errors = "";
-				for(int i =0;i<dtResult.getRowsSize();i++)
-					if(dtResult.getRow(i).isError())errors += dtResult.getRow(i).detailedStatus+ "\n";
-				fail(errors);
-			}
-			assertTrue(dtResult.getColumnsSize() > 0);
-		} catch (ClassNotFoundException e) {
-			logger.warn("Skipping tests for ChemaxonScaffold. Class was not found. Chemxon plugins not loaded?");
+		DescriptorsAbstractConfiguration epa = (DescriptorsAbstractConfiguration) Class.forName("qspr.metaserver.configurations.DescriptorsEPAConfiguration").newInstance();
+		DataTable dtResult = runTest(epa, wnd_molecules);
+		if(dtResult.errorCount() > 0) {
+			String errors = "";
+			for(int i =0;i<dtResult.getRowsSize();i++)
+				if(dtResult.getRow(i).isError())errors += dtResult.getRow(i).detailedStatus+ "\n";
+			fail(errors);
 		}
-		
+		assertTrue(dtResult.getColumnsSize() > 0);
 	}
 
 	@Test(timeout = MULTIPLIER * 15000)
