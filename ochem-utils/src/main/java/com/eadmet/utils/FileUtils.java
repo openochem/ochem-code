@@ -57,11 +57,11 @@ public class FileUtils {
 	 * @file -- file to which the data will be saved
 	 */
 	public static void saveStringToFile(String data, String file) throws IOException {
-		FileWriter pw = new FileWriter(file);
-
+		File f = new File(file);
+		if(f.exists())f.delete();
+		FileWriter pw = new FileWriter(f);
 		BufferedReader r = new BufferedReader(new StringReader(data));
 		String strLine;
-
 		while ((strLine = r.readLine()) != null)
 			pw.write(strLine + OSType.endLine());
 		pw.flush();

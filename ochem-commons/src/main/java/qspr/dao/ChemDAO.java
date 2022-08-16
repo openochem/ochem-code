@@ -95,7 +95,7 @@ abstract public class ChemDAO {
 	void testItself() throws IOException {
 		convertToFormat("C",QSPRConstants.INCHIKEYS); // check that engine is functional
 	}
-	
+
 	abstract public String aromatize(String molecule, Aromatisation type) throws IOException;
 
 	public String convertToSmilesOrSmart(String molecule) throws IOException{
@@ -141,6 +141,9 @@ abstract public class ChemDAO {
 	abstract public String convertToSDFUnblockedImp(String molecule)throws IOException, TimeoutException;
 
 	public double getMass(String sdfData){
+
+		if(sdfData.toUpperCase().contains(QSPRConstants.ERROR))return 0;
+
 		double mas = 0;
 		try {
 			mas = Various.molecule.getMassImp(sdfData);
