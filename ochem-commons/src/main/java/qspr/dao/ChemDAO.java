@@ -121,17 +121,23 @@ abstract public class ChemDAO {
 	 */
 
 	public String convertToSDFUnblocked(String molecule)throws IOException, TimeoutException{
+		Exception ee = null;
 		try {
 			return Various.molecule.convertToSDFUnblockedImp(molecule);
-		}catch(Exception e) {
-			for(ChemInfEngine engine :ChemInfEngine.values())
-				if(!ChemDAO.ignoreEngine(engine)){
-					ChemDAO mol = Various.getCheminfImpl(engine);
-					return mol.convertToSDFUnblockedImp(molecule);
-				}
+		}catch(Exception e){
+			ee = e;
+			try {
+				for(ChemInfEngine engine :ChemInfEngine.values())
+					if(!ChemDAO.ignoreEngine(engine)){
+						ChemDAO mol = Various.getCheminfImpl(engine);
+						if(mol != null)
+							return mol.convertToSDFUnblockedImp(molecule);
+					}
+			}catch (Exception eee) {
+			}
 		}
-		return null;
 
+		throw new IOException(ee);		
 	}
 
 	static public boolean ignoreEngine(ChemInfEngine engine){
