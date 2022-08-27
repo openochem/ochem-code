@@ -45,9 +45,7 @@ public class DimenetPPServer extends SmilesOnlyAbstractServer{
 	}
 
 	@Override
-	void saveHeaders(BufferedWriter bw, DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf) throws IOException {
-		super.saveHeaders(bw, dtDescriptors, dtExpValues, conf);
-
+	void saveMethodSpecificData(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf) throws IOException {
 		BufferedWriter writer = getAliasedBufferedWriter(dtExpValues != null? "train.sdf":"apply.sdf");
 		for(int i = 0; i< dtDescriptors.getDataSize(); i++) {
 			AbstractDataRow r = dtDescriptors.getRawData().getRow(i);
@@ -58,7 +56,6 @@ public class DimenetPPServer extends SmilesOnlyAbstractServer{
 		writer.close();
 	}
 
-
 	@Override
 	public boolean isCritical(String message) {
 		if(message.contains("Explicit valence for atom"))
@@ -67,7 +64,7 @@ public class DimenetPPServer extends SmilesOnlyAbstractServer{
 			throw new CriticalException("'NoneType' object has no attribute: " + message);
 		return super.isCritical(message);
 	}
-	
+
 	@Override
 	protected String getGPUCard(boolean forceCPU) { // always card 0, since environment is used to restrict only one card, which becomes 0
 		return "" + (noGPU() || forceCPU ? NO_GPU : 0);

@@ -263,24 +263,27 @@ abstract public class SmilesOnlyAbstractServer extends MultiLearningAbstractServ
 			dtExpValues = de;
 		}
 
-		// saving headers
+		// saving headers and values 
 		BufferedWriter bw = getAliasedBufferedWriter(filename);
-		saveHeaders(bw, dtDescriptors, dtExpValues, conf);
-		//saving values
+		saveHeaders(bw, dtDescriptors, dtExpValues == null?null:dtExpValues.getColumnSize(), conf);
 		int savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, conf);
 		bw.close();
+
+		saveMethodSpecificData(dtDescriptors, dtExpValues, conf);
 
 		return savedRecords;
 	}
 
-	void saveHeaders(BufferedWriter bw, DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf) throws IOException {
+	void saveMethodSpecificData(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf) throws IOException {
+	}
+
+	void saveHeaders(BufferedWriter bw, DescriptorsTable dtDescriptors, Integer outputs, ModelAbstractConfiguration conf) throws IOException {
 		// saving all values
 		bw.write(QSPRConstants.SMILES_FORMAT.toLowerCase());
 		for(int i=0;i<dtDescriptors.getDescriptorsSize();i++)
 			bw.write("," + QSPRConstants.DESCRIPTOR + i);
 
-		if(dtExpValues != null) {
-			int outputs = dtExpValues.getColumnSize();
+		if(outputs != null) {
 			if(outputs == 2 && conf.areClassificationData() && conf instanceof SupportsOneOutputOnly) outputs = 1;
 			for(int i=0;i<outputs;i++)
 				bw.write("," + QSPRConstants.PREDICTION_RESULT_COLUMN + i);

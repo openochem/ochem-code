@@ -106,6 +106,22 @@ public class KGCNNServer extends SmilesOnlyAbstractServer {
 	}
 
 	@Override
+	void saveHeaders(BufferedWriter bw, DescriptorsTable dtDescriptors, Integer outputs, ModelAbstractConfiguration conf) throws IOException {
+		KGCNNConfiguration config = (KGCNNConfiguration) conf;
+		super.saveHeaders(bw, dtDescriptors, outputs(config), conf);
+	}
+
+	int outputs(KGCNNConfiguration conf) {
+		boolean isRegression = conf.containAlsoRegressionData();
+
+		int outputs = conf.OutputValues();
+		if(!isRegression && outputs == 2)
+			return 1;
+
+		return outputs;
+	}
+
+	@Override
 	void saveConfig(ModelAbstractConfiguration configuration, DescriptorsTable mols, boolean train, boolean forceCPU) throws IOException{
 
 		KGCNNConfiguration conf = (KGCNNConfiguration) configuration;
@@ -120,7 +136,7 @@ public class KGCNNServer extends SmilesOnlyAbstractServer {
 		}
 
 		boolean isRegression = conf.containAlsoRegressionData();
-				
+
 		String configur=
 				"[Task]\n"
 						+ "train_mode = " + (train? "True":"False") +"\n"
