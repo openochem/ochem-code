@@ -29,6 +29,7 @@ public class CDK2DescriptorsServer extends CDKDescriptorsServer {
 	
 	public CDK2DescriptorsServer() throws Exception{
 		supportedTaskType = DescriptorsConfiguration.CDK2;
+		repostSize = 50;
 		setInputFlowGroup(0);
 		setOutputFlowGroup(0);
 	}
