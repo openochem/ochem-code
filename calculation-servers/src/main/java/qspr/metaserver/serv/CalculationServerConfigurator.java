@@ -53,7 +53,7 @@ public class CalculationServerConfigurator
 	public boolean silent = false;
 
 	public final String LINUX ="linux",MAC="mac",WINDOWS="windows",AARCH64 ="aarch64";
-	
+
 	public CalculationServerConfigurator(ServerInfo serverInfo, PrintWriter out)
 	{
 		this.serverInfo = serverInfo;
@@ -75,7 +75,7 @@ public class CalculationServerConfigurator
 			platformType = WINDOWS;
 		if(platformType.equals(LINUX) && OSType.isAarch64())
 			platformType = AARCH64;
-		
+
 		serverInfo.platform = osName;
 		serverInfo.failures = new HashSet<String>();
 
@@ -187,7 +187,7 @@ public class CalculationServerConfigurator
 
 		configuration.makeApplicationsRedundant();
 
-		downloadFile(Command.VERSIONTEMPLATEXML, serverHomeDirectory, configuration.metaserverURL);
+		downloadVersionTemplate(serverHomeDirectory, configuration.metaserverURL);
 		File templateFile = new File(serverHomeDirectory + "/" + Command.VERSIONTEMPLATEXML);
 		if (templateFile.exists())
 		{
@@ -203,13 +203,13 @@ public class CalculationServerConfigurator
 	/**
 	 * Download an encoded file from metaserver
 	 */
-	private static void downloadFile(String fileName, String serverHomeDirectory, String metaserverURL)
+	private static void downloadVersionTemplate(String serverHomeDirectory, String metaserverURL)
 	{
 		try
 		{
-			logger.info("Downloading the " + fileName + " from " + metaserverURL);
+			logger.info("Downloading the " + Command.VERSIONTEMPLATEXML + " from " + metaserverURL);
 
-			URLConnection openConnection = CSTransport.getConnection(metaserverURL + "/?action=getFile&file=" + fileName);
+			URLConnection openConnection = CSTransport.getConnection(metaserverURL + "/?action=getFile&file=" + Command.VERSIONTEMPLATEXML);
 
 			openConnection.addRequestProperty("User-Agent", "OCHEM server"); // just to have this field not null
 
@@ -222,13 +222,14 @@ public class CalculationServerConfigurator
 			}
 
 			String fileXML = CryptUtils.desDecode(writer.toString());
-			FileWriter fWriter = new FileWriter(new File(serverHomeDirectory + "/" + fileName));
+			FileWriter fWriter = new FileWriter(new File(serverHomeDirectory + "/" + Command.VERSIONTEMPLATEXML));
 			fWriter.write(fileXML.toString());
 			fWriter.close();
 		} catch (Exception e)
 		{
-			logger.error("Could not download " + fileName + " from metaserver");
+			logger.error("Could not download " + Command.VERSIONTEMPLATEXML + " from metaserver");
 			e.printStackTrace();
+			System.exit(1); // no further calculations is possible if template cannot be downloaded
 		}
 	}
 }
