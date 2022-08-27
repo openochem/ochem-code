@@ -59,6 +59,11 @@ public class DNNServer extends MultiLearningAbstractServer{
 					"--n_epochs",""+configuration.epochs
 			};
 
+			if(configuration.areClassificationData()) {
+				commands = OCHEMUtils.append(commands, "--lossfunc");
+				commands = OCHEMUtils.append(commands, "sce");
+			}
+
 			commands = addOptional(commands, configuration.additionalParam );
 
 		}else 
