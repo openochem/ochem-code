@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,7 +55,7 @@ import com.eadmet.utils.OCHEMUtils;
 public abstract class MachineLearningAbstractServer extends WorkflowNodeServer
 {
 	private static final String[] DEFAULT_MESSAGES = { "EPOCH:","TRAIN SCORE:","VALIDATION SCORE:"};
-	protected int batchApplySize = Integer.MAX_VALUE; // maxmimum apply size of a model
+	protected int batchApplySize = Integer.MAX_VALUE/2; // maxmimum apply size of a model
 	final int MIN_BATCH_SIZE= 10000;
 
 	protected DataTable iterations;
@@ -62,7 +63,7 @@ public abstract class MachineLearningAbstractServer extends WorkflowNodeServer
 	private String messages[] = null;
 
 	private double shift = 0.;
-	
+
 	// The original data are stored to have a possibility to identify sizes
 	public boolean allowLocalCalculations = false;
 
@@ -186,7 +187,7 @@ public abstract class MachineLearningAbstractServer extends WorkflowNodeServer
 
 		dtDescriptors = dtDescriptors.compressDescriptorsForApply(compressing);
 
-		DataTable res =  fixModelBatch(dtDescriptors, receivedConf, batchApplySize);
+		DataTable res =  fixModelBatch(dtDescriptors, receivedConf, 2*batchApplySize);
 		if(compressing.length != res.getRowsSize()) // if there was a compressing
 			res = res.decompress(compressing);
 
@@ -210,15 +211,17 @@ public abstract class MachineLearningAbstractServer extends WorkflowNodeServer
 					throw e;
 			}
 
+		long start = Calendar.getInstance().getTimeInMillis();
+
 		// more than 1 row is still available
 
 		batchSize = dtDescriptors.getDataSize()/2 < batchSize/2? dtDescriptors.getDataSize()/2: batchSize/2 ;
 		for(int i = 0; i < dtDescriptors.getDataSize() ; i += batchSize) {
-			setStatus("Applying batch = " + (i/batchSize +1) + " out of n = " + (dtDescriptors.getDataSize()/batchSize + 1) +  " with batchSize = " + batchSize);
+			setStatus("Applying batch = " + (i/batchSize +1) + " out of n = " + (dtDescriptors.getDataSize()/batchSize + 1) +  " with batchSize = " + batchSize + " elapsed = "+ (Calendar.getInstance().getTimeInMillis()-start)/1000 + " sec");
 
 			long size = i + batchSize < dtDescriptors.getDataSize() ? i + batchSize : dtDescriptors.getDataSize();
 			DescriptorsTable mols = dtDescriptors.getSliceDescriptorsTable(i, (int)size);
-			DataTable resnew = fixModelBatch(mols, receivedConf,batchSize);
+			DataTable resnew = fixModelBatch(mols, receivedConf, batchSize);
 
 			if(res == null) res = resnew;
 			else
@@ -445,7 +448,7 @@ public abstract class MachineLearningAbstractServer extends WorkflowNodeServer
 	}
 
 	void checkMinimaRecords(ModelAbstractConfiguration configuration, int records) {
-		
+
 		if(isRunningTest())return;
 		int factor = configuration instanceof BaggingConfiguration?4:2;
 		if(records<configuration.requireMinimumRecords()/factor)throw new 

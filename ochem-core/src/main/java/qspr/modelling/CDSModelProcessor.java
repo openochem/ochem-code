@@ -29,6 +29,7 @@ import qspr.entities.Property;
 import qspr.entities.PropertyOption;
 import qspr.metaserver.configurations.BaggingConfiguration;
 import qspr.metaserver.configurations.StructureOptimisationConfiguration;
+import qspr.metaserver.configurations.Supports3D;
 import qspr.metaserver.configurations.LabelWeighting;
 import qspr.metaserver.configurations.LabelWeighting.PropertyWeighting;
 import qspr.metaserver.protocol.Task;
@@ -256,6 +257,13 @@ public class CDSModelProcessor extends BasicModelProcessor
 	{
 		CDSConfiguration configuration = (CDSConfiguration) model.attachment.getObject().configuration;
 		NodesConfiguration nodesConfiguration = new NodesConfiguration();
+
+		if(configuration.modelConfiguration instanceof Supports3D) {
+			Supports3D conf = (Supports3D) configuration.modelConfiguration ;
+			conf.setUse3D(configuration.optimisationConfiguration != null);
+			if(!conf.requires3D() && !configuration.descriptors.requires3D())
+				configuration.optimisationConfiguration  = null;
+		}
 
 		addMoleculeProcessingConfiguration(nodesConfiguration, model.attachment.getObject().standartization, configuration.optimisationConfiguration);
 		nodesConfiguration.nodes.add(new NodeConfiguration("descriptors-processor", configuration.descriptors));

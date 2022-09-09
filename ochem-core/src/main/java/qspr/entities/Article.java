@@ -661,8 +661,8 @@ public class Article
 
 	public static Article getDefaultArticle(User user, UploadContext context) throws Exception {
 		DynaWrap extended = user.dynaWrapped();
-		String firstName = user.isExtended() ? extended.getString("firstName") : user.login;
-		String lastName = user.isExtended() ? extended.getString("lastName") : "";
+		String firstName = (User.getExtended().isInstance(user) && extended.getString("firstName") != null) ? extended.getString("firstName") : user.login;
+		String lastName = (User.getExtended().isInstance(user)) && extended.getString("lastName") != null? extended.getString("lastName") : "";
 		
 		if(firstName.length()==0)firstName = user.login;
 		

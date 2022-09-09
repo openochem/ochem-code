@@ -1,13 +1,15 @@
 import tensorflow as tf
-import keras.backend as K
+import tensorflow.keras.backend as K
 import numpy as np
+import pandas as pd
 import time
 import os
+import os.path
+import sys
 import argparse
 import json
 from copy import deepcopy
 from tensorflow_addons import optimizers
-#from sklearn.model_selection import KFold
 import kgcnn.training.schedule
 import kgcnn.training.scheduler
 import kgcnn.training.callbacks
@@ -19,14 +21,9 @@ from kgcnn.hyper.hyper import HyperParameter
 
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, CSVLogger
 import configparser
-import sys
 import tarfile
 from distutils.util import strtobool
 # Standard imports
-import json
-import os
-import pandas as pd
-import numpy as np
 import pickle
 import tensorflow_addons as tfa
 
@@ -37,6 +34,8 @@ config.read(conf_name);
 
 print("Load config file: ", conf_name);
 
+def descriptor_callback (mg, ds):
+    return np.array(ds[descs],dtype='float32')
 
 def getConfig(section, attribute, default=""):
     try:
@@ -91,6 +90,132 @@ def isClassifer(graph_labels_all):
     else:
         return False
 
+def splitingTrain_Val(dataset,labels,data_length, inputs=None, hypers=None, idx=0, cuts=10, output_dim=1, embsize=False, isCCE=False, seed=10):
+    assert idx < cuts
+    # split data using a specific seed!
+    np.random.seed(seed)
+    split_indices = np.uint8(np.floor(np.random.uniform(0,cuts,size=data_length)))
+    print('data length: ',data_length)
+    test = split_indices==idx
+    train = ~test
+    testidx = np.transpose(np.where(test==True))
+    trainidx = np.transpose(np.where(train==True))
+    xtrain, ytrain = dataset[trainidx].tensor(inputs), labels[trainidx,:]
+    xtest, ytest = dataset[testidx].tensor(inputs), labels[testidx,:]
+    
+    ytrain = tf.reshape(ytrain, shape=(len(trainidx),labels.shape[1]))
+    ytest = tf.reshape(ytest, shape=(len(testidx),labels.shape[1]))
+    
+    print(hypers)
+
+    if embsize:
+        feature_atom_bond_mol = [xi.shape[2] for xi in xtest]
+        hypers['model']['config']['inputs'][0]['shape'][1] = feature_atom_bond_mol[0]
+        hypers['model']['config']['inputs'][1]['shape'][1] = feature_atom_bond_mol[1]
+        hypers['model']['config']['inputs'][2]['shape'][1] = feature_atom_bond_mol[2]
+        hypers['model']['config']['input_embedding']['node']['input_dim'] = feature_atom_bond_mol[0]
+        hypers['model']['config']['input_embedding']['edge']['input_dim'] = feature_atom_bond_mol[1]
+    
+    if 'last_mlp' in hypers['model']['config'].keys():
+        if type(hypers['model']['config']['last_mlp']['units']) == list:
+            hypers['model']['config']['last_mlp']['units'][-1] = output_dim
+        else:
+            hypers['model']['config']['last_mlp']['units'] = output_dim
+    else:
+        if type(hypers['model']['config']['output_mlp']['units']) == list:
+            hypers['model']['config']['output_mlp']['units'][-1] = output_dim
+        else:
+            hypers['model']['config']['output_mlp']['units'] = output_dim
+
+
+    isClass = isClassifer(ytrain)
+    # change activation function ! we do use sigmoid or softmax in general
+    if isClass:
+        if isCCE:
+            # only for two target classes minimum
+            hypers['model']["config"]['output_mlp']['activation'][-1] = 'softmax'
+        else:
+            # generally it works
+            hypers['model']["config"]['output_mlp']['activation'][-1] = 'sigmoid'
+
+    hyper = HyperParameter(hypers,
+                             model_name=hypers['model']['config']['name'],
+                             model_module=hypers['model']['module_name'],
+                             model_class=hypers['model']['class_name'],
+                             dataset_name="MoleculeNetDataset")
+    
+    #print('ici:',feature_atom_bond_mol,'| assigned inputs new dims:',hyper['model']["config"]['inputs'])
+    
+    dataset.assert_valid_model_input(hyper["model"]["config"]["inputs"])
+
+    return xtrain, ytrain, xtest, ytest, hyper, isClass
+
+def prepData(name, labelcols, datasetname='Datamol', hyper=None, modelname=None, overwrite=False, descs=None):
+    is3D = False
+    if modelname in ['PAiNN','DimeNetPP','HamNet','Schnet']:
+        print('model need 3D molecules')
+        if os.path.exists(name.replace('.csv','.sdf')) and not overwrite == 'True':
+            print('use external 3D molecules')
+            dataset = MoleculeNetDataset(file_name=name, data_directory="", dataset_name="MoleculeNetDataset")
+            dataset.prepare_data(overwrite=overwrite)
+            dataset.read_in_memory(label_column_name=cols)
+
+
+            if modelname=='DimeNetPP':
+                dataset.map_list(method="set_range", max_distance=4,  max_neighbours= 20)
+                dataset.map_list(method="set_angle")
+            elif modelname=='PAiNN':
+                dataset.map_list(method="set_range", max_distance=3,  max_neighbours= 10000)
+            elif modelname=='Schnet':
+                dataset.map_list(method="set_range", max_distance=4,  max_neighbours= 10000)
+
+            #dataset.set_methods(hyper["data"]["dataset"]["methods"])
+        else:
+            is3D = True
+            print('force internal 3D molecules')
+
+            dataset = MoleculeNetDataset(file_name=name, data_directory="", dataset_name="MoleculeNetDataset")
+            dataset.prepare_data(overwrite=overwrite, smiles_column_name="smiles",
+                             make_conformers=is3D, add_hydrogen=is3D,
+                             optimize_conformer=is3D, num_workers=10)
+
+            dataset.read_in_memory(label_column_name=cols, add_hydrogen=False,
+                               has_conformers=False)
+            if len(descs)>0:
+                print('Adding the graph_attributes from csv file!')
+                dataset.set_attributes(add_hydrogen=False,has_conformers=is3D,   additional_callbacks= {"graph_desc": descriptor_callback})
+    
+            else:
+                dataset.set_attributes(add_hydrogen=False,has_conformers=is3D)
+        
+            dataset.set_methods(hyper["data"]["dataset"]["methods"])
+
+
+    else:
+        print('no 3D model')    
+        dataset = MoleculeNetDataset(file_name=name, data_directory="", dataset_name="MoleculeNetDataset")
+        
+        dataset.prepare_data(overwrite=is3D, smiles_column_name="smiles",
+                             make_conformers=is3D, add_hydrogen=is3D,
+                             optimize_conformer=is3D, num_workers=10)
+
+        dataset.read_in_memory(label_column_name=cols, add_hydrogen=False,
+                               has_conformers=False)
+                               
+        if len(descs)>0:
+                print('Adding the graph_attributes from csv file!')
+                dataset.set_attributes(add_hydrogen=False,has_conformers=is3D,   additional_callbacks= {"graph_desc": descriptor_callback})
+    
+        else:
+                dataset.set_attributes(add_hydrogen=False,has_conformers=is3D)
+        
+        dataset.set_methods(hyper["data"]["dataset"]["methods"])
+
+    invalid = dataset.clean(hyper["model"]["config"]["inputs"])
+    # I guess clean first and assert clean ok
+
+    return dataset, invalid
+
 
 target_list = ['target']
 # Define standard parameters from config.cfg
@@ -117,9 +242,11 @@ nn_return_proba = int(getConfig("Details", "return_proba", 0));
 nn_loss = str(getConfig("Details", "nn_loss", "RMSE"));
 nn_lr_start = float(getConfig("Details", "nn_lr_start", 1e-2));
 output_dim = int(getConfig("Details", "output_dim", 1));
+desc_dim = int(getConfig("Details", "desc_dim", 0));
 
 # model selection parameters for selecting which architecture to run
 architecture_name = getConfig("Details", "architecture_name", 'AttFP');
+overwrite = getConfig("Details", "overwrite", 'False');
 
 print("Architecture selected:", architecture_name)
 
@@ -137,14 +264,14 @@ if architecture_name == "HamNet":
                 ],
                 "input_embedding": {"node": {"input_dim": 95, "output_dim": 64},
                                     "edge": {"input_dim": 5, "output_dim": 64}},
-                "message_kwargs": {"units": 200, 
+                "message_kwargs": {"units": 200,
                                     "units_edge": 200,
                                     "rate": 0.2, "use_dropout": True},
-                "fingerprint_kwargs": {"units": 200, "units_attend": 200, 
+                "fingerprint_kwargs": {"units": 200, "units_attend": 200,
                                     "rate": 0.5, "use_dropout": True,
                                      "depth": 3},
                 "gru_kwargs": {"units": 200},
-                "verbose": 10, "depth": 3, 
+                "verbose": 10, "depth": 3,
                 "union_type_node": "gru",
                 "union_type_edge": "None",
                 "given_coordinates": True,
@@ -599,6 +726,7 @@ if architecture_name == 'ChemProp':
                     "edge": {"input_dim": 5, "output_dim": 100}
                 },
                 "pooling_args": {"pooling_method": "sum"},
+                "use_graph_state": False,
                 "edge_initialize": {"units": 200, "use_bias": True, "activation": "relu"},
                 "edge_dense": {"units": 200, "use_bias": True, "activation": "linear"},
                 "edge_activation": {"activation": "relu"},
@@ -843,32 +971,44 @@ np.random.seed(seed);
 log_filename = 'model.log';
 modelname = "model.h5";
 
-# +
+# us to check cuda GPU vs ARM and to use CPU also!
 if gpu >= 0:
-    device = "gpu:%s/" % (gpu)
+    physical_devices = tf.config.list_physical_devices('GPU')
+    if tf.test.is_built_with_cuda():
+        try:
+            # work on one card with cleaner memory growth settings
+            tf.config.set_visible_devices(physical_devices[gpu], 'GPU')
+            tf.config.experimental.set_memory_growth(physical_devices[gpu], True)
+            print('growth_memory done')
+        except:
+            print("use tf1 method for growth_memory")
+            config = tf.compat.v1.ConfigProto()
+            config.gpu_options.allow_growth = True
+            sess = tf.compat.v1.Session(config=config)
+        print('cuda gpu')
+    else:
+        print('mac gpu')
 else:
-    device = "cpu"
-
-if gpu >= 0:
-    config = tf.compat.v1.ConfigProto()
-    config.gpu_options.allow_growth = True
-    sess = tf.compat.v1.Session(config=config)
-
+    tf.config.set_visible_devices([], 'GPU')
+    print('using cpu')
 print('before', TRAIN)
 
 if TRAIN == "True":
     # change the number of output (target) of the model
     # define columns names to grab from the input file
+    # read the files
+
     cols = ['Result%s' % (i) for i in range(output_dim)]
-    # I don't like this ... we need a proper way to assign output_dim!
-    try:
-        hyper['model']["config"]['output_mlp']['units'][-1] = output_dim
-    except:
-        hyper['model']["config"]['output_mlp']['units'] = output_dim
-    try:
-        hyper['model']["config"]['last_mlp']['units'][-1] = output_dim  # multi MLP normally so list of arrays!
-    except:
-        print('cannot change the last_mlp output dimension')
+    descs = ['desc%s' % (i) for i in range(desc_dim)]
+
+    if len(descs)>0:
+        print('There are Additional Descriptors/Conditions')
+        print(hyper["model"]["config"]['use_graph_state'])
+        if 'use_graph_state' in hyper["model"]["config"].keys():
+            print('changing graph states and inputs for Descriptors')
+            hyper["model"]["config"]['use_graph_state']=True
+            hyper["model"]["config"]["inputs"].append({"shape": [len(descs)], "name": "graph_desc", "dtype": "float32", "ragged": False})
+
 
     # failed next line for GINE parameters
     hyperparams = HyperParameter(hyper,
@@ -878,25 +1018,12 @@ if TRAIN == "True":
                                  dataset_name="MoleculeNetDataset")
 
     inputs = hyperparams["model"]["config"]["inputs"]
-
+    print(hyper)
     print('training')
-    dataset = MoleculeNetDataset(file_name=TRAIN_FILE, data_directory="", dataset_name="MoleculeNetDataset")
-    dataset.prepare_data(overwrite=True, smiles_column_name="smiles",
-                         make_conformers=True, add_hydrogen=True,
-                         optimize_conformer=True, num_workers=None)
-    dataset.read_in_memory(label_column_name=cols, add_hydrogen=False,
-                           has_conformers=False)
-    dataset.set_attributes(add_hydrogen=False,
-                           has_conformers=True)
-    print('*' * 100)
+    print('is overwrite',overwrite)
+    dataset, invalid= prepData(TRAIN_FILE, cols, hyper=hyperparams, 
+        modelname=architecture_name, overwrite=overwrite, descs=descs)
 
-    # For geometric models find a way to deal with them...
-    # need to identified which are 3D models properly ...
-    # this will change the prepare_data function too 
-    dataset.set_methods(hyper["data"]["dataset"]["methods"])
-
-    # Test model input is in dataset.
-    invalid_graphs = dataset.clean(hyperparams["model"]["config"]["inputs"])
     dataset.assert_valid_model_input(hyperparams["model"]["config"]["inputs"])  # failed for GCN code here
 
     # Model identification
@@ -906,33 +1033,17 @@ if TRAIN == "True":
     data_name = dataset.dataset_name
     data_unit = hyperparams["data"]["data_unit"]
     data_length = dataset.length
-    k_fold_info = hyperparams["training"]["cross_validation"]["config"]
 
     labels = np.array(dataset.obtain_property("graph_labels"), dtype="float")
+    # data preparation
+    xtrain, ytrain, xtest, ytest, hyperparam, isClass = splitingTrain_Val(dataset,labels,data_length, inputs = inputs, hypers=hyper,  idx=0, cuts=10, output_dim=output_dim, seed=seed)
 
     print("dataset length:", len(labels))
-    # is a classification or a regression problem
-    isClass = isClassifer(labels)
-    # change activation function ! we do use sigmoid or softmax in general
-    if isClass:
-        hyperparams['model']["config"]['output_mlp']['activation'][-1] = 'sigmoid'
 
-    #kf = KFold(**k_fold_info)
-    #split_indices = kf.split(X=np.arange(data_length - 1)[:, None])
-    split_indices = np.uint8(np.floor(np.random.uniform(0,10,size=data_length))) 
-    test = split_indices==0
-    train = ~test
-    
     # hyper_fit and epochs
-    hyper_fit = hyperparams['training']['fit']
+    hyper_fit = hyperparam['training']['fit']
     epo = hyper_fit['epochs']
     epostep = hyper_fit['validation_freq']
-
-    train_loss = []
-    test_loss = []
-    mae_5fold = []
-    all_test_index = []
-    model = None
 
     # how it works in Keras the Train / Val split
     filename = 'loss.csv'
@@ -942,41 +1053,24 @@ if TRAIN == "True":
     reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=redlr_factor, verbose=0, patience=redlr_patience,
                                   min_lr=1e-5)
 
+    model = None
     # Make model
-    model = make_model(**hyperparams['model']["config"])
-
-    # data extraction is define here for a given Kfold => make them like in OCHEM classical call
-    # TODO so just use the first split provided by KFold for the moment
-    #for train_index, test_index in split_indices:
-        # Select train and test data.
-    #    xtrain, ytrain = dataset[train_index].tensor(inputs), labels[train_index]
-    #    xtest, ytest = dataset[test_index].tensor(inputs), labels[test_index]
-    #    break
-
-     # data extraction is define here for a given Kfold => make them like in OCHEM classical call TODO so just use the first split provided by KFold for the moment
-    testidx = np.transpose(np.where(test==True))
-    trainidx = np.transpose(np.where(train==True))
-    print("*"*10)
-    print(data_length,np.sum(train), len(trainidx),np.sum(test), len(testidx))
-    print("*"*10)
-    xtrain, ytrain = dataset[trainidx].tensor(inputs), labels[trainidx]
-    xtest, ytest = dataset[testidx].tensor(inputs), labels[testidx]
-    print(len(xtrain),len(xtest))
+    model = make_model(**hyperparam['model']["config"])
 
     opt = tfa.optimizers.RectifiedAdam(learning_rate=0.001)
-    # need to change this for class / regression 
+    # need to change this for class / regression
     if isClass:
-        model.compile(opt, loss=BCEmask if isClass else RMSEmask, metrics=['accuracy'])
+        model.compile(opt, loss=BCEmask, metrics=['accuracy'])
     else:
-        model.compile(opt, loss=BCEmask if isClass else RMSEmask, metrics=[tf.keras.metrics.RootMeanSquaredError()])
+        model.compile(opt, loss=RMSEmask, metrics=[tf.keras.metrics.RootMeanSquaredError()])
 
     print(model.summary())
 
     # Start and time training
-    hyper_fit = hyperparams['training']['fit']
+    hyper_fit = hyperparam['training']['fit']
     start = time.process_time()
 
-    # need to change that to have ragged not numpy or tensor error 
+    # need to change that to have ragged not numpy or tensor error
     hist = model.fit(xtrain, ytrain,
                      validation_data=(xtest, ytest),
                      batch_size=batch_size,
@@ -988,7 +1082,7 @@ if TRAIN == "True":
 
     model.save_weights(modelname)
     print("Saved model to disk")
-    pickle.dump(hyperparams, open("modelparameters.p", "wb"))
+    pickle.dump(hyperparam, open("modelparameters.p", "wb"))
 
     # Probably this should become model.save_weights()
     tar = tarfile.open(MODEL_FILE, "w:gz");
@@ -1023,32 +1117,18 @@ else:
 
     df.to_csv(APPLY_FILE, index=False)
     cols = ['Result%s' % (i) for i in range(output_dim)]  # change this for MTL tasks not the case today
-    print(cols)
+    descs = ['desc%s' % (i) for i in range(desc_dim)]
 
     inputs = hyper["model"]["config"]["inputs"]
 
     print('evaluation')
-    dataset = MoleculeNetDataset(file_name=APPLY_FILE, data_directory="", dataset_name="MoleculeNetDataset")
-    # add Hydrogen ??? is it a good idea for 2D models ...
-    dataset.prepare_data(overwrite=True, smiles_column_name="smiles",
-                         make_conformers=True, add_hydrogen=True,
-                         optimize_conformer=True, num_workers=None)
-    
-    dataset.read_in_memory(label_column_name="Result0", add_hydrogen=False,
-                           has_conformers=False)
-    dataset.set_attributes(add_hydrogen=False,
-                           has_conformers=True)
+    dataset, invalid = prepData(APPLY_FILE,cols, hyper = hyper, modelname=architecture_name, overwrite=overwrite, descs=descs)
 
-    dataset.set_methods(hyper["data"]["dataset"]["methods"])
-
-
-
-    invalid_graphs = dataset.clean(inputs)
     print('-' * 10)
-    print('error graphs:', invalid_graphs)
+    print('error graphs:', invalid)
     print('-' * 10)
 
-    # Model creation    
+    # Model creation
     make_model = get_model_class(hyper["model"]["config"]["name"], hyper["model"]["class_name"])
 
     model = make_model(**hyper['model']["config"])
@@ -1062,10 +1142,10 @@ else:
 
     dfres = pd.DataFrame(a_pred, columns=cols)
 
-    # we need to check if the graph has not computed some cases and regenerate the full index 
-    if len(invalid_graphs) > 0:
+    # we need to check if the graph has not computed some cases and regenerate the full index
+    if len(invalid) > 0:
         dfresall = pd.DataFrame(index=df.index, columns=dfres.columns)
-        idx = [i for i in range(len(df)) if i not in invalid_graphs]
+        idx = [i for i in range(len(df)) if i not in invalid]
         dfres.index = idx
         dfresall.loc[idx, :] = dfres.loc[idx, :]
 
@@ -1082,3 +1162,4 @@ else:
 
     print("Relax!");
 # -
+

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 	<xsl:include href="configurators-common.xslt" />
+	<xsl:include href="../../model/inc/structure-optimisation-commons.xslt" />
 	
 	<xsl:template name="configuration-content">
 		<title>Model builder - KGCNN configurations</title>
@@ -35,22 +36,22 @@
 			</tr><tr>
 			<td>Batch size:<input type="text" class="small" name="batch" value="32"/> </td>
 			</tr>
-			<tr>
-				<td>Sanitize data<br/></td>
-				<td><input type="checkbox" name="sanitize"/></td>
-			</tr>	
 		</table>
 		<br/>
 
+		<br/>
+		<table class="configuration">
+ 			<h1>By default RDKIT is used to generate 3D for PAiNN and DimeNetPP. You can also select another method</h1>
+ 			<tr>
+				<xsl:call-template name="structure-optimisation"/>
+			</tr>			
+		</table>	
+		<br/>
 
 		<script language="javascript">
-			<xsl:if test="//method = 'KERAS'">
-				setCheckbox("sanitize", '<xsl:value-of select="//attachment/configuration/modelConfiguration/sanitize"/>');
 				setValue("method", '<xsl:value-of select="//attachment/configuration/modelConfiguration/method"/>');
-				setValue("x", '<xsl:value-of select="//attachment/configuration/modelConfiguration/x"/>');
 				setValue("batch", '<xsl:value-of select="//attachment/configuration/modelConfiguration/batch"/>');
 				setValue("nepochs", '<xsl:value-of select="//attachment/configuration/modelConfiguration/nepochs"/>');
-			</xsl:if>
 		</script>
 	</xsl:template>
 </xsl:stylesheet>

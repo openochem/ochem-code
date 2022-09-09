@@ -20,6 +20,7 @@ package qspr.metaserver.cs;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 
 import com.eadmet.utils.OCHEMUtils;
 import com.eadmet.utils.OSType;
@@ -116,7 +117,7 @@ public class MacauServer extends MultiLearningAbstractServer{
 		for(int i=0; i<dtDescriptors.getColumnSize();i++)
 			bw.write((i>0?",":"")+QSPRConstants.DESCRIPTOR+i);
 		bw.write("\n");
-		int savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, receivedConf); // how many we can compress
+		List <Integer>  savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, receivedConf); // how many we can compress
 		bw.close();
 
 		if(dtExpValues!= null) { // saving also target values in another file
@@ -129,7 +130,7 @@ public class MacauServer extends MultiLearningAbstractServer{
 			bw.close();
 		}
 
-		return savedRecords;
+		return savedRecords.size();
 
 	}
 

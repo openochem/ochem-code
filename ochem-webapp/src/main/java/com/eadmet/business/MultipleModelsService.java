@@ -61,6 +61,7 @@ import qspr.metaserver.configurations.ModelAbstractConfiguration;
 import qspr.metaserver.configurations.NoDescriptors;
 import qspr.metaserver.configurations.StandartizationOptions;
 import qspr.metaserver.configurations.StructureOptimisationConfiguration;
+import qspr.metaserver.configurations.Supports3D;
 import qspr.metaserver.configurations.ValidationConfiguration;
 import qspr.modelling.CrossModelGenerator;
 import qspr.modelling.ModelFactory;
@@ -201,6 +202,9 @@ public class MultipleModelsService
 
 				String  aug = "";
 
+				if(duplicatedConfig instanceof Supports3D) 
+					((Supports3D)duplicatedConfig).setUse3D(false); // not required in hash
+				
 				if(duplicatedConfig instanceof NoDescriptors) { // required to avoid the use of augmentation a part of the method 
 					NoDescriptors nodesc = (NoDescriptors)duplicatedConfig;
 					aug = nodesc.augemenationString();
@@ -507,7 +511,7 @@ public class MultipleModelsService
 		CDSConfiguration descConf = (CDSConfiguration) descr.attachment.getObject().configuration;  // original desc configuration which was overwritten
 		cds.selection = descConf.selection.getDeepCopy(); // selection comes from descriptors
 
-		if(cds.modelConfiguration instanceof NoDescriptors){ // also augmentation
+		if(cds.modelConfiguration instanceof NoDescriptors && descConf.modelConfiguration instanceof NoDescriptors){ // also augmentation
 			cds.modelConfiguration = cds.modelConfiguration.getDeepCopy(); // otherwise the same modelConfiguration template could be used again  
 			NoDescriptors conf = (NoDescriptors) descConf.modelConfiguration;
 			((NoDescriptors)cds.modelConfiguration).setAugmentations(conf.getAugementTraining(), conf.getAugmentApply(), conf.getBalanceData());

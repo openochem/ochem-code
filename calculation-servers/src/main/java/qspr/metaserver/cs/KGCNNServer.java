@@ -127,6 +127,8 @@ public class KGCNNServer extends SmilesOnlyAbstractServer {
 		KGCNNConfiguration conf = (KGCNNConfiguration) configuration;
 
 		config = conf;
+		
+		config.sanitize = true;
 
 		File f = new File(getAliasedFileName(CFG));
 		if(f.exists()) {

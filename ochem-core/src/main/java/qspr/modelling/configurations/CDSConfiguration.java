@@ -65,6 +65,7 @@ public class CDSConfiguration implements Descriptable, ProvidedConditions
 	public boolean isCompatibleDescriptorsAndMethod(ModelAbstractConfiguration modelcfg) {
 		if(hasDescriptors()) {
 			if(modelcfg instanceof NoDescriptors) {
+				if(modelcfg.isSupportDescriptors())return true;
 				if(!modelcfg.isSupportConditions()) return false;
 				if(!onlyDescriptorsEmptyConfiguration()) return false;
 			}

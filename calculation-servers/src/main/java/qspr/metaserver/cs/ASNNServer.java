@@ -596,8 +596,8 @@ public class ASNNServer extends MultiLearningAbstractServer
 	@Override
 	public int saveAggregatedData(String filename, DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration receivedConf) throws IOException {
 		BufferedWriter bw = getAliasedBufferedWriter(filename);
-		bw.write("" + saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues,null,receivedConf) +"\n");
-		int savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw,receivedConf); // how many we can compress
+		bw.write("" + saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues,null,receivedConf).size() +"\n");
+		List <Integer> savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw,receivedConf); // how many we can compress
 		bw.close();
 
 		ASNNConfiguration conf = (ASNNConfiguration) receivedConf;
@@ -622,7 +622,7 @@ public class ASNNServer extends MultiLearningAbstractServer
 			f.renameTo(dest);
 		}
 
-		return savedRecords;
+		return savedRecords.size();
 	}
 
 	@Override

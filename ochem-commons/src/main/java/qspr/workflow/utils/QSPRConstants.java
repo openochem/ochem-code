@@ -24,6 +24,7 @@ public class QSPRConstants
 
 	/** MOLECULES */
 	public static final String SDF_COLUMN = "SDF"; // distinguishing column in the data table and format
+	public static final String SDF3D_COLUMN = SDF_COLUMN; /// distinguish path for 3D
 
 	//  conversion formats as defined in ChemAxon
 	public static final String PDB = "PDB";

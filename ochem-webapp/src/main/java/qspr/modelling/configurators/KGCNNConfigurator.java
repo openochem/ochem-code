@@ -48,6 +48,9 @@ public class KGCNNConfigurator extends DescriptorsConfigurator {
 
 	public void kgcnnSubmit(HttpServletRequest request)
 	{
+	
+		CDSConfiguration cds = (CDSConfiguration)model.attachment.getObject().configuration;
+
 		KGCNNConfiguration conf = (KGCNNConfiguration) 
 				((CDSConfiguration)model.attachment.getObject().configuration).modelConfiguration;
 
@@ -57,6 +60,10 @@ public class KGCNNConfigurator extends DescriptorsConfigurator {
 		conf.nepochs = Integer.valueOf(request.getParameter("nepochs"));
 		conf.batch = Integer.valueOf(request.getParameter("batch"));
 		conf.nepochs = conf.nepochs == null || conf.nepochs > 10000 ? 10000: conf.nepochs <1? 1: conf.nepochs;
+
+		cds.optimisationConfiguration=DescriptorsConfigurator.configureStructureOptimisation(request);
+		conf.setUse3D(cds.optimisationConfiguration != null);
+
 		currentPage = startStep;
 	}
 

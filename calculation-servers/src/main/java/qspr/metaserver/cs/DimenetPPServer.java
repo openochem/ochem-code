@@ -28,8 +28,6 @@ import qspr.dao.Various;
 import qspr.metaserver.configurations.DIMENETConfiguration;
 import qspr.metaserver.configurations.ModelAbstractConfiguration;
 import qspr.metaserver.cs.util.DescriptorsTable;
-import qspr.metaserver.cs.util.LabelsTable;
-import qspr.workflow.datatypes.AbstractDataRow;
 import qspr.workflow.utils.QSPRConstants;
 
 public class DimenetPPServer extends SmilesOnlyAbstractServer{
@@ -42,18 +40,6 @@ public class DimenetPPServer extends SmilesOnlyAbstractServer{
 		setOutputFlowGroup(0);	
 		batchApplySize = 10000;
 		startPositionResults = 0;
-	}
-
-	@Override
-	void saveMethodSpecificData(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf) throws IOException {
-		BufferedWriter writer = getAliasedBufferedWriter(dtExpValues != null? "train.sdf":"apply.sdf");
-		for(int i = 0; i< dtDescriptors.getDataSize(); i++) {
-			AbstractDataRow r = dtDescriptors.getRawData().getRow(i);
-			String sdf = (String)r.getAttachment(QSPRConstants.SDF_COLUMN);
-			if(sdf == null)continue;
-			writer.append(Various.molecule.addPropertyToSDF(sdf, QSPRConstants.SMILES_ATTACHMENT, (String)r.getAttachment(QSPRConstants.SMILES_ATTACHMENT)));
-		}
-		writer.close();
 	}
 
 	@Override
@@ -106,7 +92,7 @@ public class DimenetPPServer extends SmilesOnlyAbstractServer{
 				+   "nbepochs = "  + conf.nbepochs  + "\n"
 				+ 	"canonize = False" + "\n"
 				+	"early = "  + (conf.early?"True":"False")+ "\n" + "\n"
-				+ (conf.isExternal3D()?"external3D = True":"") + "\n"
+				+ (conf.requires3D()?"external3D = True":"") + "\n"
 				);
 
 		writer.write("\n");

@@ -71,6 +71,7 @@ import qspr.dao.ChemInfEngine;
 import qspr.dao.Repository;
 import qspr.dao.Various;
 import qspr.entities.Basket;
+import qspr.entities.Journal;
 import qspr.entities.Mapping1;
 import qspr.entities.Property;
 import qspr.entities.Tag;
@@ -159,7 +160,7 @@ public class Globals
 
 			if(Various.molecule == null) throw new CriticalException("No Cheminf engine is available");
 
-			
+
 			if (!OCHEMConfiguration.disableDB)
 			{
 				// Configure DB
@@ -189,7 +190,7 @@ public class Globals
 				stat = sessionFactory.getStatistics();
 				stat.setStatisticsEnabled(true);
 				migrateDatabase();
-				checkPublisher();
+				checkDatabaseSetting();
 
 			}
 			else
@@ -211,8 +212,9 @@ public class Globals
 		} catch (Throwable ex)
 		{
 			ex.printStackTrace();
-			throw new ExceptionInInitializerError(ex);
-		}
+			System.out.println("\n\n"+ ex.getMessage() + "\nExiting.");
+			if(ex instanceof CriticalException) System.exit(1);
+			throw new ExceptionInInitializerError(ex.getMessage());		}
 	}
 
 	public static boolean isStandalone = false;
@@ -225,10 +227,30 @@ public class Globals
 		return executableDirectory+"/"+s;
 	}
 
-	private static void checkPublisher() throws Throwable {
+	/**
+	 * Check that everything is OK with basic settings after dump
+	 * 
+	 * @throws CriticalException 
+	 */
+	private static void checkDatabaseSetting() {
+
 		Globals.startAllTransactions();
 		User user = Repository.user.getById(QSPRConstants.PUBLISHER_ID);
-		if(user == null || !user.login.equals(QSPRConstants.PUBLISHER)) throw new Throwable("The database does not have user PUBLISHER = " + QSPRConstants.PUBLISHER + " with id: " + QSPRConstants.PUBLISHER_ID);
+
+		String message = "The database is incorrectly configured: execute addExtended.sql to fix this issue";
+
+		if(user == null || !user.login.equals(QSPRConstants.PUBLISHER)) {
+			if(User.extendedExists()) throw new CriticalException(message);
+			else
+				throw new CriticalException("The database is incorrectly configured and does not have user PUBLISHER = " + QSPRConstants.PUBLISHER + " with id: " + QSPRConstants.PUBLISHER_ID);
+		}
+
+		if(Repository.molecule.getEmptyMolecule() == null)
+			throw new CriticalException(message);
+
+		if(Globals.session().get(Journal.class, QSPRConstants.UNPUBLISHED_JOURNAL) == null)
+			throw new CriticalException(message);
+
 		Globals.rollbackAllTransactions();
 	}
 
@@ -403,7 +425,7 @@ public class Globals
 			currentThreadSession.time = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
 			if (req != null)
-				currentThreadSession.ipAddress = ThreadScope.resolveRemoteAddr(req);
+				currentThreadSession.setIpAddress(ThreadScope.resolveRemoteAddr(req));
 			try
 			{
 				if (Globals.session().getTransaction() != null

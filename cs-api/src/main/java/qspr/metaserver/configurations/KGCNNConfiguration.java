@@ -23,13 +23,13 @@ import qspr.dao.Various;
 import qspr.workflow.utils.QSPRConstants;
 
 @XmlRootElement(name = "kgcnn-configuration")
-public class KGCNNConfiguration extends NoDescriptorsConfiguration{
+public class KGCNNConfiguration extends NoDescriptorsConfiguration implements SupportsOneOutputOnly, Supports3D{
 
 	private static final long serialVersionUID = 1L;
-
+	public Boolean external3D;
 
 	public enum KGCNN {
-		
+
 		Schnet,
 		PAiNN, 
 		GATv2, 
@@ -66,6 +66,7 @@ public class KGCNNConfiguration extends NoDescriptorsConfiguration{
 		return super.getInformativeName() +  (method == null ? "" : getRealName());	
 	}
 
+	@Override
 	public boolean isSupportRegression(){
 		return true;
 	}
@@ -88,6 +89,27 @@ public class KGCNNConfiguration extends NoDescriptorsConfiguration{
 		return super.isGoodSMILES(smiles, training);
 	}
 
+	@Override
+	public boolean requires3D() {
+		return external3D != null && external3D && (method == KGCNN.PAiNN || method == KGCNN.DimeNetPP || method == KGCNN.Schnet || method == KGCNN.HamNet);
+	}
 
+	@Override
+	public void setUse3D(boolean yes) {
+		if(yes)external3D = true;
+		else
+			external3D = null;
+		if(!requires3D())external3D = null; // to disable for those which do not require 3D
+	}
+
+	@Override
+	public boolean isSupportConditions(){
+		return isSupportDescriptors();
+	}
+
+	@Override
+	public boolean isSupportDescriptors() {
+		return method == KGCNN.ChemProp;
+	}
 
 }

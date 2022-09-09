@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
@@ -38,6 +39,7 @@ import qspr.metaserver.configurations.ModelAbstractConfiguration;
 import qspr.metaserver.configurations.MultiLearningAbstractConfiguration;
 import qspr.metaserver.configurations.NoDescriptors;
 import qspr.metaserver.configurations.Stereochemistry;
+import qspr.metaserver.configurations.Supports3D;
 import qspr.metaserver.configurations.SupportsOneOutputOnly;
 import qspr.metaserver.cs.util.DescriptorsTable;
 import qspr.metaserver.cs.util.LabelsTable;
@@ -266,15 +268,35 @@ abstract public class SmilesOnlyAbstractServer extends MultiLearningAbstractServ
 		// saving headers and values 
 		BufferedWriter bw = getAliasedBufferedWriter(filename);
 		saveHeaders(bw, dtDescriptors, dtExpValues == null?null:dtExpValues.getColumnSize(), conf);
-		int savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, conf);
+		List <Integer> savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, conf);
 		bw.close();
 
-		saveMethodSpecificData(dtDescriptors, dtExpValues, conf);
+		saveMethodSpecificData(dtDescriptors,dtExpValues,conf, savedRecords);
 
-		return savedRecords;
+		return savedRecords.size();
 	}
 
-	void saveMethodSpecificData(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf) throws IOException {
+	void saveMethodSpecificData(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration conf, List <Integer> savedRecords) throws IOException {
+
+		BufferedWriter writer = null;
+
+		if(conf instanceof Supports3D && ((Supports3D)conf).requires3D()) try{
+			writer = getAliasedBufferedWriter(dtExpValues != null? "train.sdf":"apply.sdf");
+			for(int record: savedRecords) {
+				AbstractDataRow r = dtDescriptors.getRawData().getRow(record);
+				String sdf = (String)r.getAttachment(QSPRConstants.SDF3D_COLUMN);
+				if(sdf == null)throw new CriticalException("3D conversion is requested but no 3D data are provided!");
+				if(!sdf.contains("$$$$"))
+					sdf = sdf + "\n$$$$\n";
+				writer.append(sdf);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(writer != null)
+				writer.close();
+		}
 	}
 
 	void saveHeaders(BufferedWriter bw, DescriptorsTable dtDescriptors, Integer outputs, ModelAbstractConfiguration conf) throws IOException {

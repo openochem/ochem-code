@@ -283,4 +283,9 @@ public class Session
 		return (Session) Globals.session().createCriteria(Session.class).createAlias("user", "u").add(Restrictions.eq("u.login", login)).addOrder(Order.desc("id")).setMaxResults(1).uniqueResult();
 	}
 
+	public void setIpAddress(String ip) {
+		if(ip != null && ip.length() > 20)
+			ip = ip.substring(0,20);
+		ipAddress = ip;
+	}	
 }

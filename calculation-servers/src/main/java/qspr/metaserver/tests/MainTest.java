@@ -1075,6 +1075,7 @@ public class MainTest {
 		String taskname = QSPRConstants.KGCNN;
 
 		for(KGCNN method:KGCNN.values()){
+			if(method != KGCNN.AttFP)continue; // testing only one method to be faster
 			KGCNNConfiguration conf = new KGCNNConfiguration();
 			conf.method = method;
 			conf.nepochs = 5;

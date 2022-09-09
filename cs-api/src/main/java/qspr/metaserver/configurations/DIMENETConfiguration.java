@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import qspr.workflow.utils.QSPRConstants;
 
 @XmlRootElement(name = "dimenet-configuration")
-public class DIMENETConfiguration extends NoDescriptorsConfiguration{
+public class DIMENETConfiguration extends NoDescriptorsConfiguration implements Supports3D{
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,15 +47,11 @@ public class DIMENETConfiguration extends NoDescriptorsConfiguration{
 		return true;
 	}
 
-	public boolean isExternal3D() {
-		return external3D != null && external3D;
-
-	}
 
 	@Override
 	public String toString(){
 		return super.toString() + 
-				(" batch=" +  batch) + (" epochs=" + nbepochs) + (isExternal3D()?"exter3D":"");  
+				(" batch=" +  batch) + (" epochs=" + nbepochs);  
 	}
 
 	@Override
@@ -68,4 +64,15 @@ public class DIMENETConfiguration extends NoDescriptorsConfiguration{
 		return false;
 	}
 
+	@Override
+	public boolean requires3D() {
+		return external3D != null && external3D;
+	}
+
+	@Override
+	public void setUse3D(boolean yes) {
+		if(yes)external3D = true;
+		else
+			external3D = null;
+	}
 }

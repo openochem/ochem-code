@@ -65,7 +65,7 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 	protected int saveAggregatedData(String filename, DescriptorsTable dtDescriptors, LabelsTable dtExpValues, ModelAbstractConfiguration configuration) throws Exception {
 		// saving all values
 		BufferedWriter bw = getAliasedBufferedWriter(filename);
-		int savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, configuration);
+		List <Integer> savedRecords = saveAggregatedDescriptorsAndValues(dtDescriptors, dtExpValues, bw, configuration);
 		bw.close();
 
 		LineNumberReader read = getAliasedLineNumberReader(filename);
@@ -77,7 +77,7 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 			}
 		read.close();
 
-		return savedRecords;
+		return savedRecords.size();
 	}
 
 	@Override
@@ -108,15 +108,19 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 	abstract protected DataTable applyModelMulti(DescriptorsTable dtDescriptors, MultiLearningAbstractConfiguration receivedConf) throws Exception;
 	abstract protected void saveOneRow(int mol, DescriptorsTable dtDescriptors, String[] values, Writer bw) throws IOException;
 
-	final public int saveAggregatedDescriptorsAndValues(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, Writer bw, ModelAbstractConfiguration configration) throws IOException {
+	final public List <Integer> saveAggregatedDescriptorsAndValues(DescriptorsTable dtDescriptors, LabelsTable dtExpValues, Writer bw, ModelAbstractConfiguration configration) throws IOException {
 
 		Writer bi = null;
+
+		List <Integer> savedEntries = new ArrayList<Integer>();
 
 		if(dtExpValues == null) { 
 			if (bw != null)bi = getAliasedBufferedWriter(IDS+".apply");
 			int n = saveDescriptors(dtDescriptors, bw, bi); 
 			if (bi != null) bi.close();
-			return n;
+			for(int i=0;i<n;i++)
+				savedEntries.add(i);
+			return savedEntries;
 		}
 
 		Map<String,ArrayList<Map.Entry<Integer,String>>> val = new LinkedHashMap<String,ArrayList<Map.Entry<Integer,String>>> ();
@@ -128,7 +132,7 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 
 		List<String[]> savedValues = new ArrayList<String[]>();
 
-		int count = 0, molecules = dtExpValues.getDataSize();
+		int molecules = dtExpValues.getDataSize();
 
 		try {
 			if(bw != null)bi = getAliasedBufferedWriter(IDS);
@@ -187,14 +191,16 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 			for(Integer i: array) { // selecting next molecule for training subset
 				String hashVal = dtDescriptors.getMoleculeMD5(i, true); // selection by descriptors and conditions
 				if(earlyStopping.contains(hashVal))continue;
-				count += saveMol(i, dtDescriptors, val, outputs, strOriginal, dtExpValues, savedValues, bw, bi);
+				if(saveMol(i, dtDescriptors, val, outputs, strOriginal, dtExpValues, savedValues, bw, bi))
+					savedEntries.add(i);
 			}
 
 			if(earlyStopping.size() > 0)
 				for(Integer i: array) { // selecting next molecule for early stopping subset
 					String hashVal = dtDescriptors.getMoleculeMD5(i, true); // selection by descriptors and conditions
 					if(!earlyStopping.contains(hashVal))continue;
-					count += saveMol(i, dtDescriptors, val, outputs, strOriginal, dtExpValues, savedValues, bw, bi);
+					if(saveMol(i, dtDescriptors, val, outputs, strOriginal, dtExpValues, savedValues, bw, bi))
+						savedEntries.add(i);
 				}
 
 		}catch(Exception e) {
@@ -210,7 +216,7 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 
 		saveWeights(dtExpValues.getWeights(savedValues));
 
-		return count;
+		return savedEntries;
 	}
 
 	void saveAnnotation(int i, DescriptorsTable dtDescriptors, String  strVals[], String  strOriginal[], Writer bi) throws IOException {
@@ -232,11 +238,11 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 		bi.write("\n");
 	}
 
-	int saveMol(int i, DescriptorsTable dtDescriptors, Map<String,ArrayList<Map.Entry<Integer,String>>> val,
+	boolean saveMol(int i, DescriptorsTable dtDescriptors, Map<String,ArrayList<Map.Entry<Integer,String>>> val,
 			int outputs, String  strOriginal[], LabelsTable dtExpValues, List<String[]> savedValues, Writer bw, Writer bi) throws IOException {
 
 		String hashVal = dtDescriptors.getMoleculeMD5(i, true); // selection by descriptors and conditions
-		if(!val.containsKey(hashVal))return 0; // already was saved...
+		if(!val.containsKey(hashVal))return false; // already was saved...
 
 		String  strVals[] = new String[outputs]; // original is required each time to properly store numbers of records
 
@@ -264,7 +270,7 @@ public abstract class MultiLearningAbstractServer extends MachineLearningExecuta
 			saveOneRow(i, dtDescriptors, strVals, bw);
 			savedValues.add(strVals);
 		}
-		return 1;
+		return true;
 	}
 
 	private void saveWeights(double val[]) throws IOException{

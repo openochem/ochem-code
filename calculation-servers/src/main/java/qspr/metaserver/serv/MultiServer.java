@@ -710,7 +710,7 @@ public class MultiServer {
 		Request classes = null;
 		try {
 			classes = Request.classes(MainTest.class, Class.forName("qspr.metaserver.tests.EStateTest"), DescriptorServerTest.class, Class.forName("qspr.metaserver.tests.ScaffoldGeneratorTest"));
-		} catch (ClassNotFoundException exp) {
+		} catch (Throwable exp) {
 			classes = Request.classes(MainTest.class, DescriptorServerTest.class);
 		}
 		Request request = classes.filterWith(new Filter() {

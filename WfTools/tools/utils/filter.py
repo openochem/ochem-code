@@ -223,7 +223,7 @@ def canonize_smile (sm,num):
         mg.from_smiles(smi, sanitize=True)
         return smi
         
-    if "KERAS" in methodtype:
+    if "KERAS" in methodtype or "KGCNN" in methodtype:
         SmilesOK(smi, 99999)
         try:
             mol = MolFromSmiles(smi,sanitize = sanitize)
@@ -281,7 +281,7 @@ if __name__ == "__main__":
     parser.add_argument('--outfile', '-o', help='output file', required=True)
     parser.add_argument('--augment', '-a', help='augment', required=True)
     parser.add_argument('--isomeric', '-s', help='isomeric', required=True)
-    parser.add_argument('--nosanitize', '-n', help='nosanitize', required=False)
+    parser.add_argument('--nosanitize', '-n', help='nosanitize', required=False) # by default it is used
     parser.add_argument('--methodtype', '-t', help='Method specific corrections', required=False)
     #parser.add_argument('--fixstereo', '-f', help='Fix Stereo', required=True)
     args = parser.parse_args()

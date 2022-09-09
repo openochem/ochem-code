@@ -420,7 +420,7 @@ public class ControllerWrapper extends MultiActionController {
 				logger.info("Logging in as guest...");
 
 			Session newUserSession = Session.createNewSession(user);
-			newUserSession.ipAddress = ThreadScope.resolveRemoteAddr(ThreadScope.get().localRequest);
+			newUserSession.setIpAddress(ThreadScope.resolveRemoteAddr(ThreadScope.get().localRequest));
 			newUserSession.userAgent = ThreadScope.get().localRequest.getHeader("user-agent");
 			Globals.session().save(newUserSession);
 			Globals.userSession(newUserSession);
