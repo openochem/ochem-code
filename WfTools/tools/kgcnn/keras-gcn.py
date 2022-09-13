@@ -1160,6 +1160,10 @@ else:
     except:
         pass;
 
+    APPLY_FILE = APPLY_FILE.replace('.csv','.sdf')
+    if os.path.exists(APPLY_FILE):
+        os.rename(APPLY_FILE, APPLY_FILE+".old")
+
     print("Relax!");
 # -
 
