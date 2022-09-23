@@ -78,7 +78,7 @@ public class ChemPropServer extends SmilesOnlyAbstractServer
 							//"--graph_invariant_func", "rdkitunbranched-1-7-256",
 							//"" + ((cfg.edges != null && cfg.edges)?"--virtual_edges":""),
 							"--seed","" + cfg.getSeed(),
-							"--split_sizes 0.8 0.2 0",
+							"--split_sizes 0.9 0.1 0",
 							"--save_dir",MODEL,
 		};
 		else

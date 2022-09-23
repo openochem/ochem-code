@@ -26,10 +26,10 @@ public class ChemPropConfiguration extends NoDescriptorsConfiguration{
 
 	private static final long serialVersionUID = 1L;
 
-	public Integer depth = 3; // number of message passing steps
-	public Integer nepochs = 100; // number of message passing steps
-	public Integer hidden = 300; // hidden size of the neural network layers.
-	public Integer batch = 50; //batch size
+	public Integer depth = 5; // number of message passing steps
+	public Integer nepochs = 200; // number of message passing steps
+	public Integer hidden = 200; // hidden size of the neural network layers.
+	public Integer batch = 32; //batch size
 
 	@Override
 	public String toString(){
