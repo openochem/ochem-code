@@ -56,16 +56,17 @@ import qspr.workflow.utils.SDFProcessor;
 public class CDKStandartizer extends MoleculeStandartizer
 {
 	// Override the standardization methods here
-	
-	private void applyTransform(IAtomContainer mol, String file) throws Exception {
+
+	private IAtomContainer applyTransform(IAtomContainer mol, String file) throws Exception {
 		InputStream standardization_config = CDKStandartizer.class.getClassLoader().getResourceAsStream(file);
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document config = db.parse(standardization_config);
 		Normalizer.normalize(mol, config);
+		return mol;
 	}
-	
-	public void removeChargeWithHydrogens(IAtom atm) throws Exception {
+
+	public IAtomContainer removeChargeWithHydrogens(IAtom atm) throws Exception {
 		IAtomContainer mol = atm.getContainer();
 		atm.setFormalCharge(0);
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(mol.getBuilder());
@@ -73,41 +74,41 @@ public class CDKStandartizer extends MoleculeStandartizer
 		AtomTypeManipulator.configure(atm, type);
 		CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
 		adder.addImplicitHydrogens(mol, atm);
+		return mol;
 	}
-	
+
 	public List<String> doStandartization(List<String> sdfs)  throws Exception{
 		List<String> results = new ArrayList<String>();
 		for (String sdf : sdfs) {
 			IAtomContainer mol = CDKUtils.readOneMoleculeInAnyFormat(sdf);
-			
+
 			if (cleanIt) {
-				cleanMolecule(mol);
+				mol=cleanMolecule(mol);
 			}
-			
+
 			mol = AtomContainerManipulator.removeHydrogens(mol);
-			
+
 			if (deSalt) {
-			     if (!ConnectivityChecker.isConnected(mol)) {
-			    	 IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(mol);
-			    	 IAtomContainer largest_frag = fragments.getAtomContainer(0);
-			    	 for (IAtomContainer fragment :fragments.atomContainers()) {
-			    		 if (fragment.getAtomCount() > largest_frag.getAtomCount()) {
-			    			 largest_frag = fragment;
-			    		 }
-			    	 }
-			    	 mol = largest_frag;
-			     }
-			 }
-			
+				if (!ConnectivityChecker.isConnected(mol)) {
+					IAtomContainerSet fragments = ConnectivityChecker.partitionIntoMolecules(mol);
+					IAtomContainer largest_frag = fragments.getAtomContainer(0);
+					for (IAtomContainer fragment :fragments.atomContainers()) {
+						if (fragment.getAtomCount() > largest_frag.getAtomCount()) {
+							largest_frag = fragment;
+						}
+					}
+					mol = largest_frag;
+				}
+			}
+
 			if (deAromatize) {
 				Kekulization.kekulize(mol);
 			}
-			
+
 			if (standardizeIt) {
-				// FIXME: this still does not work
-//				applyTransform(mol, "standardize.xml");
+				mol = applyTransform(mol, "standardize.xml");
 			}
-			
+
 			if (neutralizeIt && AtomContainerManipulator.getTotalFormalCharge(mol) != 0) {
 				for (IAtom atm : mol.atoms()) {
 					int charge = atm.getFormalCharge();
@@ -122,16 +123,21 @@ public class CDKStandartizer extends MoleculeStandartizer
 					}
 				}
 			}
-			
+
+
 			if (deConvertNO2) {
-				applyTransform(mol, "deconvertNO.xml");
+				mol=applyTransform(mol, "deconvertNO.xml");
 			}
-			
-			
+
+
 			if (addExplicitHydrogens) {
 				AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 			}
-			
+
+			if (cleanIt) {
+				mol=cleanMolecule(mol);
+			}
+
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			BufferedOutputStream bos = new BufferedOutputStream(baos);
 			String new_repr = null;			
@@ -151,14 +157,14 @@ public class CDKStandartizer extends MoleculeStandartizer
 
 			results.add(new_repr);
 		}
-		
+
 		return results;
 	}
 
 	@Override
 	public DataTable doStandartizationTable( DataTable datatable, CalculationServer server){
 		long time = Calendar.getInstance().getTimeInMillis();
-		
+
 		datatable.reset();
 		while (datatable.nextRow())
 			if (!datatable.getCurrentRow().isError())
@@ -182,14 +188,14 @@ public class CDKStandartizer extends MoleculeStandartizer
 
 		return datatable;
 	}
-	
+
 	public IAtomContainer cleanMolecule(IAtomContainer mol) throws IOException, CDKException {
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
-//		Kekulization.kekulize(mol);
+		//		Kekulization.kekulize(mol);
 		String smile = new SmilesGenerator(SmiFlavor.UseAromaticSymbols).create(mol);
 		String smart_orig = smile;
-		
+
 		// ported from ChemaxonStandartizer
 		smile = smile.replaceAll("\\[NH0\\]", "N");
 		smile = smile.replaceAll("\\[NH0\\+\\]","[N+]");
@@ -202,14 +208,14 @@ public class CDKStandartizer extends MoleculeStandartizer
 		smile = smile.replaceAll("\\[SeH0\\]", "[Se]");
 		smile = smile.replaceAll("\\[B\\]", "B");
 		smile = smile.replaceAll("\\[N\\]", "N");
-		
+
 		if (smart_orig != smile) {
 			mol = CDKUtils.readOneMoleculeInAnyFormat(smile); // create new molecule if anything changed;
 		}
-		
+
 		return mol;
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 	}
 

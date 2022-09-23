@@ -56,10 +56,10 @@ public class StandardizerTestCase extends TestCase {
 
 	};
 
-//	private String[] toNormalize = {
-//			"Cc1ccccc1[N+](=O)[O-]",
-//			"Cc1ccccc1N(=O)=O",
-//	};
+	private String[] toNormalize = {
+			"Cc1ccccc1[N+](=O)[O-]",
+			"Cc1ccccc1N(=O)=O",
+	};
 	private String[] toNeutralize = {
 			"O=C(C)Oc1cc(CC[N-2])ccc1C(=O)[O-1]", // with anions
 			"O=C(C)Oc1cc(CC[N+](C)(C)(C))ccc1C(=O)O", // with quaternary nitrogen
@@ -118,26 +118,26 @@ public class StandardizerTestCase extends TestCase {
 		standardizer = MoleculeStandartizer.getInstance(currentStandardizerOption,null); // libraries are assumed to be already uploaded
 	}
 
-//	@Test
-//	public void testStandardize() {
-//		standardizer.setCleanStructure();
-//		standardizer.setStandardize();
-//		standardizer.outFormat = MolFormat.SMILES;
-//		try {
-//			String finishedProduct = standardizer.doStandartization(toNormalize[0]);
-//			assertEquals(canonize("Cc1ccccc1N(=O)=O"), canonize(finishedProduct));
-//
-//			standardizer.setDeConvertNO2();
-//			finishedProduct = standardizer.doStandartization(toNormalize[0]);
-//			assertEquals(canonize("Cc1ccccc1[N+](=O)[O-]"), canonize(finishedProduct.replaceAll("#8", "O")));
-//
-//			finishedProduct = standardizer.doStandartization(toNormalize[1]);
-//			assertEquals(canonize("Cc1ccccc1[N+](=O)[O-]"), canonize(finishedProduct));
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			fail("Standardizer failed with exception:" + e.getMessage());
-//		}
-//	}
+	@Test
+	public void testStandardize() {
+		standardizer.setCleanStructure();
+		standardizer.setStandardize();
+		standardizer.outFormat = MolFormat.SMILES;
+		try {
+			String finishedProduct = standardizer.doStandartization(toNormalize[0]);
+			assertEquals(canonize("Cc1ccccc1N(=O)=O"), canonize(finishedProduct));
+
+			standardizer.setDeConvertNO2();
+			finishedProduct = standardizer.doStandartization(toNormalize[0]);
+			assertEquals(canonize("Cc1ccccc1[N+](=O)[O-]"), canonize(finishedProduct.replaceAll("#8", "O")));
+
+			finishedProduct = standardizer.doStandartization(toNormalize[1]);
+			assertEquals(canonize("Cc1ccccc1[N+](=O)[O-]"), canonize(finishedProduct));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail("Standardizer failed with exception:" + e.getMessage());
+		}
+	}
 
 	@Test
 	public void testDeAromatize() {

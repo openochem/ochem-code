@@ -99,6 +99,7 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 				String sdf = preprocessSDF((String) dtMolecules.getValue());
 				sdf = Various.molecule.convertToFormat(sdf, QSPRConstants.SDFAROM_GENERAL_WITHH);
 				result.addRow();
+				int failed = 0;
 				for (int i = 0; i < configuration.alertPatterns.size(); i++) {
 					String curPattern = configuration.alertPatterns.get(i);
 					try 
@@ -112,9 +113,10 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 							result.setValue("Alert" + i + "_" + curPattern, matcher.getMatchCount(sdf, i));
 					} catch (Exception e) 
 					{
-						if (!configuration.compactMode)
-							result.setValue("Alert" + i + "_" + curPattern, -999);
+						failed++;
 					}
+					if(!configuration.compactMode && failed == configuration.alertPatterns.size())
+						result.getCurrentRow().setError("Molecule failed");
 				}
 
 				if (configuration.compactMode)
