@@ -302,7 +302,7 @@ public class DescriptorsConfigurator extends BasicModelConfigurator
 		logger.info("Using " + alerts.size() + " alerts");
 		DescriptorsStructuralAlertsConfiguration conf = new DescriptorsStructuralAlertsConfiguration();
 		conf.compactMode = false;
-		conf.alertPatterns = ScreeningProcessor.getSMARTs(alerts);
+		conf.setAlerts(ScreeningProcessor.getSMARTs(alerts));
 		return conf;
 	}
 

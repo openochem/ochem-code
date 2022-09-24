@@ -37,7 +37,7 @@ public class OthersDAOImp implements OthersDAO {
 
 		DescriptorsStructuralAlertsConfiguration conf = new DescriptorsStructuralAlertsConfiguration();
 		conf.compactMode = false;
-		conf.alertPatterns = ScreeningProcessor.getSMARTs(alerts);
+		conf.setAlerts(ScreeningProcessor.getSMARTs(alerts));
 
 		return conf;
 	}

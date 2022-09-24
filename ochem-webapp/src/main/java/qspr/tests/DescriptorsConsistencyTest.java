@@ -134,8 +134,7 @@ public class DescriptorsConsistencyTest
 			descriptors.add(new DescriptorsRDKITConfiguration());
 			descriptors.add(new DescriptorsPaDEL2Configuration());
 			DescriptorsStructuralAlertsConfiguration alerts =  Repository.various.getEFGConfiguration();
-			if(alerts.alertPatterns != null && alerts.alertPatterns.size() > 0)
-				descriptors.add(alerts);
+			descriptors.add(alerts);
 			try {
 				descriptors.add((DescriptorsAbstractConfiguration) Class.forName("qspr.metaserver.configurations.DescriptorsEPAConfiguration").newInstance());
 			} catch (ClassNotFoundException e) {

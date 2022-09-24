@@ -184,7 +184,7 @@ public class ScreeningProcessor extends AbstractTaskProcessor
 		setStatus("Preparing SMARTS");
 		DescriptorsStructuralAlertsConfiguration conf = new DescriptorsStructuralAlertsConfiguration();
 		conf.compactMode = true;
-		conf.alertPatterns = getSMARTs(alerts);
+		conf.setAlerts(getSMARTs(alerts));
 
 		DescriptorsConfiguration descConf = new DescriptorsConfiguration();
 		descConf.addDescriptorType(DescriptorsConfiguration.StructuralAlerts, conf).skipCache();

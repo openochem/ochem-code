@@ -45,11 +45,8 @@ public class DescriptorsStructuralAlertsConfiguration extends DescriptorsAbstrac
 	public DescriptorsStructuralAlertsConfiguration(){
 	}
 
-	public void addAlerts(String[] addAlerts)
-	{
-		for (String alert : addAlerts) {
-			alertPatterns.add(alert);
-		}
+	public void setAlerts(List<String> addAlerts){
+		alertPatterns = addAlerts;
 	}
 
 	public String toString() { return ""; }
@@ -65,13 +62,16 @@ public class DescriptorsStructuralAlertsConfiguration extends DescriptorsAbstrac
 	}
 
 	@Override
-	public boolean requires3D() {
-		return false;
-	}
-
-	@Override
 	public String getDefaultTypeName() {
 		return DescriptorsConfiguration.StructuralAlerts;
+	}
+
+	public int size() {
+		return alertPatterns == null?0:alertPatterns.size();
+	}
+
+	public String get(int i) {
+		return alertPatterns.get(i);
 	}
 
 }

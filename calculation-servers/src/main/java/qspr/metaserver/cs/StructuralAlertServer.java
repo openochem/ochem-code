@@ -17,10 +17,8 @@
 
 package qspr.metaserver.cs;
 
-//import java.io.IOException;
 import java.io.Serializable;
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,10 +50,10 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 	{
 		// Define the reposting size based on the number of alerts
 		DescriptorsStructuralAlertsConfiguration conf = (DescriptorsStructuralAlertsConfiguration) configuration;
-		if (conf.alertPatterns.size() == 0)
+		if (conf.size() == 0)
 			return 0;
 
-		return Math.min(200, 100000 / conf.alertPatterns.size())/2;
+		return Math.min(200, 100000 / conf.size())/2;
 	}
 
 	@Override
@@ -80,11 +78,11 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 		SMARTMatcher matcher = new SMARTMatcher(configuration.alertPatterns, Various.molecule.engine);
 		//List<Molecule> moleculePattern = configuration.getAlertSetAsJChemMolecules(configuration.alertPatterns);
 		if (configuration.compactMode)
-			for (int i = 0; i < (configuration.alertPatterns.size() - 1) / 32 + 1; i++)
+			for (int i = 0; i < (configuration.size() - 1) / 32 + 1; i++)
 				result.addColumn("AlertsBits" + i);
 		else
-			for (int i = 0; i < configuration.alertPatterns.size(); i++)
-				result.addColumn("Alert" + i + "_" + configuration.alertPatterns.get(i));
+			for (int i = 0; i < configuration.size(); i++)
+				result.addColumn("Alert" + i + "_" + configuration.get(i));
 
 		dtMolecules.reset();
 		while (dtMolecules.nextRow())
@@ -92,31 +90,44 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 			int[] alertsBits = null;
 			if (configuration.compactMode)
 				alertsBits = new int[result.getColumnsSize()];
-			try
-			{
+			try {
 				setStatus("" + dtMolecules.currentRow + " of " + dtMolecules.getRowsSize() + " done");
 
 				String sdf = preprocessSDF((String) dtMolecules.getValue());
 				sdf = Various.molecule.convertToFormat(sdf, QSPRConstants.SDFAROM_GENERAL_WITHH);
 				result.addRow();
-				int failed = 0;
-				for (int i = 0; i < configuration.alertPatterns.size(); i++) {
-					String curPattern = configuration.alertPatterns.get(i);
+				int failed = 0, count = 0;
+				for (int i = 0; i < configuration.size(); i++) {
+					String curPattern = configuration.get(i);
 					try 
 					{
+						if(i == 0) matcher.getMatchCount(sdf, 0);
+
 						if (configuration.compactMode)
 						{
-							if (matcher.matchPattern(sdf, i))
+							if (matcher.matchPattern(sdf, i)) {
 								alertsBits[i / 32] |= (1 << (i%32));
+								count++;
+							}
 						}
-						else
-							result.setValue("Alert" + i + "_" + curPattern, matcher.getMatchCount(sdf, i));
+						else {
+							int number =  matcher.getMatchCount(sdf, i);
+							count += number;
+							result.setValue("Alert" + i + "_" + curPattern, number);
+						}
 					} catch (Exception e) 
 					{
 						failed++;
 					}
-					if(!configuration.compactMode && failed == configuration.alertPatterns.size())
-						result.getCurrentRow().setError("Molecule failed");
+				}
+
+				if(failed>0 && count == 0) { // molecule was failing 
+					if(!configuration.compactMode)
+						result.getCurrentRow().setError("Molecule failed for all alerts");
+					else
+						for(int i=0;i<configuration.size();i++)
+							if(configuration.get(i).contains(QSPRConstants.ERROR))
+								alertsBits[i / 32] |= (1 << (i%32));
 				}
 
 				if (configuration.compactMode)
@@ -124,9 +135,6 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 						result.setValue(i, Float.intBitsToFloat(alertsBits[i]));
 
 			} catch (Exception e) {
-				//				if(e instanceof LicenseException)
-				//					throw e;
-
 				result.getCurrentRow().setError(supportedTaskType +":" + e.getMessage());
 				e.printStackTrace(out);
 				out.println(e.getMessage() + " for molecule " + dtMolecules.currentRow);
@@ -165,10 +173,8 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 
 		DescriptorsStructuralAlertsConfiguration conf = new DescriptorsStructuralAlertsConfiguration();
 		conf.compactMode = false;
-		conf.alertPatterns.add("NOT C=C AND NC");
-		conf.alertPatterns.add("NOT NCCC");
-		conf.alertPatterns.add("CC");
-		conf.alertPatterns.add("CCCCC");
+		String alerts[] = {"NOT C=C AND NC","NOT NCCC","CC","CCCCC","C=C AND NC AND CCC","CCF OR NCC","CCF OR NOT CCF","NOT CC OR NOT CCN"};
+		conf.setAlerts(Arrays.asList(alerts));
 
 		//		Molecule smart = conf.getAlertSetAsJChemMolecules(conf.alertPatterns).get(0);
 		//logger.info(matchPattern(MolImporter.importMol(MolImporter.importMol("CCCCNCCCCCCC=C", "smiles").exportToFormat("sdf"), "sdf"), smart, false));

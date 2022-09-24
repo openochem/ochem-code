@@ -1453,14 +1453,8 @@ public class MainTest {
 
 		DescriptorsStructuralAlertsConfiguration conf = new DescriptorsStructuralAlertsConfiguration();
 		conf.compactMode = false;
-		conf.alertPatterns.add("NOT C=C AND NC");
-		conf.alertPatterns.add("NOT NCCC");
-		conf.alertPatterns.add("CC");
-		conf.alertPatterns.add("CCCCC");
-		conf.alertPatterns.add("C=C AND NC AND CCC");
-		conf.alertPatterns.add("CCF OR NCC");
-		conf.alertPatterns.add("CCF OR NOT CCF");
-		conf.alertPatterns.add("NOT CC OR NOT CCN");
+		String alerts[] = {"NOT C=C AND NC","NOT NCCC","CC","CCCCC","C=C AND NC AND CCC","CCF OR NCC","CCF OR NOT CCF","NOT CC OR NOT CCN"};
+		conf.setAlerts(Arrays.asList(alerts));
 
 		dtMolecules.columnAttachments.put(QSPRConstants.SDF_COLUMN, map);
 
