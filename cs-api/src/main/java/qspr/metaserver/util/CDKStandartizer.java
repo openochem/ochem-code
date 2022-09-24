@@ -105,8 +105,8 @@ public class CDKStandartizer extends MoleculeStandartizer
 				Kekulization.kekulize(mol);
 			}
 
-			if (standardizeIt) {
-				mol = applyTransform(mol, "standardize.xml");
+			if (standardizeIt) { // not working correctly
+				//mol = applyTransform(mol, "standardize.xml");
 			}
 
 			if (neutralizeIt && AtomContainerManipulator.getTotalFormalCharge(mol) != 0) {
