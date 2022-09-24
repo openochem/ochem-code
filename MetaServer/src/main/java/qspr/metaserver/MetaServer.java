@@ -1572,6 +1572,13 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			return calculatingPeer.getPing() > METASERVER_TASK_OVERDUE;
 	}
 
+	public static String getLocalURL(HttpServletRequest request) {
+		return   request.getScheme() + "://" +
+				request.getServerName() + 
+				("http".equals(request.getScheme()) && request.getServerPort() == 80 || "https".equals(request.getScheme()) && request.getServerPort() == 443 ? "" : ":" + request.getServerPort() ) +
+				request.getRequestURI();
+	}
+
 	public synchronized void serveGETRequest(HttpServletRequest req, HttpServletResponse res) throws Exception
 	{
 		if (req.getParameter("action") != null)
@@ -1597,7 +1604,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 				peer.logsRequested = true;			
 			if (req.getParameter("command") != null)
 				peer.commandToSend = req.getParameter("command");
-			res.sendRedirect("/");
+			res.sendRedirect(getLocalURL(req));
 			return;
 		}
 		terminatorMode = req.getParameter("terminator") != null;
@@ -1617,7 +1624,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 				task.status = Task.KILL;
 				changeTaskStatus(task);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-				res.setHeader("Location", "/");
+				res.setHeader("Location", getLocalURL(req));
 			}
 
 			if (req.getParameter("restarttask") != null)
@@ -1627,7 +1634,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 				task.status = Task.INIT;
 				changeTaskStatus(task);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-				res.setHeader("Location", "/");
+				res.setHeader("Location", getLocalURL(req));
 			}
 
 			if (req.getParameter("stoptask") != null)
@@ -1637,7 +1644,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 				task.status = Task.STOP;
 				changeTaskStatus(task);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-				res.setHeader("Location", "/");
+				res.setHeader("Location", getLocalURL(req));
 			}
 
 			showStatusPageInternal(req, res);

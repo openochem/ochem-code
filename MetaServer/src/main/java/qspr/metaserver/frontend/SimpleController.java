@@ -272,7 +272,7 @@ public class SimpleController
 		MetaServer.getInstance().session().createSQLQuery("update Task set min_required_memory="+minmem+", resubmitted=1 where resubmitted > 0  and min_required_memory > "+minmem+"").list();
 		MetaServer.getInstance().taskQueue.clear();
 		MetaServer.getInstance().session().createSQLQuery("update Task set min_required_memory="+minmem+", resubmitted=1 where resubmitted > 0  and min_required_memory > "+minmem+"").list();
-		res.sendRedirect("/");
+		res.sendRedirect(MetaServer.getLocalURL(req));
 	}	
 
 	public void taskProfile(HttpServletRequest req, HttpServletResponse res)
