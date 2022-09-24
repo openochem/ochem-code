@@ -10,6 +10,7 @@ import multiprocessing
 import time
 import pathlib
 import random
+from molvs import standardize_smiles
 
 global isomeric
 global methodtype
@@ -160,6 +161,9 @@ def canonize_smile (sm,num):
     if "error" in sm:
         raise Exception("error in smiles " + sm)
     
+    if sanitize:
+        sm = standardize_smiles(sm)
+        
     m = Chem.MolFromSmiles(sm, sanitize = sanitize)
 
     if (methodtype == "EAGCNG" or methodtype == "PYTORCH" or methodtype == "ATTFP") and len(m.GetBonds())<1:
