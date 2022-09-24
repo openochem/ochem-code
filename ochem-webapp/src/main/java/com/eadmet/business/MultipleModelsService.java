@@ -34,6 +34,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.criterion.Restrictions;
 
 import qspr.Globals;
+import qspr.OCHEMConfiguration;
 import qspr.business.PendingTaskPeer;
 import qspr.dao.ChemInfEngine;
 import qspr.dao.Repository;
@@ -212,7 +213,7 @@ public class MultipleModelsService
 				}
 
 				String version = duplicatedConfig.versionOCHEM;
-				if(version == null || version.startsWith("v.")){
+				if(version == null || version.startsWith("v.") || OCHEMConfiguration.autoLoginUser != null){
 					duplicatedConfig.setVersion("", true); // we do not need to distinguish different OCHEM versions unless this is manually set version
 					version = "";
 				}

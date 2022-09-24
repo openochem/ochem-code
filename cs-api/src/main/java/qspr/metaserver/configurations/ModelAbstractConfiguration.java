@@ -99,7 +99,7 @@ abstract public class ModelAbstractConfiguration implements Serializable {
 	}
 
 	public String toString() {
-		String s = versionOCHEM == null || versionOCHEM.startsWith("v.3.")?"":versionOCHEM + " ";
+		String s = versionOCHEM == null || versionOCHEM.startsWith("v.")?"":versionOCHEM + " ";
 		s += scaleTypeX != null && scaleTypeX != ScalingType.NONE ? "\nscale X: " + scaleTypeX : "";
 		s += scaleTypeY != null && scaleTypeY != ScalingType.NONE ? "\nscale Y: " + scaleTypeY : "";
 		if(isFeatureNet()) s += " FeatureNet";
