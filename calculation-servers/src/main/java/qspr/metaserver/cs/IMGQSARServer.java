@@ -70,7 +70,7 @@ public class IMGQSARServer extends SmilesOnlyAbstractServer {
 	void saveConfig(ModelAbstractConfiguration configuration, DescriptorsTable mols, boolean train, boolean forceCPU) throws IOException{
 
 		File f = getAliasedFile("");
-		File model = new File(OSType.isMac()?"/etc/ochem/cddd":"/workspace/");
+		File model = new File(OSType.isMac()?"/etc/ochem/cddd":"/etc/source/imgqsar/");
 		
 		AliasedDirectory.alias(model, model.list(), f);
 		
