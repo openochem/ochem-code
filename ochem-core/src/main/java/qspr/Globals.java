@@ -202,9 +202,8 @@ public class Globals
 			}
 
 			// Decreasing Logger information for mongodb
-			Logger mongoLogger = LogManager.getLogger( "org.mongodb.driver");
-			Configurator.setLevel(mongoLogger.getName(), Level.ERROR);
-
+			//Logger mongoLogger = LogManager.getLogger( "org.mongodb.driver");
+			//Configurator.setLevel(mongoLogger.getName(), Level.ERROR);
 			//mongoLogger.setLevel(Level.ERROR); // e.g. or Log.WARNING, etc. /// N.B. Check whether it works
 
 			logger.info("QSPR core loaded");
