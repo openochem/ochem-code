@@ -196,10 +196,10 @@ public class MainTest {
 	public void SIRMSTest() throws Exception {
 		DescriptorsSIRMSConfiguration sirms = new DescriptorsSIRMSConfiguration(1, 4);
 		sirms.descriptorTypes.add(Labeling.elm);
-		sirms.descriptorTypes.add(Labeling.REFRACTIVITY);
+		//sirms.descriptorTypes.add(Labeling.REFRACTIVITY);
 		sirms.descriptorTypes.add(Labeling.CHARGE);
 		sirms.descriptorTypes.add(Labeling.HB);
-		sirms.descriptorTypes.add(Labeling.LOGP);
+		//sirms.descriptorTypes.add(Labeling.LOGP);
 		DataTable dtResult = runTest(sirms, wnd_molecules);
 		assertTrue(dtResult.getColumnsSize() > 0);
 	}

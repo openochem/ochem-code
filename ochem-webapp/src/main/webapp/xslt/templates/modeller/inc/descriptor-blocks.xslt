@@ -91,10 +91,11 @@
 		<div class="params invisible" id="SIRMS-params">
 			<div>
 				Atom labeling:<br/>
+<!-- Not yet implemented with CDK 
 				<input type="checkbox" name="sirms_charge"  checked="true"/><label>Atom charges</label><br/>
 				<input type="checkbox" name="sirms_logp"  checked="true"/><label>Lipophilicity</label><br/>
-				<input type="checkbox" name="sirms_hb"  checked="true"/><label>Hydrogen acceptors and donors</label><br/>
 				<input type="checkbox" name="sirms_refractivity"  checked="true"/><label>Refractivity</label><br/>
+ -->				<input type="checkbox" name="sirms_hb"  checked="true"/><label>Hydrogen acceptors and donors</label><br/>
 				<input type="checkbox" name="sirms_elm"/><label>Atom elements</label><br/>
 				<input type="checkbox" name="sirms_none"/><label>Only topogy</label><br/>
 				<br/>
