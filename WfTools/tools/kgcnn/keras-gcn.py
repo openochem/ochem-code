@@ -726,7 +726,7 @@ if architecture_name == 'ChemProp':
                     "edge": {"input_dim": 5, "output_dim": 100}
                 },
                 "pooling_args": {"pooling_method": "sum"},
-                "use_graph_state": False,
+                #"use_graph_state": False, # not working now
                 "edge_initialize": {"units": 200, "use_bias": True, "activation": "relu"},
                 "edge_dense": {"units": 200, "use_bias": True, "activation": "linear"},
                 "edge_activation": {"activation": "relu"},
