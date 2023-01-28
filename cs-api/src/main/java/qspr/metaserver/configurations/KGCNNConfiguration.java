@@ -109,7 +109,7 @@ public class KGCNNConfiguration extends NoDescriptorsConfiguration implements Su
 
 	@Override
 	public boolean isSupportDescriptors() {
-		return method == KGCNN.ChemProp;
+		return false;
 	}
 
 }
