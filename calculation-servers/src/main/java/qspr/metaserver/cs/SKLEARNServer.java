@@ -22,8 +22,10 @@ import java.io.IOException;
 
 import qspr.metaserver.configurations.ModelAbstractConfiguration;
 import qspr.metaserver.configurations.SKLConfiguration;
+import qspr.metaserver.configurations.SKLConfiguration.SKLMethod;
 import qspr.metaserver.cs.util.DescriptorsTable;
 import qspr.metaserver.cs.util.LabelsTable;
+import qspr.metaserver.util.ExecutableRunner.CONDA;
 import qspr.workflow.datatypes.DataTable;
 import qspr.workflow.utils.QSPRConstants;
 
@@ -61,9 +63,13 @@ public class SKLEARNServer extends MachineLearningExecutableAbstractServer
 	}
 
 	void saveConfig(SKLConfiguration conf, boolean traningMode) throws IOException{
+
+		boolean classification = conf.areClassificationData();
+
 		BufferedWriter writer = getAliasedBufferedWriter(CFG);
 		writer.write("[Task]\n");
-		writer.write("\nbase_model =  " + ("" + conf.method).toLowerCase());
+		String method = conf.method == SKLMethod.CAT_BOOST && classification?SKLMethod.CAT_BOOST+"_classifier":""+conf.method;
+		writer.write("\nbase_model =  " + method.toLowerCase());
 		writer.write("\ntrain_mode = " + traningMode);
 		writer.write("\nmodel_file = " + MODEL);
 		writer.write("\ntask_names = ");
@@ -84,11 +90,11 @@ public class SKLEARNServer extends MachineLearningExecutableAbstractServer
 	@Override
 	protected DataTable trainModel(DescriptorsTable dtDescriptors, LabelsTable dtExpValues,
 			ModelAbstractConfiguration receivedConf) throws Exception {
-		
+
 		saveDataSVM(dtDescriptors, dtExpValues, DATAFILE);
 		saveDataSVM(dtDescriptors, null, APPLYFILE);
 
-		runPythonWithConda(prepareCommands(receivedConf, true), MODEL,null);
+		runPythonWithConda(prepareCommands(receivedConf, true), MODEL,CONDA.RDKIT);
 		receivedConf.storeModel(getAliasedFile(MODEL));
 		return applyModel(dtDescriptors, receivedConf);
 	}
@@ -97,7 +103,7 @@ public class SKLEARNServer extends MachineLearningExecutableAbstractServer
 	protected DataTable applyModelBatch(DescriptorsTable dtDescriptors, ModelAbstractConfiguration receivedConf) throws Exception {
 		saveDataSVM(dtDescriptors, null, APPLYFILE);
 		saveModelToFile(receivedConf, getAliasedFileName(MODEL));
-		runPythonWithConda(prepareCommands(receivedConf, false), PREDICTIONS, null);
+		runPythonWithConda(prepareCommands(receivedConf, false), PREDICTIONS, CONDA.RDKIT);
 		return readResultValuesSingle(PREDICTIONS,receivedConf.optionsNumber,0);
 	}
 
@@ -108,4 +114,5 @@ public class SKLEARNServer extends MachineLearningExecutableAbstractServer
 			original.saveOneRowSVM(i, vals == null ? null: new String[]{vals.getOneValueOnlyString(i)}, bw);
 		bw.close();
 	}
+
 }

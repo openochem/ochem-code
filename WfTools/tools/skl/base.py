@@ -20,8 +20,8 @@ def libsvm_parse (path, rng=None):
         return xdim, ydim
     
     xdim,ydim = get_dims(data[0])
-    X = np.zeros((len(data), xdim), np.float)
-    Y = np.zeros((len(data), ydim), np.float)
+    X = np.zeros((len(data), xdim), float) # np.float == float
+    Y = np.zeros((len(data), ydim), float)
 
     
     order = np.arange(len(data))

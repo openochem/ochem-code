@@ -18,6 +18,8 @@
 					<option value="BAGGING">BAGGING</option>
 					<option value="BAGGING_TREES">BAGGING+TREES</option>
 					<option value="BAYESIAN_RIDGE">BAYESIAN_RIDGE</option>
+					<option value="CAT_BOOST">CatBoost</option>
+					<option value="GBM">LightGBM</option>
 					<option value="ELASTIC_NET_CV">ELASTIC_NET_CV</option>
 					<option value="ELASTIC_NET">ELASTIC_NET</option>
 					<option value="EXTRA_TREES">EXTRA_TREES</option>
@@ -25,6 +27,7 @@
 					<option value="GRADIENT_BOOSTING">GRADIENT_BOOSTING</option>
 					<option value="HUBER">HUBER</option>
 					<option value="KERNEL_RIDGE">KERNEL_RIDGE</option>
+					<option value="KERNEL_RIDGE_HYPER">KERNEL_RIDGE_HYPER</option>
 					<option value="K_NEIGHBORS">K_NEIGHBORS</option>
 					<option value="LASSO_LARS_CV">LASSO_LARS_CV</option>
 					<option value="LASSO_LARS_IC">LASSO_LARS_IC</option>
