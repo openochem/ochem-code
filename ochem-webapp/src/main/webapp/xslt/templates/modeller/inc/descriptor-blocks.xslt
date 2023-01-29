@@ -223,7 +223,7 @@
 		</xsl:if>
 
 
-		<div><doc term="CDK2" hide="true"><input type="checkbox" name="CDK2" details="1" descriptor="1"/> CDK 2.7.1 descriptors (256/3D)</doc></div>
+		<div><doc term="CDK2" hide="true"><input type="checkbox" name="CDK2" details="1" descriptor="1"/> CDK 2.8 descriptors (256/3D)</doc></div>
 		<div class="params invisible" id="CDK2-params">
 			<a href="javascript:selectBlocks(true, 'CDK2-params')">[select all]</a><a href="javascript:selectBlocks(false, 'CDK2-params')">[select none]</a><br/>
 			<input type="checkbox" name="cdk21" checked="true"/><label>constitutional descriptors (38)*</label>
