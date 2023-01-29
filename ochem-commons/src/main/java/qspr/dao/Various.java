@@ -64,6 +64,7 @@ public class Various {
 		}catch(Exception e) {
 			System.err.println("DAO implementation failed to initalize for engine: " + engine + ". Returning null...");
 			e.printStackTrace();
+			cache.put(engine, null);
 			return null;
 		}
 	}

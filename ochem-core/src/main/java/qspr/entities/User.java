@@ -68,17 +68,17 @@ import com.eadmet.messaging.DialogueService;
 @XmlRootElement(name = "user")
 @Loggable
 public class User {
-	
+
 	@Id
 	@Column(name = "user_id")
-//	@TableGenerator(
-//		name = "table-generator", 
-//	    table = "baseuser_id_generator", 
-//	    pkColumnName = "seq_id", 
-//	    valueColumnName = "seq_value",
-//	    allocationSize = 1
-//    )
-//	@GeneratedValue(strategy = GenerationType.TABLE, generator = "table-generator")
+	//	@TableGenerator(
+	//		name = "table-generator", 
+	//	    table = "baseuser_id_generator", 
+	//	    pkColumnName = "seq_id", 
+	//	    valueColumnName = "seq_value",
+	//	    allocationSize = 1
+	//    )
+	//	@GeneratedValue(strategy = GenerationType.TABLE, generator = "table-generator")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@XmlAttribute
 	public Long id;
@@ -417,14 +417,14 @@ public class User {
 	public static void delete(User user) {
 		Globals.session().delete(user);
 	}
-	
+
 	public static Set<String> getDevelopers() {
 		return new HashSet<String>();
 	}
-	
+
 	private static final Class<?> currentClass = Globals.getCurrentUserClass();
 	public static final String defaultExtendedClass = QSPRConstants.EXTENDED_USER;
-	
+
 	public static boolean extendedExists() {
 		try {
 			Class.forName(defaultExtendedClass);
@@ -433,23 +433,22 @@ public class User {
 			return false;
 		}
 	}
-	
+
 	public static Class<?> getExtended() {
 		if (extendedExists()) {
 			try {
 				return Class.forName(defaultExtendedClass);
 			} catch (ClassNotFoundException e) {
-				throw new UserFriendlyException("Could not find extended User entity: " + defaultExtendedClass);
+				throw new UserFriendlyException("Exception when instantiating Extended User entity: " + defaultExtendedClass);
 			}
-		} else {
-			throw new UserFriendlyException("Could not find extended User entity: " + defaultExtendedClass);
-		}
+		} 
+		throw new UserFriendlyException("Extended User entity is not defined: " + defaultExtendedClass);
 	}
-	
+
 	public static Class<?> getCurrentClass() {
 		return currentClass;
 	}
-	
+
 	public static User getNewInstance() {
 		try {
 			return (User) currentClass.newInstance();
@@ -457,7 +456,7 @@ public class User {
 			throw new UserFriendlyException(e);
 		}
 	}
-	
+
 	public static User getNewInstance(String classPath) {
 		try {
 			return (User) (Class.forName(classPath).newInstance());
@@ -465,7 +464,7 @@ public class User {
 			throw new UserFriendlyException(e);
 		}
 	}
-	
+
 	public boolean isOCHEMDeveloper() {
 		return false;
 	}
@@ -482,11 +481,11 @@ public class User {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public DynaWrap dynaWrapped() {
 		return new DynaWrap(this);
 	}
-	
+
 	public boolean isExtended() {
 		if (extendedExists()) {
 			return getExtended().isInstance(this);
@@ -495,14 +494,14 @@ public class User {
 		}
 	}
 
-//	public abstract boolean isOCHEMDeveloper();
-	
-//	public abstract String getFullName();
-	
-//	public abstract String getSecret();
-	
-//	public abstract boolean authorizeWithSecret(String secret) throws Exception;
-	
-//	public abstract void setPassword(String passwd) throws Exception;
+	//	public abstract boolean isOCHEMDeveloper();
+
+	//	public abstract String getFullName();
+
+	//	public abstract String getSecret();
+
+	//	public abstract boolean authorizeWithSecret(String secret) throws Exception;
+
+	//	public abstract void setPassword(String passwd) throws Exception;
 
 }

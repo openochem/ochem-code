@@ -660,12 +660,15 @@ public class Article
 	}
 
 	public static Article getDefaultArticle(User user, UploadContext context) throws Exception {
-		DynaWrap extended = user.dynaWrapped();
-		String firstName = (User.getExtended().isInstance(user) && extended.getString("firstName") != null) ? extended.getString("firstName") : user.login;
-		String lastName = (User.getExtended().isInstance(user)) && extended.getString("lastName") != null? extended.getString("lastName") : "";
-		
-		if(firstName.length()==0)firstName = user.login;
-		
+
+		String firstName = user.login, lastName = "";		
+		try {
+			DynaWrap extended = user.dynaWrapped();
+			firstName =	(User.getExtended().isInstance(user) && extended.getString("firstName") != null) ? extended.getString("firstName") : user.login;
+			lastName = (User.getExtended().isInstance(user)) && extended.getString("lastName") != null? extended.getString("lastName") : "";
+		}catch(Exception e) {
+		}
+
 		String name = QSPRConstants.UNPUBLISHED_ARTICLE+firstName+" " + lastName;
 
 		if (context.articleCache.get(name) != null)
