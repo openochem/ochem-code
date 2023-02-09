@@ -86,6 +86,10 @@ public class Command implements Serializable
 		return this;
 	}
 
+	public Integer getDataInteger() {
+		return ((Number) data).intValue();
+	}
+	
 	public String toString()
 	{
 		switch (this.id)

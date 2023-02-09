@@ -18,7 +18,6 @@
 package qspr.controllers;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -110,9 +109,9 @@ public class HomeController extends ControllerWrapper
 					if (row[0] == null)
 						continue;
 					Property p = new Property();
-					p.id = ((Integer) row[0]).longValue();
+					p.id = ((Number) row[0]).longValue();
 					p.setName((String) row[1]);
-					p.count = ((BigInteger) row[2]).longValue();
+					p.count = ((Number) row[2]).longValue();
 					publicProperties.add(p);
 				}
 			}
@@ -145,7 +144,7 @@ public class HomeController extends ControllerWrapper
 
 		List<User> users = new ArrayList<User>();
 		for (Object[] row : rows) {
-			User user = (User) Globals.session().get(User.getCurrentClass(), ((Integer)row[1]).longValue());
+			User user = (User) Globals.session().get(User.getCurrentClass(), ((Number)row[1]).longValue());
 			user.latestActivity = TimeUtils.ago((Timestamp) row[0]);
 			users.add(user);
 		}

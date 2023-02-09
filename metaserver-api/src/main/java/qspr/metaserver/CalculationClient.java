@@ -309,8 +309,9 @@ public class CalculationClient
 		// A method to request statuses of multiple tasks with a single query to metaserver
 		// Not supported for local tasks!
 
-		Command res;
 		ArrayList<Task> tasks = new ArrayList<Task>();
+		if(taskIds.isEmpty()) return tasks;
+		Command res;
 
 		while (taskIds.size() > 10)
 		{

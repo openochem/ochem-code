@@ -93,9 +93,9 @@ public class StructuralAlertServer extends DescriptorsAbstractServer {
 			try {
 				setStatus("" + dtMolecules.currentRow + " of " + dtMolecules.getRowsSize() + " done");
 
+				result.addRow();
 				String sdf = preprocessSDF((String) dtMolecules.getValue());
 				sdf = Various.molecule.convertToFormat(sdf, QSPRConstants.SDFAROM_GENERAL_WITHH);
-				result.addRow();
 				int failed = 0, count = 0;
 				for (int i = 0; i < configuration.size(); i++) {
 					String curPattern = configuration.get(i);

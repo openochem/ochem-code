@@ -17,6 +17,7 @@
 
 package qspr.schedule;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +45,7 @@ public class CleanAttachmentsTask extends OchemCronjobTask implements DataRefere
 		ThreadScope.get().disableTrackChanges = true;
 		Globals.startMainTransaction();
 		logger.info("Selecting valid attachment IDs");
-		List<Integer> real_ids = Globals.session().createSQLQuery(
+		List<Number> real_ids = Globals.session().createSQLQuery(
 				"select teacher_task_template from ModelTemplate union distinct " +
 						"select applier_task_template from ModelTemplate union distinct " +
 						"select attachment_id from ArticleUserPdf union distinct " +
@@ -62,12 +63,17 @@ public class CleanAttachmentsTask extends OchemCronjobTask implements DataRefere
 						"select configuration from ModelConfigurationTemplate" 
 				).list();
 		logger.info("Selecting all attachment IDs");
-		List<Integer> all_ids = Globals.session().createSQLQuery("select attachment_id from Attachment").list();
-		logger.info(String.format("Substracting two lists of with IDs %d and %d elements", all_ids.size(), real_ids.size()));
+		List<Number> all_nums = Globals.session().createSQLQuery("select attachment_id from Attachment").list();
+		logger.info(String.format("Substracting two lists of with IDs %d and %d elements", all_nums.size(), real_ids.size()));
 
 		Globals.commitMainTransaction();
-		all_ids.removeAll(real_ids); //We now have only orphan attachment ids here
+		all_nums.removeAll(real_ids); //We now have only orphan attachment ids here
 		Globals.startMainTransaction();
+
+		List<Integer> all_ids = new ArrayList<Integer>();
+		
+		for(int i=0;i<all_nums.size();i++) // remapping of BigInt to Int types
+			all_ids.add(((Number)all_nums.get(i)).intValue());
 
 		logger.info("Found " + all_ids.size() + " orphan attachments");
 		while (all_ids.size() > 0)

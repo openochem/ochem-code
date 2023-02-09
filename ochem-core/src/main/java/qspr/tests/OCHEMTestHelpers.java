@@ -157,12 +157,11 @@ public class OCHEMTestHelpers
 
 	public static Basket generateRandomBasketNumeric(String basketName, int size, Property property)
 	{
-		//List<Integer> idss = Globals.session().createSQLQuery("select Molecule_id from Molecule limit 100000," + size).list();
-		List<Integer> idss = Globals.session().createSQLQuery("select Molecule_id from Molecule order by RAND() limit " + size).list();
+		List<Number> idss = Globals.session().createSQLQuery("select Molecule_id from Molecule order by RAND() limit " + size).list();
 		List<Long> ids = new ArrayList<Long>();
-		for (Integer integer : idss)
+		for (Number number : idss)
 		{
-			ids.add(new Long(integer.longValue()));
+			ids.add(new Long(number.longValue()));
 		}
 
 		List<Molecule> mols = Globals.session().createCriteria(Molecule.class).add(Restrictions.in("id", ids)).list();

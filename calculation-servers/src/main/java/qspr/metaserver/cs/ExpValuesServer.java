@@ -36,7 +36,7 @@ import qspr.workflow.utils.QSPRConstants;
 
 public class ExpValuesServer extends DescriptorsAbstractServer
 {
-	public String dbUrl = "jdbc:mysql://iprior/ochem_clean";
+	public String dbUrl = "jdbc:mariadb://iprior/ochem_clean";
 	public String dbUsername = "root";
 	public String dbPassword = "TnOtB1982";
 

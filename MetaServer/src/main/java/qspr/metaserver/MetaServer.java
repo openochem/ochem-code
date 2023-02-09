@@ -260,7 +260,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 				return clGetTaskByMD5(command, peer);
 
 			case Command.CL_GET_PARENT_ID:
-				List<Integer[]> rows =  session().createSQLQuery("select parent_task_id from Task where task_id=:id").setParameter("id", (Integer) command.data).list();
+				List<Number[]> rows =  session().createSQLQuery("select parent_task_id from Task where task_id=:id").setParameter("id", command.getDataInteger()).list();
 				return rows == null || rows.size() == 0 ? null : new Command(Command.MS_TASKFOUND, rows.get(0));
 
 			case Command.CL_QUERY_TASK:
@@ -277,13 +277,13 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 			case Command.CL_DELETE_TASK:
 				logger.info("Deleting task " + command.data + " as requested by " + command.senderId);
-				session().createQuery("delete from Task where id=:id").setInteger("id", (Integer) command.data).executeUpdate();
-				removeTaskFromCache((Integer) command.data);
-				deleteChildrenTasks((Integer) command.data, false, false);
+				session().createQuery("delete from Task where id=:id").setInteger("id", command.getDataInteger()).executeUpdate();
+				removeTaskFromCache(command.getDataInteger());
+				deleteChildrenTasks(command.getDataInteger(), false, false);
 				return null;
 			case Command.CL_DELETE_CHILDREN:
 				logger.info("Deleting children of " + command.data + " as requested by " + command.senderId);
-				deleteChildrenTasks((Integer) command.data, false, false);
+				deleteChildrenTasks(command.getDataInteger(), false, false);
 				return null;
 			case Command.CS_REGISTER:
 				return registerServer(command);
@@ -345,7 +345,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		for (Object[] row : rows)
 		{
 			String status = (String) row[0];
-			Integer id = (Integer) row[1];
+			Integer id = ((Number) row[1]).intValue();
 			if (Task.READY.equals(status))
 				taskId = id;
 			else if (Task.isAliveStatus(status))
@@ -505,75 +505,49 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 	private Command clQueryTaskStatus(Command command, OnlinePeer peer)
 	{
+		List<Number> requestedTaskIds  = new ArrayList<Number>();
+		ArrayList<Task> tasks = new ArrayList<Task>();
+
 		if (command.data instanceof List)
-		{
-			// The statuses of multiple tasts requested. To be optimal, make a single query and request only what's required
-
-			ArrayList<Task> tasks = new ArrayList<Task>();
-			List<Integer> requestedTaskIds = (List<Integer>) command.data;
-			if (requestedTaskIds == null || requestedTaskIds.isEmpty())
-				return new Command(Command.MS_TASK_STATUS, tasks);
-			List<Object[]> rows = session().createSQLQuery("select task_id, status, detailed_status, calc_server_id from Task where task_id in (:ids)")
-					.setParameterList("ids", requestedTaskIds).list();
-
-			// Update the last_access time
-			session().createSQLQuery("update Task set last_access=:now where task_id in (:ids)")
-			.setParameterList("ids", requestedTaskIds)
-			.setParameter("now", Calendar.getInstance().getTime())
-			.executeUpdate();
-
-			for (int i = 0; i < requestedTaskIds.size(); i++)
-			{
-				Task task = new Task();
-				task.id = requestedTaskIds.get(i);
-				task.setError(Command.UNKNOWN_TASK + task.id);
-
-				for (Object[] row : rows)
-					if (row[0].equals(task.id))
-					{
-						task.status = (String) row[1];
-						task.setDetailedStatus((String) row[2]);
-						task.calcServerId = (String) row[3];
-						if (Task.INIT.equals(task.status))
-							task.setDetailedStatus("Waiting for a free server");
-					}
-
-				tasks.add(task);
-			}
-
-			return new Command(Command.MS_TASK_STATUS, tasks);
-		}
+			requestedTaskIds = (List<Number>) command.data;
 		else
+			requestedTaskIds.add((Number)command.data);
+
+		if (requestedTaskIds == null || requestedTaskIds.isEmpty())
+			return new Command(Command.MS_TASK_STATUS, tasks);
+
+		List<Object[]> rows = session().createSQLQuery("select task_id, status, detailed_status, calc_server_id from Task where task_id in (:ids)")
+				.setParameterList("ids", requestedTaskIds).list();
+
+		// Update the last_access time
+		session().createSQLQuery("update Task set last_access=:now where task_id in (:ids)")
+		.setParameterList("ids", requestedTaskIds)
+		.setParameter("now", Calendar.getInstance().getTime())
+		.executeUpdate();
+
+		for (int i = 0; i < requestedTaskIds.size(); i++)
 		{
-			Integer taskId = (Integer) command.data;
-			List<Object[]> rows = session().createSQLQuery("select task_id, status, detailed_status, calc_server_id, task_type from Task where task_id = :id")
-					.setParameter("id", taskId).list();
-
-			// Update the last_access time
-			session().createSQLQuery("update Task set last_access=:now where task_id=:id")
-			.setParameter("id", taskId)
-			.setParameter("now", Calendar.getInstance().getTime())
-			.executeUpdate();
-
-
 			Task task = new Task();
-			task.id = taskId;
+			task.id = requestedTaskIds.get(i).intValue();
 			task.setError(Command.UNKNOWN_TASK + task.id);
 
 			for (Object[] row : rows)
-				if (row[0].equals(task.id))
+				if (task.id == ((Number)row[0]).intValue())
 				{
 					task.status = (String) row[1];
 					task.setDetailedStatus((String) row[2]);
 					task.calcServerId = (String) row[3];
 					if (Task.INIT.equals(task.status))
-					{
 						task.setDetailedStatus("Waiting for a free server");
-					}
 				}
 
-			return new Command(Command.MS_TASK_STATUS, task);
-		}	
+			tasks.add(task);
+		}
+
+		if(command.data instanceof List)
+			return new Command(Command.MS_TASK_STATUS, tasks);
+		else
+			return new Command(Command.MS_TASK_STATUS, tasks.get(0));
 	}
 
 	protected Command csTaskCalculated(Command command, OnlinePeer peer)
@@ -701,7 +675,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 	protected Command clQueryTask(Command command, OnlinePeer peer)
 	{
-		Integer taskId = (Integer) command.data;
+		Integer taskId = command.getDataInteger();
 
 		Task task = (Task) session().get(Task.class, taskId);
 
@@ -786,7 +760,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 	private Command killTask(Command command, OnlinePeer peer)
 	{
-		Integer taskId = (Integer) command.data;
+		Integer taskId = command.getDataInteger();
 		Task task = (Task) session().get(Task.class, taskId);
 		logger.info("" + task + " killed by " + command.senderId);
 		if (task == null)
@@ -863,7 +837,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		if (parentId == null)
 			return;
 
-		List<Integer> taskIds = session().createCriteria(Task.class).add(Restrictions.eq("parentTaskId", parentId)).setProjection(Projections.id()).list();
+		List<Number> taskIds = session().createCriteria(Task.class).add(Restrictions.eq("parentTaskId", parentId)).setProjection(Projections.id()).list();
 
 		if (taskIds.size() > 0)
 		{
@@ -877,11 +851,11 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 					"update Task set scheduled_kill=1 where (ref_count > 1) and id in (:id)")
 			.setParameterList("id", taskIds).executeUpdate();
 
-			for (Integer id : taskIds)
+			for (Number id : taskIds)
 			{
 				logger.info("Killing " + id + "." + parentId + " as a child of " + parentId);
-				removeTaskFromCache(id);
-				killChildrenTasks(id);
+				removeTaskFromCache(id.intValue());
+				killChildrenTasks(id.intValue());
 			}
 
 			session().flush();
@@ -893,27 +867,27 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 	{
 		if (parentId == null)
 			return;
-		List<Integer> taskIds = session().createCriteria(Task.class).add(Restrictions.eq("parentTaskId", parentId)).setProjection(Projections.id()).list();
-		for (Integer id : taskIds)
+		List<Number> taskIds = session().createCriteria(Task.class).add(Restrictions.eq("parentTaskId", parentId)).setProjection(Projections.id()).list();
+		for (Number id : taskIds)
 		{
 			logger.info("Deleting " + id + " as a child of " + parentId);
 			if (cleanUpOnly)
 			{
 				// Cleanup a task
-				session().createQuery("update Task set result=null, data=null where ref_count <= 1 and id=:id" + (keepErrors ? "  and status<>'error'" : "")).setInteger("id", id)
+				session().createQuery("update Task set result=null, data=null where ref_count <= 1 and id=:id" + (keepErrors ? "  and status<>'error'" : "")).setInteger("id", id.intValue())
 				.executeUpdate();
 				// Kill the task, if still active
-				session().createQuery("update Task set status='kill' where ref_count <= 1 and id=:id and (taskType='init' or taskType='assigned')").setInteger("id", id)
+				session().createQuery("update Task set status='kill' where ref_count <= 1 and id=:id and (taskType='init' or taskType='assigned')").setInteger("id", id.intValue())
 				.executeUpdate();
 			}
 			else
-				session().createQuery("delete from Task where ref_count <= 1 and id=:id" + (keepErrors ? "  and status<>'error'" : "")).setInteger("id", id).executeUpdate();
+				session().createQuery("delete from Task where ref_count <= 1 and id=:id" + (keepErrors ? "  and status<>'error'" : "")).setInteger("id", id.intValue()).executeUpdate();
 
-			session().createQuery("update Task set scheduled_kill=1 where id=:id and ref_count > 1").setInteger("id", id)
+			session().createQuery("update Task set scheduled_kill=1 where id=:id and ref_count > 1").setInteger("id", id.intValue())
 			.executeUpdate();
 
-			removeTaskFromCache(id);
-			deleteChildrenTasks(id, keepErrors, cleanUpOnly);
+			removeTaskFromCache(id.intValue());
+			deleteChildrenTasks(id.intValue(), keepErrors, cleanUpOnly);
 		}
 		session().flush();
 	}
@@ -980,9 +954,11 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			setInteger("rm", task.getMinRequiredMemory()).
 			executeUpdate();
 
+		long howlong = task.timeAssigned != null ? (Calendar.getInstance().getTimeInMillis() - task.timeAssigned.getTime())/1000:0;
+
 		String message ="Resubmitting task " + task + ", because something went wrong with server: \n" + task.getDetailedStatus() + "\n name:" + getOriginalName(task) + "\n" +
 				task.calcServerId + " trial=" + task.resubmitted + " minmemory="+task.getMinRequiredMemory() + " (user "
-				+ task.getUser()+ ")";
+				+ task.getUser()+ ") was calculated for " + howlong + " sec.";
 
 		logger.info(message);
 		Mailer.notifyDevelopers("Resubmitting: Server did not return task result", message);
@@ -1208,7 +1184,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			for (Object[] groupElement : groupList)
 			{
 				String taskType = (String)groupElement[0];
-				Integer minMemory = (Integer)groupElement[1];
+				Integer minMemory = ((Number)groupElement[1]).intValue();
 				Task waitingTask = getTask(Task.INIT, taskType, minMemory);
 				if (waitingTask != null)
 					taskList.add(waitingTask);
@@ -1234,13 +1210,13 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			synchronized (assignedTasks)
 			{
 				assignedTasks.clear();
-				List<Integer> taskIdList = session().createCriteria(Task.class).add(
+				List<Number> taskIdList = session().createCriteria(Task.class).add(
 						Restrictions.eq("status", Task.ASSIGNED)).setProjection(Projections.id())
 						.list();
 
-				for (Integer taskId : taskIdList)
+				for (Number taskId : taskIdList)
 				{
-					Task task = (Task) session().get(Task.class, taskId);
+					Task task = (Task) session().get(Task.class, taskId.intValue());
 					session().evict(task);
 					task.clearData();
 					task.clearResult();
@@ -1251,9 +1227,9 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 						Restrictions.eq("status", Task.STOP)).setProjection(Projections.id())
 						.list();
 
-				for (Integer taskId : taskIdList)
+				for (Number taskId : taskIdList)
 				{
-					Task task = (Task) session().get(Task.class, taskId);
+					Task task = (Task) session().get(Task.class, taskId.intValue());
 					session().evict(task);
 					task.clearData();
 					task.clearResult();
@@ -1416,12 +1392,12 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 	private Task getTask(String status, String type)
 	{
 		session().flush();
-		List<Integer> tasks = session()
+		List<Number> tasks = session()
 				.createSQLQuery("select task_id from Task force index (StatTypePri_Index) where status=:status and task_type=:taskType order by priority desc")
 				.setString("taskType", type).setString("status", status).setMaxResults(1).list();
 
 		if (tasks.size() > 0)
-			return (Task) session().get(Task.class, tasks.get(0));
+			return (Task) session().get(Task.class, tasks.get(0).intValue());
 		else
 			return null;
 
@@ -1431,14 +1407,14 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 	{
 		session().flush();
 
-		List<Integer> tasks = null;
+		List<Number> tasks = null;
 		if (minMemory == null)
 			tasks = session().createSQLQuery("select task_id from Task force index (StatTypePri_Index) where status=:status and task_type=:taskType and min_required_memory is null order by priority desc").setString("taskType", type).setString("status", status).setMaxResults(1).list();
 		else
 			tasks = session().createSQLQuery("select task_id from Task force index (StatTypePri_Index) where status=:status and task_type=:taskType and min_required_memory=:mem order by priority desc").setString("taskType", type).setString("status", status).setInteger("mem", minMemory).setMaxResults(1).list();
 
 		if (tasks.size() > 0)
-			return (Task) session().get(Task.class, tasks.get(0));
+			return (Task) session().get(Task.class, tasks.get(0).intValue());
 		else
 			return null;
 
@@ -1452,9 +1428,10 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			if (peer == null)
 			{
 				peer = new OnlinePeer();
+				peer.ipAddress = ServerServlet.resolveRemoteAddr(request.get());
 				logger.info("New peer: " + sid);
-			}
-			peer.ipAddress = ServerServlet.resolveRemoteAddr(request.get());
+			}else
+				logger.info("Update peer: " + sid + " time: " + (Calendar.getInstance().getTimeInMillis() - peer.lastActive) + " ms");
 			peer.lastActive = Calendar.getInstance().getTimeInMillis();
 			onlinePeers.put(sid, peer);
 			return peer;
@@ -1528,14 +1505,14 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		gCal.add(Calendar.MONTH, -4); // changed for four month to avoid error tasks in Pending tasks (which will be deleted in 3.5 months)
 		Timestamp oneMonthAgo = new Timestamp(gCal.getTimeInMillis());
 
-		List<Integer> taskIds = session().createSQLQuery("select task_id from Task where time_completed < :oneMonthAgo")
+		List<Number> taskIds = session().createSQLQuery("select task_id from Task where time_completed < :oneMonthAgo")
 				.setParameter("oneMonthAgo", oneMonthAgo).list();
-		for (Integer taskId : taskIds)
+		for (Number taskId : taskIds)
 			logger.info("[Cleanup] Deleting an old task " + taskId);
 		if (!taskIds.isEmpty())
 			session().createSQLQuery("delete from Task where time_completed < :oneMonthAgo").setParameter("oneMonthAgo", oneMonthAgo).executeUpdate();
 
-		Integer oldestTaskId = (Integer) session().createSQLQuery("select min(task_id) from Task where time_completed is not null").uniqueResult();
+		Number oldestTaskId = (Number) session().createSQLQuery("select min(task_id) from Task where time_completed is not null").uniqueResult();
 		// Added a special index to MetaServer table for this ^ query. For it the time_completed index was used, and the task_id was then obtained by full scan of results. Sometimes - up to 5 minutes.
 		// P.S. There was already such an index,  I dont know why it could disappear
 		if (oldestTaskId != null)
@@ -1564,12 +1541,19 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 		OnlinePeer calculatingPeer = onlinePeers.get(task.calcServerId);
 
-		if (calculatingPeer == null)
+		if (calculatingPeer == null) {
 			// If the server is not the list, task is overdue if the metaserver is running long enough
-			return getUptime() > METASERVER_TASK_OVERDUE / 1000; // 60 min
+			boolean res = getUptime() > METASERVER_TASK_OVERDUE / 1000; // 60 min
+			if(res)logger.info("Peer is not available for task " + task.calcServerId);
+			return res;
+		}
 
-			// If the server did not contact us for more than 60 min, the task is overdue
-			return calculatingPeer.getPing() > METASERVER_TASK_OVERDUE;
+		// If the server did not contact us for more than 60 min, the task is overdue
+		boolean res = calculatingPeer.getPing() > METASERVER_TASK_OVERDUE;
+
+		if(res)logger.info("Server for task: " + task.calcServerId + " did not conect during during " + METASERVER_TASK_OVERDUE/1000 + " sec");
+
+		return res;
 	}
 
 	public static String getLocalURL(HttpServletRequest request) {
@@ -1802,14 +1786,14 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		}
 	}
 
-	public Integer getQueuedTasksCount()
+	public Number getQueuedTasksCount()
 	{
-		return (Integer) session().createSQLQuery("select count(*) c from Task where status='init'").addScalar("c", IntegerType.INSTANCE).uniqueResult();
+		return (Number) session().createSQLQuery("select count(*) c from Task where status='init'").addScalar("c", IntegerType.INSTANCE).uniqueResult();
 	}
 
-	public Integer getPrimaryQueuedTasksCount()
+	public Number getPrimaryQueuedTasksCount()
 	{
-		return (Integer) session().createSQLQuery("select count(*) c from Task where status='init' and parent_task_id is null")
+		return (Number) session().createSQLQuery("select count(*) c from Task where status='init' and parent_task_id is null")
 				.addScalar("c", IntegerType.INSTANCE).uniqueResult();
 	}
 
@@ -1897,15 +1881,28 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		return logger;
 	}
 
+	@SuppressWarnings({ "unused" })
 	public static void main(String args[]) throws Exception
-	{	
-		/*
+	{
 		MetaServer.mirror = true;
 		MetaServer ms = new MetaServer(METASERVER);
 		Transaction tx = ms.session().beginTransaction();
-		List<ArchivedTask> tasks = (List)ms.session().createCriteria(ArchivedTask.class).list();
-		System.out.println(MemoryUtils.memorySummary());
-		 */
+
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(16501);
+
+		for(Integer i:ids) {
+
+			List<Integer> idss = new ArrayList<Integer>();
+			idss.add(i);
+			Command com = new Command( null, (Serializable) i);
+			Command coma = ms.clQueryTaskStatus(com, null);
+			Task aa = (Task) coma.data;
+			System.out.println(aa.status);
+		}
+
+		//List<ArchivedTask> tasks = (List)ms.session().createCriteria(ArchivedTask.class).list();
+		//System.out.println(MemoryUtils.memorySummary());
 	}
 
 }

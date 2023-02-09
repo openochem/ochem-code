@@ -44,11 +44,11 @@ public class CleanBasketTask extends OchemCronjobTask {
 
 		List<Integer> ids = Globals.session().createSQLQuery(sqlSelect).list();
 
-		for (Integer id : ids)
+		for (Number id : ids)
 		{
 			log("Basket deleted: "+id);
-			Globals.session().createSQLQuery("delete from BasketEntry where basket_id = :basket_id").setInteger("basket_id", id).executeUpdate();
-			Globals.session().createSQLQuery("delete from Basket where basket_id = :basket_id").setInteger("basket_id", id).executeUpdate();
+			Globals.session().createSQLQuery("delete from BasketEntry where basket_id = :basket_id").setInteger("basket_id", id.intValue()).executeUpdate();
+			Globals.session().createSQLQuery("delete from Basket where basket_id = :basket_id").setInteger("basket_id", id.intValue()).executeUpdate();
 		}
 
 		Globals.commitMainTransaction();
