@@ -1196,11 +1196,15 @@ public class Model
 
 		List<Long> ids = retrieveRecordIds();
 
+		List<Long> toUpdate = new ArrayList<Long>();
+
 		for(Long epId: ids)try{
 			if(epId == Integer.MAX_VALUE || epId == null) {messages += "\nno molecule id for mol = " + epId; continue;}
 			ExperimentalProperty ep = (ExperimentalProperty) Globals.session().get(ExperimentalProperty.class, epId); 
 			if(ep == null) {messages += "\nrecord was deleted R" + epId; continue;	}	
 			if(ep.error != null) {messages += "record R" + ep.id + " is error. It can't be published."; continue;}
+			if(ep.article.id.longValue() == articleId.longValue() && ep.owner.id == QSPRConstants.PUBLISHER_ID)continue;
+			toUpdate.add(epId);
 		}catch(Exception e){
 			messages += "\n" + e.getMessage();
 		}
@@ -1208,17 +1212,15 @@ public class Model
 		if(messages.length() > 0)
 			throw new IOException(errorModelChanged + messages);
 
-
 		// publishing
-
-		int SIZE = 1000;
+		int SIZE = QSPRConstants.MAXRECORDS_PER_MYSQL_UPDATE;
 
 		if(articleId != null)
 			do{
-				List<Long>  update = ids.subList(0, SIZE < ids.size() ? SIZE : ids.size());
+				List<Long>  update = toUpdate.subList(0, SIZE < toUpdate.size() ? SIZE : toUpdate.size());
 				ExperimentalProperty.publishRecords(update, articleId);
 				update.clear();
-			}while(ids.size()>0);
+			}while(toUpdate.size()>0);
 
 	}
 

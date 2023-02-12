@@ -25,8 +25,11 @@ import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 
 import qspr.Globals;
+import qspr.entities.Basket;
 import qspr.entities.Model;
+import qspr.entities.User;
 import qspr.util.CriteriaWrapper;
+import qspr.workflow.utils.QSPRConstants;
 
 import com.eadmet.exceptions.UserFriendlyException;
 
@@ -63,6 +66,16 @@ public class ModelOperation
 	public static void approveModel(Model model, boolean publishedAndCited, int qualityGrade) {
 		if (model.approved)
 			throw new UserFriendlyException("The model is already approved!");
+
+		User publisher = User.getById(QSPRConstants.PUBLISHER_ID);
+
+		model.trainingSet.user=publisher;
+		Globals.session().saveOrUpdate(model.trainingSet); 
+
+		for(Basket b:model.getValidationSets()) {
+			b.user = publisher;
+			Globals.session().saveOrUpdate(b); 
+		}
 		model.approved = true;
 	}
 

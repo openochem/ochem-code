@@ -59,7 +59,6 @@ import org.hibernate.criterion.Restrictions;
 import qspr.Globals;
 import qspr.ThreadScope;
 import qspr.annotations.Loggable;
-import qspr.dao.MetalBondParserSdf;
 import qspr.dao.Repository;
 import qspr.dao.Various;
 import qspr.metaserver.util.MixtureAttachment;
@@ -1408,7 +1407,7 @@ public class ExperimentalProperty implements Serializable, UserContributedEntity
 		if(ids ==null || ids.size() == 0)return;
 
 		Globals.session().createSQLQuery("update ExperimentalProperty set rights = 3, modifier_id = " + QSPRConstants.PUBLISHER_ID +", time_modified =NOW() " + 
-				" where exp_property_id in (:ids) and modifier_id != " + QSPRConstants.PUBLISHER_ID).setParameterList("ids", ids)
+				" where exp_property_id in (:ids) and rights != 3 and modifier_id != " + QSPRConstants.PUBLISHER_ID).setParameterList("ids", ids)
 		.executeUpdate();
 
 		Globals.restartAllTransactions(true);
