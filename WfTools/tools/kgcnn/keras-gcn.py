@@ -1131,7 +1131,13 @@ else:
     # Model creation
     make_model = get_model_class(hyper["model"]["config"]["name"], hyper["model"]["class_name"])
 
-    model = make_model(**hyper['model']["config"])
+    # Fix to make models working with the saved old ChemProp models
+    if 'use_graph_state' in hyper["model"]["config"].keys():
+        r = dict(hyper["model"]["config"])
+        del r['use_graph_state']
+        model = make_model(**r)
+    else:
+        model = make_model(**hyper['model']["config"])
     # load stored best weights
 
     model.load_weights(modelname)
