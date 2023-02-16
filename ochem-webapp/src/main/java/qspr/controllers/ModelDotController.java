@@ -36,6 +36,7 @@ import qspr.entities.Model;
 import qspr.frontend.BrowserModel;
 import qspr.frontend.WebList;
 import qspr.frontend.WebModel;
+import qspr.util.AccessChecker;
 
 import com.eadmet.business.ModelDotService;
 import com.eadmet.business.PaginationFilter;
@@ -64,9 +65,9 @@ public class ModelDotController extends BrowserWrapper
 	public ModelAndView show(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
 		return new WebModel()
-		.setTemplate("model/dot")
-		.setRenderMode("popup")
-		.getModelAndView();
+				.setTemplate("model/dot")
+				.setRenderMode("popup")
+				.getModelAndView();
 	}
 
 	public ModelAndView list(HttpServletRequest request, HttpServletResponse response) throws Exception
@@ -77,6 +78,11 @@ public class ModelDotController extends BrowserWrapper
 		long epId = getLongParam("ep_id");
 		long modelMappingId = getLongParam("mm_id");
 		List<ExperimentalProperty> eps = service.getModelDotList(model, statNum, epId, modelMappingId);
+
+		if(!model.approved) {
+			ExperimentalProperty ep = Repository.record.getRecord(epId);
+			AccessChecker.requestViewingPermission(ep);
+		}
 
 		WebList wl = new WebList();
 		wl.loadFromList(eps);
@@ -110,10 +116,10 @@ public class ModelDotController extends BrowserWrapper
 	{
 		Model model = getRequestedModel();
 		return new WebModel(model)
-		.setTemplate("model/errors")
-		.setRenderMode("popup")
-		.addParam("recalculated", "" + assertParam("recalculated"))
-		.getModelAndView();
+				.setTemplate("model/errors")
+				.setRenderMode("popup")
+				.addParam("recalculated", "" + assertParam("recalculated"))
+				.getModelAndView();
 	}
 
 	public ModelAndView action(HttpServletRequest request, HttpServletResponse response) throws Exception

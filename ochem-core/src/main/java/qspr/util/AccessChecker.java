@@ -132,7 +132,7 @@ public class AccessChecker
 
 		// If all possibilities for record edit failed - that it's not permitted after all
 		logger.info("You do not have sufficient privileges to modify this entity (introduced by "+entity.getOwner().login+")");
-		throw new UserFriendlyException("You do not have sufficient privileges to modify this entity (introduced by "+entity.getOwner().login+")");
+		throw new UserFriendlyException("You do not have sufficient privileges to view/modify this entity (introduced by "+entity.getOwner().login+")");
 	}
 
 	/**

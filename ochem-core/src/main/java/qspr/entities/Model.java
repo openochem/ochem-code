@@ -200,7 +200,7 @@ public class Model
 	public String configurationHash;
 
 	@Column
-	public boolean approved = false;
+	public boolean approved = true;
 
 	@Column(name = "date_created")
 	@XmlTransient
