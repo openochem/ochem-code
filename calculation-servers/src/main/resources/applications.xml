@@ -137,13 +137,9 @@
 		<param name="EXE" platform="aarch64" value="%TOOLS_DIR%/deep/deep-aarch64" />
 	</application>
 
-	<application class="qspr.metaserver.cs.J48Server" name="WEKA-J48">
-		<param name="EXE" value="%TOOLS_DIR%/weka/weka.jar" />
-	</application>
+	<application class="qspr.metaserver.cs.J48Server" name="WEKA-J48"/>
 
-	<application class="qspr.metaserver.cs.RFServer" name="WEKA-RF">
-		<param name="EXE" value="%TOOLS_DIR%/weka/weka.jar" />
-	</application>
+	<application class="qspr.metaserver.cs.RFServer" name="WEKA-RF"/>
 
 	<application class="qspr.metaserver.cs.LibSvmServer" name="LibSVM">
 		<param name="EXE" value="%TOOLS_DIR%/libsvm/svm-train-linux" />

@@ -264,11 +264,11 @@ public abstract class WekaAbstractServer extends MachineLearningExecutableAbstra
 		String memory =  "-Xmx"+ getMemoryForExecutable()+"M";
 
 		if (!useCostMatrix)
-			return new String[] {javaHome+"/bin/java", "-cp", getExeFile(), memory, className, "-xml", cfgFileName };
+			return new String[] {javaHome+"/bin/java", "-cp", javaClassPath, memory, className, "-xml", cfgFileName };
 		else
 		{
 			writeCostMatrix(conf.labelWeighting);
-			return new String[] {javaHome+"/bin/java", "-cp", getExeFile(), memory, "weka.classifiers.meta.CostSensitiveClassifier", "-xml", cfgFileName};
+			return new String[] {javaHome+"/bin/java", "-cp", javaClassPath, memory, "weka.classifiers.meta.CostSensitiveClassifier", "-xml", cfgFileName};
 		}
 	}
 
