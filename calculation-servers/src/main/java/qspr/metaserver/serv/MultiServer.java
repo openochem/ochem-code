@@ -31,6 +31,7 @@ import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,10 +64,12 @@ import qspr.metaserver.protocol.Command;
 import qspr.metaserver.protocol.ServerInfo;
 import qspr.metaserver.protocol.Task;
 import qspr.metaserver.protocol.Task.DebugLevel;
+import qspr.metaserver.serv.ServerRunnerConfiguration.LocalAppConfig;
 import qspr.metaserver.tests.DescriptorServerTest;
 import qspr.metaserver.tests.MainTest;
 import qspr.metaserver.tests.TaskTest;
 import qspr.metaserver.transport.CSTransport;
+import qspr.metaserver.transport.DataReferenceFactory;
 import qspr.metaserver.transport.NoSqlTransport;
 import qspr.workflow.utils.QSPRConstants;
 import qspr.tests.ReportGeneratorTestListener;
@@ -306,13 +309,44 @@ public class MultiServer {
 		// Save current process id to version.xml
 		configuration.processId = currentId;
 		configuration.parentProcessId = currentOwnerId;
-		saveConfiguration(configuration);
 
 		Applications applications = (Applications) unmarshaller.unmarshal(this.getClass().getClassLoader().getResourceAsStream("applications.xml"));
 		ServerRunnerConfiguration.allApplications = applications;
 
 		if (configuration.applications == null || configuration.applications.size() == 0)
 			notifyRunner(ExchangeCommands.MULTISERVER_TERMINATE, "To complete setup you must provide correct " + ServerRunner.VERSIONXML +"  file");
+
+		try {
+			// FIX to work inside of the docker
+			try{ // if "ochem-mongo" is available, we use it and also update path to mariadb
+				InetAddress inet[] = InetAddress.getAllByName("ochem-mongo");
+				if(inet!=null && inet.length>0) {
+					configuration.mongoDbURL = NoSqlTransport.host = "mongodb://ochem-mongo";
+					if(configuration.applicationConfigurations != null)
+						for(LocalAppConfig ap: configuration.applicationConfigurations)
+							for(ApplicationParam param: ap.params) {
+								if(param.name.equals("DBURL")) {
+									String cleanURI = param.value.substring(5);
+									URI uri = URI.create(cleanURI);
+									String host = uri.getHost();
+									String rest=cleanURI.substring(cleanURI.indexOf(host)+host.length());
+									param.value =  "jdbc:mariadb://ochem-mariadb"+rest;
+								}
+							}
+				}
+			}catch (Exception e) {}
+
+			// trying whether MongoDB is available
+			int trials = NoSqlTransport.trials;
+			NoSqlTransport.trials = 0;
+			DataReferenceFactory.createReferencer().saveReference("test", QSPRConstants.WEBSERVICE_DATABASE);
+			NoSqlTransport.trials = trials;
+		}catch(Exception e) {
+			out.println("Mongodb is not available at: " + configuration.mongoDbURL);
+			System.exit(1);
+		}
+
+		saveConfiguration(configuration);
 
 		version = serverInfo.version = configuration.currentVersion;
 		serverInfo.ipAddress = InetAddress.getLocalHost().getHostAddress();

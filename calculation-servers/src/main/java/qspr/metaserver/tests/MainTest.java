@@ -87,26 +87,34 @@ public class MainTest {
 
 	@BeforeClass
 	public static void init() throws Exception {
-		jc = JAXBContextFactory.get("qspr.workflow.datatypes:qspr.workflow.structure");
-		LocalTransport.allowQueue = true;
-		TransportFactory.defaultTransportClass = LocalTransport.class;
+		try {
+			jc = JAXBContextFactory.get("qspr.workflow.datatypes:qspr.workflow.structure");
+			LocalTransport.allowQueue = true;
+			TransportFactory.defaultTransportClass = LocalTransport.class;
 
-		Various.molecule = Various.getDefaultCheminfImpl();
+			Various.molecule = Various.getDefaultCheminfImpl();
 
-		if(Various.molecule == null) throw new UserFriendlyException("Chemoinformatics engine was not enabled (check version-template.xml), the default is : " + OCHEMConfiguration.getCheminfEngine());
+			if(Various.molecule == null) throw new UserFriendlyException("Chemoinformatics engine was not enabled (check version-template.xml), the default is : " + OCHEMConfiguration.getCheminfEngine());
 
-		map = Collections.singletonMap(QSPRConstants.CHEMENGINE, "" + Various.molecule.engine);
-		dt_ALOGPS = DataTable.fromXml(jc, PATH + "testALOGPS.xml");
-		dt_PYMOL = DataTable.fromXml(jc, PATH + "testPYMOL.xml");
-		dt_mopac = DataTable.fromXml(jc, PATH + "dt_test_mopacboinc_molecule.xml");
-		dt_default = DataTable.fromXml(jc, PATH + "dt_molecules.xml");
+			map = Collections.singletonMap(QSPRConstants.CHEMENGINE, "" + Various.molecule.engine);
+			dt_ALOGPS = DataTable.fromXml(jc, PATH + "testALOGPS.xml");
+			dt_PYMOL = DataTable.fromXml(jc, PATH + "testPYMOL.xml");
+			dt_mopac = DataTable.fromXml(jc, PATH + "dt_test_mopacboinc_molecule.xml");
+			dt_default = DataTable.fromXml(jc, PATH + "dt_molecules.xml");
 
-		dt_ALOGPS.setInfEngine(Various.molecule.engine);
-		dt_PYMOL.setInfEngine(Various.molecule.engine);
-		dt_mopac.setInfEngine(Various.molecule.engine);
-		dt_default.setInfEngine(Various.molecule.engine);
+			dt_ALOGPS.setInfEngine(Various.molecule.engine);
+			dt_PYMOL.setInfEngine(Various.molecule.engine);
+			dt_mopac.setInfEngine(Various.molecule.engine);
+			dt_default.setInfEngine(Various.molecule.engine);
 
-		wnd_molecules = new WorkflowNodeData(dt_default);
+			wnd_molecules = new WorkflowNodeData(dt_default);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("MainTest init failed: exiting.");
+			System.exit(1);
+		}
+
 	}
 
 	@AfterClass

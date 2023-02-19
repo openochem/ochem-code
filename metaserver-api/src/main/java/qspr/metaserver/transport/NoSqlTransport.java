@@ -72,6 +72,8 @@ public class NoSqlTransport implements DataReferencer
 	@ConfigurableProperty(name = "password")
 	public static String password = "";
 
+	public static int trials = 12;
+
 	public final static String DEFAULT_COLLECTION ="Data";
 
 	public final static String MONGOID ="_id";
@@ -180,7 +182,7 @@ public class NoSqlTransport implements DataReferencer
 		} catch (Exception e)
 		{
 			try {
-				if (attempts++ < 12)
+				if (attempts++ < trials)
 					Thread.sleep(1000*attempts);
 				else
 					throw new IOException(e);
