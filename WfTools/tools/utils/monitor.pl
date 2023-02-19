@@ -8,7 +8,7 @@ my $test = 0;
 
 my (%SERVERS,$JAVA,$METASERVER,$MEMORY,$COUNT,$GPU,$SLEEP);
 
-$SLEEP = 5;
+$SLEEP = 1;
 
 updateTasks($file);
 my $tasks = initTasks();
@@ -83,17 +83,31 @@ sub delServers(){
     close(I);
     for(my $i = 1; $i<=$SERVERS{$SERVER};$i++){ # at least 10 servers above the specified number
         $servers[$i] && next; # running
-        system("mv server$SERVER$i/runs/* server$SERVER"."0/runs/ >/dev/null 2>/dev/null"); # to have a possibility to debug failed tasks
-        system("rm -r server$SERVER$i 2> /dev/null");
-        # killing remaining python processes, if any
-        open(I,"ps -wax |");
-        while(<I>){
-            /server$SERVER$i\s+/ or /server$SERVER$i\// or next;
-            my @a = split;
-            $a[0] = $a[0]>0?$a[0]:$a[1];
-            system("kill -9 $a[0]");
+        my $base_path = "server$SERVER$i/runs";
+        if (-e $base_path)
+        {
+            open(D,"ls $base_path |");
+            while(<D>){
+                chomp;
+                length($_)<5 and next; # skip if nothing is there...
+                my $move="mv server$SERVER$i/output $_ 2> /dev/null\n";
+                system($move);
+                $test and print($move);
+            }
+            close(D);
+            
+            system("mv $base_path/* server$SERVER"."0/runs/ >/dev/null 2>/dev/null"); # to have a possibility to debug failed tasks
+            system("rm -r server$SERVER$i 2> /dev/null");
+            # killing remaining python processes, if any
+            open(I,"ps -wax |");
+            while(<I>){
+                /server$SERVER$i\s+/ or /server$SERVER$i\// or next;
+                my @a = split;
+                $a[0] = $a[0]>0?$a[0]:$a[1];
+                system("kill -9 $a[0]");
+            }
+            close(I);
         }
-        close(I);
     }
     return \@servers;
 }
@@ -105,7 +119,6 @@ sub startServer(){
         my $datestring = localtime();
         $test && print "$datestring starting $i out of $SERVERS{$SERVER} busy: $servers->[$i]\n";
         $servers->[$i] && next;
-        ##sleep($SLEEP->{$SERVER});
         my $server = "server$SERVER$i";
         my $mem = $MEMORY->{$SERVER};
         $mem = $mem > $MINIMAL_MEMORY ? $mem : $MINIMAL_MEMORY;
@@ -113,11 +126,12 @@ sub startServer(){
         system("cp -r $server1 $server");
         system("rm $server/output/*");
         system("rm -rf $server/runs/*");
-        system("perl -pi -e 's|<processId>.+<\/processId>|<maximumIdleTime>150<\/maximumIdleTime>|' $server/version.xml 2> /dev/null");
-        #system("perl -pi -e 's|current-version=\".+\">|current-version=\"local\">|' $server/version.xml 2> /dev/null"); # Does not make sence since such servers are not updated after the release of new code
+        system("perl -pi -e 's|<sleepTime>.+<\/sleepTime>|<sleepTime>1<\/sleepTime>|' $server/version.xml 2> /dev/null");
+        system("perl -pi -e 's|<sleepTimeWhileCalculating>.+<\/sleepTimeWhileCalculating>|<sleepTimeWhileCalculating>60<\/sleepTimeWhileCalculating>|' $server/version.xml 2> /dev/null");
+        system("perl -pi -e 's|<processId>.+<\/processId>|<maximumIdleTime>120<\/maximumIdleTime>|' $server/version.xml 2> /dev/null");
         system("perl -pi -e 's|<memoryLimit>.+<\/memoryLimit>|<memoryLimit>$mem<\/memoryLimit>|' $server/version.xml 2> /dev/null");
         $mem = defined $GPU->{$SERVER}?$mem*5:$mem; # give 5 times more memory for GPU tasks
-        system("cd $server; $JAVA->{$SERVER}/bin/java -Xmx$mem"."m -XX:MinHeapFreeRatio=25 -XX:MaxHeapFreeRatio=40 -cp lib/*:lib/activation-1.1.jar qspr.metaserver.serv.MultiServer /etc/cs_servers/$server >o 2>>o &");
+        system("cd $server; $JAVA->{$SERVER}/bin/java -Xmx$mem"."m -XX:MinHeapFreeRatio=25 -XX:MaxHeapFreeRatio=40 -Dlog4j1.compatibility=\"true\" -Dlog4j.configuration=\"/etc/source/ochem/log4j.xml\" -cp lib/*:lib/activation-1.1.jar qspr.metaserver.serv.MultiServer /etc/cs_servers/$server >o 2>>o &");
         return 1;
     }
     return 0;
@@ -148,9 +162,6 @@ sub initTasks(){
                 $tasks->{$SERVER}->{lc($1)}=1;
                 lc($1) eq "corinalocal" && do {$tasks->{$SERVER}->{"corina"}=1;};
             }
-            #if(/<sleepTime>(\S+)<\/sleepTime>/){
-            #    $tasks->{$SLEEP}->{lc($1)}=1;
-            #}
         }
         close(I);
         system("perl -pi -e 's|<memoryLimit>.+<\/memoryLimit>|<memoryLimit>512<\/memoryLimit>|' $server1/version.xml 2> /dev/null");
@@ -187,12 +198,11 @@ sub updateMemoryTasks(){
     return $tasks;
 }
 
-
 sub checkTasks{
     my $SERVER = shift;
     my $datestring = localtime();
     $test && print("$datestring trying $SERVER\n");
-    open(I,"wget --no-check-certificate --proxy=off --timeout=$SLEEP -q -O - $METASERVER->{$SERVER}?action=queue |");
+    open(I,"wget --no-check-certificate --proxy=off --timeout=1 -q -O - $METASERVER->{$SERVER}?action=queue |");
     $test && print("$datestring got $SERVER\n");
     my $found;
     $COUNT->{$SERVER}=0;
