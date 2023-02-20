@@ -192,6 +192,11 @@ public class ModelService extends LoginService{
 		{
 			@Override
 			public void run() throws Exception {
+				if(sessionGUID == null || !sessionGUID.equals(QSPRConstants.ANONYMOUS)) {
+					Session sess = Session.getByGUID(sessionGUID);
+					if(sess ==  null)throw new UserFriendlyException("Session does not exist: " + sessionGUID);
+				}
+
 				ThreadScope.get().userSession.disableQuota = true;
 				Model model = Repository.model.getByPublicId(request.getModelId());
 				if (model == null)

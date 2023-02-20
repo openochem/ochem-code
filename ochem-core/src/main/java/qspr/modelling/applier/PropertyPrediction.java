@@ -43,7 +43,7 @@ public class PropertyPrediction
 	private Double realValue;
 	private String predictedValueString;
 	private String realValueString;
-	
+
 	public String getPredictedValueString() {
 		return predictedValueString;
 	}
@@ -59,7 +59,7 @@ public class PropertyPrediction
 	public void setRealValueString(String realValueString) {
 		this.realValueString = realValueString;
 	}
-	
+
 	public double getDm()
 	{
 		return dm;
@@ -99,28 +99,28 @@ public class PropertyPrediction
 	{
 		return value;
 	}
-	
+
 	public void setValue(double value)
 	{
 		this.value = value;
 		this.predictedValueString = "" + value;
 	}
-	
+
 	public double getAccuracy()
 	{
 		return accuracy;
 	}
-	
+
 	public void setAccuracy(double accuracy)
 	{
 		this.accuracy = accuracy;
 	}
-	
+
 	public String getUnit()
 	{
 		return unit;
 	}
-	
+
 	public void setUnit(String unit)
 	{
 		this.unit = unit;
@@ -135,7 +135,7 @@ public class PropertyPrediction
 	{
 		return property;
 	}	
-	
+
 	public Boolean getInsideAD()
 	{
 		return insideAD;
@@ -145,7 +145,7 @@ public class PropertyPrediction
 	{
 		this.insideAD = insideAD;
 	}
-	
+
 	public String toString()
 	{
 		return "Property:"+property+", Value:"+value+", Accuracy:"+accuracy+", Unit:"+unit;
@@ -154,21 +154,21 @@ public class PropertyPrediction
 	public void addRealValues(Property property, Molecule molecule, Unit targetUnit, Basket trainingSet) {
 		String qq =  "select exp_property_id from ExperimentalProperty  natural join BasketEntry  natural join Molecule where basket_id=" +  trainingSet.id +
 				" and property_id=" + property.id + "  and mapping2_id=" + molecule.mapping2.id;
-		
-		System.out.println(qq);
-		
-	    Query q = Globals.session().createSQLQuery(qq);
-	    @SuppressWarnings("unchecked")
-		List<Integer> entities = q.list();
-	    if(entities.size() == 0) return;
 
-	    long id = entities.get(0);
-	    
-	    ExperimentalProperty ep = Repository.record.getRecord(id);
-	    
-	    if(property.isQualitative())
-	    	this.realValueString = Repository.option.getPropertyOptionById(ep.option.id).name;
-	    else
-	    	this.realValueString = "" + UnitConversion.convert(ep.value, ep.unit, targetUnit, molecule.molWeight);
+		System.out.println(qq);
+
+		Query q = Globals.session().createSQLQuery(qq);
+		@SuppressWarnings("unchecked")
+		List<Integer> entities = q.list();
+		if(entities.size() == 0) return;
+
+		long id = ((Number)entities.get(0)).longValue();
+
+		ExperimentalProperty ep = Repository.record.getRecord(id);
+
+		if(property.isQualitative())
+			this.realValueString = Repository.option.getPropertyOptionById(ep.option.id).name;
+		else
+			this.realValueString = "" + UnitConversion.convert(ep.value, ep.unit, targetUnit, molecule.molWeight);
 	}
 }

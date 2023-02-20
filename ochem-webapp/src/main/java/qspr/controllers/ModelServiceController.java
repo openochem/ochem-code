@@ -114,7 +114,7 @@ public class ModelServiceController extends MultiActionController
 	 * Run predictions in a simplified way, without bothering about task IDs 
 	 */
 	public ModelAndView getPrediction(HttpServletRequest request, HttpServletResponse response) {
-		return getResponsePrediction(null, getModelID(request), request.getParameter("mol"),true);
+		return getResponsePrediction(QSPRConstants.ANONYMOUS, getModelID(request), request.getParameter("mol"),true);
 	}
 
 	public ModelAndView getModelDescriptionAuth(HttpServletRequest request, HttpServletResponse response) {
