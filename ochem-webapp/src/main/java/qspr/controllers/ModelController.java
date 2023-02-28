@@ -1404,6 +1404,10 @@ public class ModelController extends BrowserWrapper
 
 	public ModelAndView approve(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Model model = getRequestedModel();
+
+		if (!Globals.isValidatedUser())
+			throw new UserFriendlyException("You need a validated account to perform this action!");
+
 		ModelOperation.approveModel(model, assertParam("publishedAndCited"), getIntParam("qualityGrade"));
 
 		return new WebModel(new Alert("Thank you!\nThe model has been approved.")).getModelAndView();
