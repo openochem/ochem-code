@@ -17,7 +17,9 @@
 
 package qspr.dao;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -43,13 +45,22 @@ public class ModelDAOImpl implements ModelDAO {
 		return null;
 	}
 
+	public List<Model> deDuplicate(List<Model> models){
+		Set<Model> mod = new LinkedHashSet<Model>();
+		mod.addAll(models);
+		models.clear();
+		models.addAll(mod);
+		return models;
+	}
+
+
 	@Override
 	public List<Model> getFeaturedModels() {
-		return Globals.session().createCriteria(Model.class)
+		return deDuplicate(Globals.session().createCriteria(Model.class)
 				.add(Restrictions.eq("published", true))
 				.add(Restrictions.isNotNull("featuredName"))
 				.addOrder(Order.asc("publicId"))
-				.list();
+				.list());
 	}
 
 	@Override
@@ -62,24 +73,24 @@ public class ModelDAOImpl implements ModelDAO {
 
 	@Override
 	public List<Model> getPublishedApprovedModels() {
-		return Globals.session().createCriteria(Model.class)
+		return deDuplicate(Globals.session().createCriteria(Model.class)
 				.add(Restrictions.eq("published", true))
 				.add(Restrictions.eq("approved", true))
 				.addOrder(Order.asc("publicId"))
-				.list();	
+				.list());	
 	}
 
 	@Override
 	public List<Model> getPublishedModels() {
-		return Globals.session().createCriteria(Model.class)
+		return deDuplicate(Globals.session().createCriteria(Model.class)
 				.add(Restrictions.eq("published", true))
 				.addOrder(Order.asc("publicId"))
-				.list();	
+				.list());	
 	}
 
 	@Override
 	public List<Model> getAllModels() {
-		return Globals.session().createCriteria(Model.class)
-				.list();	
+		return deDuplicate(Globals.session().createCriteria(Model.class)
+				.list());	
 	}
 }

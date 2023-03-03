@@ -87,7 +87,7 @@ public class TaskTreeNode
 			children.add(node);
 		}
 
-		if(children.size()<MetaServer.LIMITCHILDREN) {
+		if(children.size() == 0) {
 			List<ArchivedTask> archivedTasks = MetaServer.getInstance().session().createCriteria(ArchivedTask.class).add(Restrictions.eq("parentTaskId", task.id)).addOrder(Order.desc("id")).setMaxResults(MetaServer.LIMITCHILDREN - children.size()).list();
 			for (ArchivedTask childTask : archivedTasks)
 			{

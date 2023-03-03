@@ -226,6 +226,10 @@ public class Task implements Serializable
 			logger.info("Task serialization took " + (Calendar.getInstance().getTimeInMillis() - time)/1000 + " sec.");
 	}
 
+	public int numberCrashes(){
+		return resubmitted == null? 0: resubmitted.intValue();
+	}
+
 	public Task(String type, Serializable configuration, Serializable data) throws IOException
 	{
 		long time = Calendar.getInstance().getTimeInMillis();

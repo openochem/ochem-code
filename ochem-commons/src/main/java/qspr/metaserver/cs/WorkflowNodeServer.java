@@ -243,10 +243,10 @@ public abstract class WorkflowNodeServer extends CalculationServer
 
 			Serializable configuration = task.getConfiguration();
 			int suggestedRepostSize = getRepostSize(configuration);
-			if (suggestedRepostSize == 0 || in.ports.get(0).getRowsSize() <= suggestedRepostSize || in.ports.size() > 1)
+			if (suggestedRepostSize == 0 || in.ports.size() > 1 || (task.numberCrashes() == 0 && in.ports.get(0).getRowsSize() <= suggestedRepostSize) )
 				wndOut = calculate(in.getDeeperCopy(), configuration);
 			else
-				wndOut = calculateInParralel(in, configuration);
+				wndOut = calculateInParralel(in, configuration, task.numberCrashes());
 
 			Runtime.getRuntime().gc();
 
@@ -365,9 +365,14 @@ public abstract class WorkflowNodeServer extends CalculationServer
 		return wndOut;
 	}
 
-	WorkflowNodeData calculateInParralel(WorkflowNodeData in, Serializable configuration) throws Exception
+	WorkflowNodeData calculateInParralel(WorkflowNodeData in, Serializable configuration, int resubmitted) throws Exception
 	{
 		int suggestedRepostSize = getRepostSize(configuration);
+
+		suggestedRepostSize =  resubmitted == 0? suggestedRepostSize: suggestedRepostSize/(resubmitted + 1);
+
+		if(suggestedRepostSize < 10) suggestedRepostSize = 1;
+
 		out.println("Calculating a task in smaller batches of " + suggestedRepostSize + " rows");
 		CalculationTaskSet taskSet = new CalculationTaskSet(this);
 
