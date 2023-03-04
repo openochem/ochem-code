@@ -334,6 +334,9 @@ public class MolBrowserController extends BrowserWrapper
 	public ModelAndView show(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception
 	{
+		if(!Globals.userSession().user.isSuperUser())
+			throw new UserFriendlyException("Molecules can be accessed only by administrator");
+		
 		WebModel wm = new WebModel().setList(Globals.getTaginationFilters(Mapping1.class)).setTemplate("molecule-browser");
 		return wm.getModelAndView();
 	}

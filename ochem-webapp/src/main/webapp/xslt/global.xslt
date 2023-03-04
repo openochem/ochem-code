@@ -158,10 +158,13 @@
 											<item href="systemstatus/meta.do" title="Metaserver status"/>
 											<item href="systemstatus/show.do" title="Server tests"/>
 										</items>
-										<items>
-											<item href="molbrowser/show.do" title="Molecules"/>
-											<item href="epbrowser/show.do?trash=1&amp;globaltrash=1" title="Global trash" img="img/icons/trash16.png"/>
-										</items>
+										
+										<xsl:if test="//user/superuser = 'true'">
+											<items>
+												<item href="molbrowser/show.do" title="Molecules"/>
+												<item href="epbrowser/show.do?trash=1&amp;globaltrash=1" title="Global trash" img="img/icons/trash16.png"/>
+											</items>
+										</xsl:if>
 									</sub-menu>
 								</item>
 
