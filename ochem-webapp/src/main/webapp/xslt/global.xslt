@@ -150,7 +150,8 @@
 									</items>
 								</sub-menu>
 							</item>
-							
+
+							<xsl:if test="//user/superuser = 'true'">
 								<item href="#" title="Administration">
 									<sub-menu id="administration">
 										<items>	
@@ -159,14 +160,13 @@
 											<item href="systemstatus/show.do" title="Server tests"/>
 										</items>
 										
-										<xsl:if test="//user/superuser = 'true'">
 											<items>
 												<item href="molbrowser/show.do" title="Molecules"/>
 												<item href="epbrowser/show.do?trash=1&amp;globaltrash=1" title="Global trash" img="img/icons/trash16.png"/>
 											</items>
-										</xsl:if>
 									</sub-menu>
 								</item>
+							</xsl:if>
 
 						</main-menu>
 						</td>
