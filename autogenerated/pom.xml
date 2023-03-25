@@ -4,6 +4,10 @@
 	<artifactId>ncbi_and_conversion_utilities</artifactId>
  	<name>Utilities</name>
 	<version>2.0</version>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
  	<dependencies>
 		<dependency>
 			<groupId>javax.xml</groupId>
