@@ -18,7 +18,6 @@
 package qspr.modelling;
 
 import java.io.Serializable;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,7 +29,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import qspr.Globals;
-import qspr.dao.MetalBondParserSdf;
 import qspr.dao.Repository;
 import qspr.dao.Various;
 import qspr.entities.Basket;
@@ -40,6 +38,7 @@ import qspr.entities.ExperimentalProperty;
 import qspr.entities.Property;
 import qspr.entities.PropertyOption;
 import qspr.entities.PropertyValue;
+import qspr.entities.Session;
 import qspr.interfaces.ProvidedConditions;
 import qspr.metaserver.configurations.MaximalSizeRestriction;
 import qspr.metaserver.configurations.MultiLearningAbstractConfiguration;
@@ -85,15 +84,15 @@ abstract public class BasicModelProcessor extends ModelProcessor
 	{
 		if (numOfOptions == null || numOfOptions.isEmpty())
 		{
-			Map.Entry<String, byte[]> entry = qspr.entities.Session.table.get("basket_"+Globals.userSession().id);
-			String hash = "" +model.getFilteredSet(QSPRConstants.TRAINING).id;
+			String hash = model.trainingSet.lastModified.toString()+model.trainingSet.id;
 
 			OptionsEnumeration en = null;
-			if(entry != null && entry.getKey().equals(hash)) en = (OptionsEnumeration)ClassCompressor.byteToObject(entry.getValue());
+			byte[] entry = Session.getHash(hash);
+			if(entry != null) en = (OptionsEnumeration)ClassCompressor.byteToObject(entry);
 
 			if (en == null) {
 				en = OptionsEnumeration.enumeratePropertyOptions(model.getFilteredSet(QSPRConstants.TRAINING), mapper);
-				qspr.entities.Session.table.put("basket_"+Globals.userSession().id,new AbstractMap.SimpleEntry<String, byte[]>(hash,ClassCompressor.objectToByte(en)));
+				Session.hashSet(hash,ClassCompressor.objectToByte(en));
 			}
 			else
 				System.out.println("Reusing hashed value");
@@ -154,9 +153,9 @@ abstract public class BasicModelProcessor extends ModelProcessor
 		System.out.println("Baskets hash: " + hash);
 
 		DataTable dtMolecules = null;
-		Map.Entry<String, byte[]> entry = qspr.entities.Session.table.get("table_"+Globals.userSession().id);
-		if(entry != null && entry.getKey().equals(hash)) {
-			dtMolecules = (DataTable) ClassCompressor.byteToObject(entry.getValue());			
+		byte[] entry = Session.getHash(hash);
+		if(entry != null ) {
+			dtMolecules = (DataTable) ClassCompressor.byteToObject(entry);			
 			System.out.println("Found for Baskets hash: " + hash);
 		}else
 			System.out.println("Not Found for Baskets hash: " + hash);
@@ -224,7 +223,7 @@ abstract public class BasicModelProcessor extends ModelProcessor
 			dtMolecules.attachment = Integer.valueOf(trainingSet.entries.size());
 
 			// storing for caching
-			qspr.entities.Session.table.put("table_"+Globals.userSession().id,new AbstractMap.SimpleEntry<String, byte[]>(hash,ClassCompressor.objectToByte(dtMolecules)));
+			Session.hashSet(hash,ClassCompressor.objectToByte(dtMolecules));
 		}
 
 		setStatus("Enumerating experimental values");
@@ -362,12 +361,12 @@ abstract public class BasicModelProcessor extends ModelProcessor
 							MixtureAttachment at = ExperimentalProperty.createSolventAttachment(pv.option.name);
 							dtConditions.getCurrentRow().addAttachment(QSPRConstants.SOLVENT_ATTACHMENT, at); // do not need to be added
 							// we also add SMILES for later use
-							
+
 							String smiles = 
 									Various.molecule.convertToFormatFixMetal(data.getSDF(dtConditions.currentRow),QSPRConstants.SMILESH)  + "." + at.smiles();
-							
+
 							data.getRow(dtConditions.currentRow).addAttachment(QSPRConstants.SMILES_ATTACHMENT,smiles);
-						
+
 						}catch(Exception e) {
 							data.getRow(dtConditions.currentRow).setError(e.getMessage());
 						}

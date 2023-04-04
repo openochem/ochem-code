@@ -540,6 +540,7 @@ public class Task implements Serializable
 		setConfiguration(getConfiguration());
 		setData(getData());
 		setResult(getResult());
+		md5 = getMD5();
 	}
 
 	public Task setMinRequiredMemory(int requiredMemory)
@@ -633,6 +634,7 @@ public class Task implements Serializable
 	}
 
 	public String getMD5() {
+		if(data == null || configuration == null) return null;
 		return OCHEMUtils.getMD5(data, configuration);
 	}
 

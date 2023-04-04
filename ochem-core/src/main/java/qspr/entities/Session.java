@@ -153,7 +153,7 @@ public class Session
 	public Set<Long> selectedAlerts = new HashSet<Long>();
 
 	@Transient
-	static public Map<String,Map.Entry<String, byte[]>> table = new HashMap<String,Map.Entry<String, byte[]>>();
+	static private Map<String, byte[]> hashedBasket = new HashMap<String,byte[]>();
 
 	/**
 	 * A session-scoped CS transport
@@ -214,6 +214,19 @@ public class Session
 				TransportFactory.setThreadTransport(sessionSpecificTransport);
 		}
 	}
+
+	static private String sessionString() {
+		return Globals.isGuestUser()?"":""+Globals.userSession().id;
+	}
+
+	static public void hashSet(String hash,byte[] bytes) {
+		qspr.entities.Session.hashedBasket.put(sessionString() + hash,bytes);
+	}
+
+	static public byte[] getHash(String hash) {
+		return hashedBasket.get(sessionString() + hash);
+	}
+
 
 	@XmlElement(name = "limit")
 	public int getLimit()

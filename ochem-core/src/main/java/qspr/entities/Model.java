@@ -773,7 +773,7 @@ public class Model
 
 
 	public String hashOfSets(ProvidedConditions cond){
-		String hash = trainingSet.lastModified.toString();
+		String hash = trainingSet.lastModified.toString()+trainingSet.id;
 		for(String set: filteredSets.keySet())
 			hash += "-"+ set+"_"+filteredSets.get(set).cachedCount;
 		if(cond != null && cond.hasConditions())

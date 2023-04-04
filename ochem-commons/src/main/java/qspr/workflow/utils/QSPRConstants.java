@@ -289,5 +289,6 @@ public class QSPRConstants
 	public static final String PYTHON36 = "/opt/conda/envs/map4/bin/python3.6";
 	public static final String RDKITPYTHON ="export RDBASE=/opt/conda/envs/map4/share/RDKit/; export PYTHONPATH=/opt/conda/envs/map4/include/rdkit; " + PYTHON36;
 	public static final int MAXRECORDS_PER_MYSQL_UPDATE = 500;
+	public static final int MAXCACHEDRETRIEVAL = 100;
 
 }

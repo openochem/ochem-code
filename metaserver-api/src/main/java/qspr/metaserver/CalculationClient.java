@@ -131,10 +131,10 @@ public class CalculationClient
 
 		String md5 = task.getMD5();
 		task.md5 = md5;
-		task.disableTaskLevelCache = true;
-		// Task level caching 
-		if (task.isCachable())
+				
+		if (md5 != null && task.isCachable())
 		{
+			firstCalculateLocally = false; // all cachable tasks are 
 			Integer reference_id = getTaskByMD5(md5);
 			if (reference_id != null)
 			{

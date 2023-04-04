@@ -262,11 +262,11 @@ public class BaggingServer extends ValidationAbstractServer {
 			b.set(i);
 		return b;
 	}
-
+/*
 	@Override
 	protected int overRun(ValidationConfiguration configuration) {
 		BaggingConfiguration conf = (BaggingConfiguration)configuration;
 		return conf.noOverrun !=null && conf.noOverrun? 0:  (int)Math.ceil(conf.ensembleSize/10.);
 	}
-
+*/
 }

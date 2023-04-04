@@ -340,7 +340,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 	private Integer getTaskByMD5(String md5)
 	{
-		List<Object[]> rows =  session().createSQLQuery("select status, task_id from Task where task_md5=:md5").setParameter("md5", md5).list();
+		List<Object[]> rows =  session().createSQLQuery("select status, task_id from Task where task_md5=:md5  and status != \\\"error\\\" and  status != \\\"kill\\\"").setParameter("md5", md5).list();
 		Integer taskId = null;
 		for (Object[] row : rows)
 		{
@@ -863,6 +863,8 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 
 	}
 
+	private void deleteChildrenTasks(Integer parentId, boolean keepErrors, boolean cleanUpOnly) {}
+	/*
 	private void deleteChildrenTasks(Integer parentId, boolean keepErrors, boolean cleanUpOnly)
 	{
 		if (parentId == null)
@@ -891,7 +893,7 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		}
 		session().flush();
 	}
-
+	 */
 	private boolean removeTaskFromCache(int taskId)
 	{
 		String foundKey = null;
@@ -946,13 +948,13 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			task.priority -= PRIORITY_DECREMENT_FOR_RESTART;
 		}
 
-		if(task.parentTaskId != null) // update all tasks from the parent, to avoid multiple updates
+		/*if(task.parentTaskId != null) // update all tasks from the parent, to avoid multiple updates
 			session().createQuery("update Task set minRequiredMemory = :rm, resubmitted = 1, priority = :pr where parent_task_id = :id and status = :st and minRequiredMemory < :rm").
 			setInteger("id", task.parentTaskId).
 			setDouble("pr", task.priority).
 			setString("st", "init").
 			setInteger("rm", task.getMinRequiredMemory()).
-			executeUpdate();
+			executeUpdate();*/
 
 		long howlong = task.timeAssigned != null ? (Calendar.getInstance().getTimeInMillis() - task.timeAssigned.getTime())/1000:0;
 

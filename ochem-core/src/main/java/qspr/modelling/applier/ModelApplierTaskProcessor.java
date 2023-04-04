@@ -319,7 +319,7 @@ public class ModelApplierTaskProcessor extends AbstractTaskProcessor
 
 		logger.info("Cached entries are analysed for " + model.name);
 
-		if (useCache || parent.scenario != PredictionScenario.PREDICTION_ONLY) // only for published models or if CV are required
+		if ((useCache || parent.scenario != PredictionScenario.PREDICTION_ONLY) && (basket.cachedCount == null || basket.cachedCount < QSPRConstants.MAXCACHEDRETRIEVAL)) // only for published models or if CV are required
 		{
 			useCache = true;
 			setStatus("Retrieval of previously calculated and cached predictions...");
