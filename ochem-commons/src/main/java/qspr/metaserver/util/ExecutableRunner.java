@@ -271,7 +271,7 @@ public class ExecutableRunner
 		Process proc = null;
 		int exitVal = 0;
 		boolean timeoutReached = false;
-		ProcessUtils.killByName(parentServer.getRunsDirectory());
+		ProcessUtils.killByName(getAliasedPath());
 
 		String files[] = outputfiles.split(","); 
 		for(String file : files) {
