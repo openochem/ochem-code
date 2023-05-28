@@ -55,12 +55,6 @@
 				<xsl:if test="/model/session/user/group">
 					<input type="checkbox" name="group" filter="1"/><xsl:value-of select="/model/session/user/group/name"/> members' models
 				</xsl:if>
-				<input type="checkbox" name="autorefresh"/> Refresh every minute
-					<div class="pager-strip">
-						<span><b class="showed">none</b> of <b class="total">none</b></span>
-						<div class="pgr">
-						</div>
-					</div>
 					
 					<table class="torefactor">
 						<tr>
