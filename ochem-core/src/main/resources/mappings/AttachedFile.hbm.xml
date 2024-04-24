@@ -9,9 +9,7 @@
         </id>
         <property name="md5" type="java.lang.String" column="attachment_md5" access="field"/>
         <property name="flag" type="java.lang.Integer" column="flag" access="field"/>
-        <property name="data" type="binary" access="field">
-        	<column name="data"  read="uncompress(data)" write="compress(?)"/>
-        </property>
+        <property name="data" type="binary" access="field"/>
                 
         <property name="source" column="source" not-null="false" access="field">
 	      <type name="org.hibernate.type.EnumType">

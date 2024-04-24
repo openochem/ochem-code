@@ -171,6 +171,7 @@ public class QSPRConstants
 	// Publishing
 	public static final long     PUBLISHER_ID = 1; // PUBLISHER id of a user which formally publish models, data, stored descriptors
 	public static final String   PUBLISHER = "published"; // The login of this special user
+	public static final String   ADMIN = "admin";
 
 	// Methods
 	public static final String COMPARE_SCAFFOLDS = "CompareScaffolds";

@@ -139,8 +139,10 @@ public class OCHEMUtils
 		return data == null? null : MySqlCompatibleCompress(data.getBytes());
 	}
 
+	static boolean  debug = true;
 	private static byte[] MySqlCompatibleCompress(byte[] data) throws IOException
 	{
+	    if(debug)return data;	
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		BufferedOutputStream bos = new BufferedOutputStream(baos);
 		DeflaterOutputStream dos = new DeflaterOutputStream(bos);
@@ -156,6 +158,7 @@ public class OCHEMUtils
 
 	public static byte[] MySqlCompatibleUncompress(byte[] data) throws IOException
 	{
+	    if(debug)return data;	
 
 		if(data == null) return null;
 
@@ -422,7 +425,7 @@ public class OCHEMUtils
 	}
 
 	public static void main(String[] args) throws Exception{
-		System.out.println(getFilteredBasketName("тестт(% a)"));
+		logger.info(getFilteredBasketName("тестт(% a)"));
 	}
 
 	public static String trim(String article) {

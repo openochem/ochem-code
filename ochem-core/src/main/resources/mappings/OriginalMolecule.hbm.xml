@@ -8,9 +8,7 @@
             <generator class="native"/>
         </id>
         <property name="md5" type="java.lang.String" column="orig_molecule_md5" access="field"/>
-        <property name="data" type="java.lang.String" access="field">
-        	<column name="data" read="uncompress(data)" write="compress(?)"/>
-        </property>
+        <property name="data" type="java.lang.String" access="field"/>
         <many-to-one name="molecule" column="molecule_id" class="qspr.entities.Molecule" lazy="false" access="field"/>
         <many-to-one name="format" column="format_id" class="qspr.entities.MoleculeFormat" access="field"/>
     </class>

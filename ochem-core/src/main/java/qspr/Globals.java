@@ -39,10 +39,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.commons.lang3.mutable.Mutable;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator;
 import org.flywaydb.core.Flyway;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -242,6 +240,11 @@ public class Globals
 			if(User.extendedExists()) throw new CriticalException(message);
 			else
 				throw new CriticalException("The database is incorrectly configured and does not have user PUBLISHER = " + QSPRConstants.PUBLISHER + " with id: " + QSPRConstants.PUBLISHER_ID);
+		}
+
+		if(OCHEMConfiguration.autoLoginUser != null) {
+			user = User.getByLogin(OCHEMConfiguration.autoLoginUser);
+			if(user == null)OCHEMConfiguration.autoLoginUser = QSPRConstants.ADMIN;
 		}
 
 		if(Repository.molecule.getEmptyMolecule() == null)

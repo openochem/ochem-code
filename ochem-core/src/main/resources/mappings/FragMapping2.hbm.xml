@@ -8,9 +8,7 @@
             <generator class="native"/>
         </id>
         <property name="inchi2" type="java.lang.String" column="inchi2" access="field"/>
-        <property name="data" type="java.lang.String" access="field">
-        	<column name="data" read="uncompress(data)" write="compress(?)"/>
-        </property>
+        <property name="data" type="java.lang.String" access="field"/>
         <many-to-one name="mapping1" column="mapping1_id" class="qspr.fragmententities.Mapping1" lazy="false" access="field"/>
     </class>
 </hibernate-mapping>

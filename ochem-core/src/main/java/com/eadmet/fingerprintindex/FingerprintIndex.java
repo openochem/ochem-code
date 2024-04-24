@@ -280,7 +280,7 @@ public class FingerprintIndex
 			{
 				try
 				{
-					List<byte[]> l =  Globals.session().createSQLQuery("select uncompress(molecule_data) from Molecule where mapping2_id = :mp2").setInteger("mp2", mapping2id).list();
+					List<byte[]> l =  Globals.session().createSQLQuery("select molecule_data from Molecule where mapping2_id = :mp2").setInteger("mp2", mapping2id).list();
 					if (l.size() == 0)
 						continue;
 				

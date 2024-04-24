@@ -9,9 +9,7 @@
         </id>
         <property name="inchi1" type="java.lang.String" column="inchi1" access="field"/>
         
-        <property name="fragment_data" type="java.lang.String" access="field">
-        	<column name="fragment_data" read="uncompress(fragment_data)" write="compress(?)"/>
-        </property>
+        <property name="fragment_data" type="java.lang.String" access="field"/>
         
         <property name="size" type="java.lang.Long" update="false" insert="false" access="field">
         	<column name="size" read="length(fragment_data)"/>

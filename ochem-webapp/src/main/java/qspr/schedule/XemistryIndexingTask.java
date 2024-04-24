@@ -58,9 +58,9 @@ public class XemistryIndexingTask extends OchemCronjobTask
 
 	private String query ="insert ignore into StructureQuery select\n " + 
 			"	mapping2_id,\n" + 
-			"	ens_string_property(uncompress(molecule_data),'E_QUERY_SCREEN',null,'rawbinary'),\n" +
-			"	ens_blob_property(uncompress(molecule_data),'E_SCREEN'),\n" +
-			"	ens_string_property(uncompress(molecule_data),'E_MINIMOL',null,'rawbinary')\n" + 
+			"	ens_string_property(molecule_data,'E_QUERY_SCREEN',null,'rawbinary'),\n" +
+			"	ens_blob_property(molecule_data,'E_SCREEN'),\n" +
+			"	ens_string_property(molecule_data,'E_MINIMOL',null,'rawbinary')\n" + 
 			"	from Molecule left join StructureQuery using (mapping2_id) where StructureQuery.mapping2_id is null and molecule_id in (:ids) ";
 
 	public void executeTask() throws Exception 
