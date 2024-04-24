@@ -59,7 +59,7 @@ public class OCHEMConfiguration
 
 	@ConfigurableProperty(name = "cheminformatics_engine", comment = "Choose between 'CDK' or 'CHEMAXON'.")
 	static public String cheminfEngine = null;
-	
+
 	@ConfigurableProperty(name = "user_entity", comment = "Choose implementation of the User class and database entity.")
 	static public String userEntity = QSPRConstants.DEFAULT_USER;
 
@@ -226,7 +226,12 @@ public class OCHEMConfiguration
 	}
 
 	public static Class<?> getUserClass() throws ClassNotFoundException {
-		return Class.forName(userEntity);
+		try {
+			return Class.forName(userEntity);
+		}catch(ClassNotFoundException e) {
+			if(autoLoginUser == null)throw e;
+			return Class.forName(QSPRConstants.DEFAULT_USER);
+		}
 	}
 
 }
