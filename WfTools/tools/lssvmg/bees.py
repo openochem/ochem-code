@@ -37,7 +37,7 @@ class hive ():
         return np.array(new_points)[np.argsort(vals)]
 
     def explore_point (self, point, cur_density):
-        points = np.zeros((cur_density+1, len(point)), np.float)
+        points = np.zeros((cur_density+1, len(point)), float)
         for i in range(cur_density):
             points[i] = point + np.random.rand(len(point))*self.range*2 - self.range
         points[-1] = point
@@ -67,13 +67,13 @@ class hive ():
         return self.points[0]
 
     def __init__ (self, fn, x0, g_range, g_density=10, range=None, density=3, ngood=None, maxiter=10):
-        self.g_range = np.array(g_range, np.float)
+        self.g_range = np.array(g_range, float)
         self.g_density = g_density
-        self.range = np.array(range, np.float) if range is not None else (self.g_range[:,1]-self.g_range[:,0])*0.1
+        self.range = np.array(range, float) if range is not None else (self.g_range[:,1]-self.g_range[:,0])*0.1
         self.density = density
         self.ngood = ngood if ngood is not None else self.density+2
         self.maxiter = maxiter if maxiter > 10 else 10
-        self.points = np.array([x0], np.float)
+        self.points = np.array([x0], float)
         self.vals = {}
         self.prev_points = None
         self.fn = fn

@@ -249,8 +249,8 @@ class CNF ():
             pad_id = -1 if self.preload_dictionary else self.tokens["pad"] # gpu/cpu embedding fix
             tokens = [self.tokens.get(char, pad_id) for char in smiles_tokenizer(sm, self.tokenizer_type)]
             padsize = lmax-len(tokens)
-            return np.array(tokens + [pad_id]*padsize, np.float)
-        return np.array([embed_smile(sm) for sm in smiles], np.float)
+            return np.array(tokens + [pad_id]*padsize, float)
+        return np.array([embed_smile(sm) for sm in smiles], float)
 
 
     def fit (self, X, Y, W=None):

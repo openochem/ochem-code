@@ -7,7 +7,7 @@ with open("data/targets.csv") as fh:
     for row in reader:
         targets.append(row)
 
-targets = np.array(targets, np.float)
+targets = np.array(targets, float)
 train_targets = targets[:644]
 test_targets = targets[644:]
 
@@ -16,7 +16,7 @@ with open("result.csv") as fh:
     reader = csv.reader(fh)
     for row in reader:
         results.append(row)
-results = np.array(results, np.float)
+results = np.array(results, float)
 train_results = results[:644]
 test_results = results[644:]
 

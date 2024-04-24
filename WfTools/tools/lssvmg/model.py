@@ -35,7 +35,7 @@ class model ():
             data = []
             for row in reader:
                 data.append(row)
-        data = np.array(data, np.float)
+        data = np.array(data, float)
         ncols = data.shape[1]
 
         if len(target_columns)>0:

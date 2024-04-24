@@ -26,7 +26,7 @@ class base ():
             data = []
             for row in reader:
                 data.append(row)
-        data = np.array(data, np.float)
+        data = np.array(data, float)
         self.rng.shuffle(data)
             
         X = data[:,:-ntargets]
@@ -59,7 +59,7 @@ class base ():
             data = []
             for row in reader:
                 data.append(row)
-        X = np.array(data, np.float)
+        X = np.array(data, float)
 
         if self.do_center:
             X = self.center_x.transform(X)

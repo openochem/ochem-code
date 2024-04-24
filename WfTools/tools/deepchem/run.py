@@ -83,7 +83,7 @@ def roc_auc_score (y_true, y_score, **kwargs):
         return dc.metrics.rms_score(y_true, y_score)
     
 def fix_missed_values (Y):
-    w = (~np.isnan(Y)).astype(np.float)
+    w = (~np.isnan(Y)).astype(float)
     Yfix = np.nan_to_num(Y.copy(), 0)
     return Yfix, w
 
