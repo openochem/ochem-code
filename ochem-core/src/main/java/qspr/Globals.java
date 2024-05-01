@@ -376,9 +376,17 @@ public class Globals
 
 	static public Class<?> getCurrentUserClass() {
 		try {
-			return OCHEMConfiguration.getUserClass();
-		} catch (ClassNotFoundException e) {
-			throw new UserFriendlyException(e);
+			Class<?> found= Class.forName(OCHEMConfiguration.userEntity);
+			Globals.session().get(found, QSPRConstants.PUBLISHER);
+			return found;
+		} catch (Throwable e) {
+			try {
+				if(OCHEMConfiguration.autoLoginUser != null) // otherwise nobody can login
+					return Class.forName(QSPRConstants.DEFAULT_USER);
+				throw new UserFriendlyException(e.getMessage());
+			}catch (Throwable ee) {
+				throw new UserFriendlyException(e.getMessage());
+			}
 		}
 	}
 

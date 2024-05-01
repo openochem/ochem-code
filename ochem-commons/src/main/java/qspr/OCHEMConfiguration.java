@@ -225,13 +225,5 @@ public class OCHEMConfiguration
 		return System.getenv("OCHEM_CHEMAXON_LICENSE") != null && System.getenv("OCHEM_CHEMAXON_LICENSE").length() > 0;
 	}
 
-	public static Class<?> getUserClass() throws ClassNotFoundException {
-		try {
-			return Class.forName(userEntity);
-		}catch(ClassNotFoundException e) {
-			if(autoLoginUser == null)throw e;
-			return Class.forName(QSPRConstants.DEFAULT_USER);
-		}
-	}
 
 }
