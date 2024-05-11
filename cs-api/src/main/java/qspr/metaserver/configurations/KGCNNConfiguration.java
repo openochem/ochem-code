@@ -30,21 +30,29 @@ public class KGCNNConfiguration extends NoDescriptorsConfiguration implements Su
 
 	public enum KGCNN {
 
-		Schnet,
+		HamNet,
 		PAiNN, 
-		GATv2, 
-		GINE,
-
 		GCN,
-		ChemProp, 
+		GAT, 
+		GATv2, 
+		CMPNN,
+		Schnet,
 		GraphSAGE,
 		AttFP,
-		GIN,
-		GAT, 
-		HamNet, 
+		NMPN, 
+		DGIN, 
+		ChemProp, 
 		DimeNetPP, 
-
-
+		Megnet, 
+		MoGAT, 
+		MAT,
+		//MEGAN,
+		RGCN, 
+		GNNFilm, 
+		HDNNP2nd, 
+		rGIN,
+		GIN,
+		GINE,
 	};
 
 	public KGCNN method;

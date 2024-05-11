@@ -22,12 +22,25 @@
 					<option value="GATv2">GATv2</option>
 					<option value="GAT">GAT</option>
 					<option value="GraphSAGE">GraphSAGE</option>
-					<option value="GCN">GCN</option>
 					<option value="DimeNetPP">DimeNetPP</option>
 					<option value="HamNet">HamNet</option>
+
+					<option value="NMPN">NMPN</option>
+					<option value="Megnet">Megnet</option>
+					<option value="MoGAT">MoGAT</option>
+					<option value="MAT">MAT</option>
+<!-- 				<option value="MEGAN">MEGAN</option>  -->	
+					<option value="RGCN">RGCN</option>
+					<option value="GNNFilm">GNNFilm</option>
+					<option value="HDNNP2nd">HDNNP2nd</option>
+					<option value="rGIN">rGIN</option>
+					<option value="CMPNN">CMPNN</option>
+					
 				</select></td>
 			</tr>
 		</table>
+
+	
 
 		<br/>
 		<table class="configuration">
