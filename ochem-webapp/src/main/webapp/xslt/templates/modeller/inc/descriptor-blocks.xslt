@@ -15,7 +15,7 @@
 			#MOPAC2016-params {width: 650px; overflow: auto;}
 			#EState-atomic-params {width: 650px; overflow: auto;}
 			#EState-params {width: 650px; overflow: auto;}
-			#CDK2-params {width: 650px; overflow: auto;}
+			#CDK23-params {width: 650px; overflow: auto;}
 			#PaDEL2"-params {width: 650px; overflow: auto;}
 			#MORDRED-params {width: 650px; overflow: auto;}
 			#Fragmentor-params, #Fragmentor-2011-params, #QNPR-params, #Random-params {margin-left: 20px; background-color: #FFC; padding: 10px; width: 650px; }
@@ -223,19 +223,19 @@
 		</xsl:if>
 
 
-		<div><doc term="CDK2" hide="true"><input type="checkbox" name="CDK2" details="1" descriptor="1"/> CDK 2.8 descriptors (256/3D)</doc></div>
-		<div class="params invisible" id="CDK2-params">
-			<a href="javascript:selectBlocks(true, 'CDK2-params')">[select all]</a><a href="javascript:selectBlocks(false, 'CDK2-params')">[select none]</a><br/>
-			<input type="checkbox" name="cdk21" checked="true"/><label>constitutional descriptors (38)*</label>
-			<input type="checkbox" name="cdk22" checked="true"/><label>topological descriptors (195)</label><br/>
-			<input type="checkbox" name="cdk23" checked="true"/><label>geometric descriptors (49)</label>
-			<input type="checkbox" name="cdk24" checked="true"/><label>electronic descriptor (23)</label>
-			<input type="checkbox" name="cdk25" checked="true"/><label>hybrid descriptor (34)</label>
-			<br/><br/>*Some descriptors belong to two or more packages.
+		<div><doc term="CDK23"><input type="checkbox" name="CDK23" details="1" descriptor="1"/> CDK 2.8 descriptors (256/3D)</doc></div>
+		<div id="CDK23-params">
+			<a href="javascript:selectBlocks(true, 'CDK23-params')">[select all]</a><a href="javascript:selectBlocks(false, 'CDK23-params')">[select none]</a><br/>
+			<input type="checkbox" name="cdk231" checked="true"/><label>constitutional descriptors (38)*</label>
+			<input type="checkbox" name="cdk232" checked="true"/><label>topological descriptors (195)</label><br/>
+			<input type="checkbox" name="cdk233" checked="true"/><label>geometric descriptors (49)</label>
+			<input type="checkbox" name="cdk234" checked="true"/><label>electronic descriptor (23)</label><br/>
+			<input type="checkbox" name="cdk235" checked="true"/><label>hybrid descriptor (34)</label>
+			<br/>*Some descriptors belong to two or more packages.
 			<br/>Time to calculate descriptors per molecule (max: 99 minutes)<br/>
-			<label>Time (in minutes):</label>	<input class="width40" type="text" name="cdk2Timeout" value="10"/>
+			<label>Time (in minutes):</label>	<input class="width40" type="text" name="cdk23Timeout" value="10"/>
+			<br/><br/>
 		</div>
-
 
 		<div><doc term="RDKIT" hide="true"><input type="checkbox" name="RDKIT" details="1" descriptor="1"/> RDKit descriptors <i>(3D)</i></doc></div>
 		<div class="params invisible" id="RDKIT-params">
@@ -463,7 +463,7 @@
 	
 		<div><doc term="PaDEL2" hide="true"><input type="checkbox" name="PaDEL2" details="1" descriptor="1"/> PaDEL2 descriptors (3D)</doc></div>
 		<div class="params invisible" id="PaDEL2-params">
-			<a href="javascript:selectBlocks(true, 'PaDEL2-params')">[select all]</a><a href="javascript:selectBlocks(false, 'CDK2-params')">[select none]</a><br/>
+			<a href="javascript:selectBlocks(true, 'PaDEL2-params')">[select all]</a><a href="javascript:selectBlocks(false, 'PaDEL2-params')">[select none]</a><br/>
 			<input type="checkbox" name="padel1" checked="true"/><label>2D descriptors</label>
 			<input type="checkbox" name="padel2" checked="true"/><label>3D descriptors (3D)</label><br/>
 			<input type="checkbox" name="padel3" checked="true"/><label>fingerprints</label>
@@ -649,6 +649,17 @@
 						value &gt;&gt;= 1;
 					}
 				}
+
+				// Check if descriptors are defined and use them or default ones
+				<xsl:if test="//attachment/configuration/descriptors/types">
+					$('input[descriptor]').removeAttr("checked");
+					var type = "";
+					<xsl:for-each select="//attachment/configuration/descriptors/types">
+						type = '<xsl:value-of select="type"/>';
+						$('input[name=' + type + ']').attr("checked", "checked");
+					</xsl:for-each>
+					$('input[descriptor]').change();
+				</xsl:if>
 				
 				<xsl:if test="//attachment/configuration/descriptors/mixtures">
 					var mixtures = '<xsl:value-of select="//attachment/configuration/descriptors/mixtures"/>';
@@ -721,14 +732,14 @@
 					setCheckbox("radius",     '<xsl:value-of select="//attachment/configuration/descriptors/types[type='MAP4']/configuration/radius"/>');
 				</xsl:if>
 				
-				<xsl:if test="//attachment/configuration/descriptors/types[type='CDK2']">
-					setCheckbox("cdk21", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/descriptorTypes = 'constitutionalDescriptor'"/>');
-					setCheckbox("cdk22", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/descriptorTypes = 'topologicalDescriptor'"/>');
-					setCheckbox("cdk23", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/descriptorTypes = 'geometricalDescriptor'"/>');
-					setCheckbox("cdk24", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/descriptorTypes = 'electronicDescriptor'"/>');
-					setCheckbox("cdk25", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/descriptorTypes = 'hybridDescriptor'"/>');
-					setCheckbox("cdk26", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/descriptorTypes = 'proteinDescriptor'"/>');
-					setValue("cdk2Timeout", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK2']/configuration/moleculeTimeout"/>');
+				<xsl:if test="//attachment/configuration/descriptors/types[type='CDK23']">
+					setCheckbox("cdk231", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/descriptorTypes = 'constitutionalDescriptor'"/>');
+					setCheckbox("cdk232", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/descriptorTypes = 'topologicalDescriptor'"/>');
+					setCheckbox("cdk233", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/descriptorTypes = 'geometricalDescriptor'"/>');
+					setCheckbox("cdk234", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/descriptorTypes = 'electronicDescriptor'"/>');
+					setCheckbox("cdk235", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/descriptorTypes = 'hybridDescriptor'"/>');
+					setCheckbox("cdk236", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/descriptorTypes = 'proteinDescriptor'"/>');
+					setValue("cdk23Timeout", '<xsl:value-of select="//attachment/configuration/descriptors/types[type='CDK23']/configuration/moleculeTimeout"/>');
 				</xsl:if>
 							
 				<xsl:if test="//attachment/configuration/descriptors/types[type='InductiveDescriptors']">

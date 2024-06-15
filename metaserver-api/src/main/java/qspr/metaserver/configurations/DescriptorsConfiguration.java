@@ -34,7 +34,7 @@ public class DescriptorsConfiguration  extends DescriptorsAbstractConfiguration 
 
 	public static final String RDKIT = "RDKIT";
 
-	public static final String CDK2 = "CDK2";
+	public static final String CDK2 = "CDK23";
 	public static final String JPLOGP = "JPlogP";
 	public static final String CDDD = "CDDD";
 	public static final String MORDRED = "MORDRED";
