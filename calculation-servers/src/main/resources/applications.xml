@@ -232,7 +232,7 @@
 	</application>
 
 	<application class="qspr.metaserver.cs.CDK2DescriptorsServer"
-		name="CDK2">
+		name="CDK23">
 		<param name="EXE" value="%TOOLS_DIR%/cdk2" />
 	</application>
 	

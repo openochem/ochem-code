@@ -54,15 +54,28 @@ public class KRAKENXServer extends MOPAC7Server{
 
 	@Override
 	public void parseMopacOutput(String mopacFileName, DataTable dtResult, DescriptorsAbstractConfiguration conf) throws IOException, InterruptedException{
-		String[] commands = { "cd",getAliasedFileName(".")+";",javaHome+"/bin/java", "-Djava.awt.headless=true", "-Duser.language=en", "-Duser.region=US",
+
+		String java = "/usr/lib/jvm/java-11-openjdk-amd64/bin/java";
+
+		String[] commands = { "cd",getAliasedFileName(".")+";",
+				java, "-Djava.awt.headless=true", "-Duser.language=en", "-Duser.region=US",
 				"-cp",".:"+javaClassPath+":KrakenX.jar", // we need CDK2 ...
 				"krakenx.KrakenX","pars.txt"};
+		FileUtils.saveStringToFile("FOR005.out", getAliasedFileName("mopac.txt"));
 		executeBinaryBash(commands, output, TIMEOUTBABEL);
-		DataTable test = new DataTable(true);
-		
-		String ou = FileUtils.getFileAsString(getAliasedFileName(output));
-		if(!ou.contains("molecule"))FileUtils.saveStringToFile("molecule "+ou, getAliasedFileName(output)); // fixing recent bug in Krakenx, removal of the name of first column
-		
+		DataTable test = new DataTable(true); 
+		String out = FileUtils.getFileAsString(getAliasedFileName(output));
+		if(!out.contains("molecule")) { // fix for bug with shift of columns
+			out = "molecule " + out;
+			FileUtils.saveStringToFile(out, getAliasedFileName(output));
+		}
+
+		if(out.contains(" NA ")) { // fix for bug with shift of columns
+			out=out.replaceAll(" NA ", " NaN ");
+			out=out.replaceAll(" NA ", " NaN ");
+			FileUtils.saveStringToFile(out, getAliasedFileName(output));
+		}
+
 		readStandardOutputResults(test, output,false);
 		readStandardOutputResults(dtResult, output,false);
 
