@@ -123,11 +123,13 @@ public class CDDDDescriptorsServer extends DescriptorsAbstractExecutableServer
 				res.addRow();
 				// now we read first line (1 molecule) with results
 				String [] descriptors = dataResults.split(",");
-				if(descriptors.length != 515)
+				if(descriptors.length != 514 || descriptors[2].length()==0) {
 					res.getCurrentRow().setError("CDDD failed");
+					continue;
+				}
 
-				for(int l = 3; l < descriptors.length; l++)
-					res.setValue(l-3, descriptors[l]);
+				for(int l = 2; l < descriptors.length; l++)
+					res.setValue(l-2, descriptors[l]);
 			}
 		}catch(IOException e) {
 			throw(e);
