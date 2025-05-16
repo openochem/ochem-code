@@ -58,7 +58,7 @@ public class KRAKENXServer extends MOPAC7Server{
 
 		String java = "/usr/lib/jvm/java-11-openjdk-"+
 				(OSType.isAarch64()?"arm64":"amd64")+
-				"amd64/bin/java";
+				"/bin/java";
 
 		String[] commands = { "cd",getAliasedFileName(".")+";",
 				java, "-Djava.awt.headless=true", "-Duser.language=en", "-Duser.region=US",
