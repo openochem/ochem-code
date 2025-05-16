@@ -19,6 +19,7 @@ package qspr.metaserver.cs;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 
@@ -58,7 +59,8 @@ public class CDDDDescriptorsServer extends DescriptorsAbstractExecutableServer
 	int prepareData(DataTable dtMolecules, int start, int size) throws Exception{
 
 		saveMolecules(dtMolecules,QSPRConstants.SMILES_FORMAT,QSPRConstants.SMILESNOAROM, start, size);
-		String[] commands = new String[] {OSType.isMac()?"python3.6":QSPRConstants.RDKITPYTHON, getExeFile(), "--infile", QSPRConstants.SMILES_FORMAT, "--outfile",
+		String filePython = (new File(QSPRConstants.PYTHON36)).exists()?QSPRConstants.RDKITPYTHON:"python3";
+		String[] commands = new String[] {OSType.isMac()?"python3.6":filePython, getExeFile(), "--infile", QSPRConstants.SMILES_FORMAT, "--outfile",
 				dataout,"--augment","1","--isomeric","True"};
 		exeRunner.findWorkingPython(commands,dataout,0,CONDA.MAP4, size);
 
