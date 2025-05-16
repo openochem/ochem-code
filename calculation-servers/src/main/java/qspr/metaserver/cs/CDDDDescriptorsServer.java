@@ -22,6 +22,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 
+import com.eadmet.utils.OSType;
+
 import qspr.metaserver.configurations.DescriptorsAbstractConfiguration;
 import qspr.metaserver.configurations.DescriptorsConfiguration;
 import qspr.metaserver.util.ExecutableRunner.CONDA;
@@ -41,11 +43,8 @@ public class CDDDDescriptorsServer extends DescriptorsAbstractExecutableServer
 		try {
 			int mol = prepareData(dtMolecules, start, size);
 			if(mol > 0) {
-				String commands[]={"export",
-						QSPRConstants.RDKITPYTHON, "/opt/conda/envs/map4/bin/cddd" + " --input", getAliasedFileName(datain+".smi"), "--output",  
-						getAliasedFileName(dataout),"--model_dir","/etc/source/cddd"
-				};				
-				runPython(commands, dataout, CONDA.CDDD, 50);
+				String commands[]={"export","PATH=$PATH:~/.local/bin",";","cddd-onnx","--input",getAliasedFileName(datain+".smi"),"--output",getAliasedFileName(dataout)};
+				runPython(commands, dataout, CONDA.RDKIT, 50);
 				return readResults(dataout,dtMolecules,start,size);
 			}
 		}catch(Throwable e) {
@@ -59,9 +58,9 @@ public class CDDDDescriptorsServer extends DescriptorsAbstractExecutableServer
 	int prepareData(DataTable dtMolecules, int start, int size) throws Exception{
 
 		saveMolecules(dtMolecules,QSPRConstants.SMILES_FORMAT,QSPRConstants.SMILESNOAROM, start, size);
-		String[] commands = new String[] {null, getExeFile(), "--infile", QSPRConstants.SMILES_FORMAT, "--outfile",
+		String[] commands = new String[] {OSType.isMac()?"python3.6":QSPRConstants.RDKITPYTHON, getExeFile(), "--infile", QSPRConstants.SMILES_FORMAT, "--outfile",
 				dataout,"--augment","1","--isomeric","True"};
-		exeRunner.findWorkingPython(commands,dataout,0,CONDA.RDKIT, size);
+		exeRunner.findWorkingPython(commands,dataout,0,CONDA.MAP4, size);
 
 		LineNumberReader br =  getAliasedLineNumberReader(dataout);
 		BufferedWriter writer  =  getAliasedBufferedWriter(datain+".smi");
