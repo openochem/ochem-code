@@ -18,6 +18,7 @@
 package qspr.metaserver.cs;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -34,7 +35,8 @@ public class FragmentorServer extends DescriptorsAbstractExecutableServer
 			int start,int size) throws Exception
 	{
 		DescriptorsFragmentorConfiguration configuration=(DescriptorsFragmentorConfiguration)receivedConfiguration;
-		String commands[]={getExeFile(),
+		String file = (new File(getExeFile())).exists()?getExeFile():getAliasedFileName("isida-fragmentor-linux");
+		String commands[]={file,
 				"-i",datain,
 				"-o",dataout,
 				"-t",""+configuration.fragmentType,
