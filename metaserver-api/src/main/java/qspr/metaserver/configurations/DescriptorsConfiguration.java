@@ -105,6 +105,7 @@ public class DescriptorsConfiguration  extends DescriptorsAbstractConfiguration 
 			MOPAC2016,
 			MORDRED,
 			OEstate,
+			OSMORDRED,
 			ECFP,
 			PADEL2,
 			PyDescriptor,

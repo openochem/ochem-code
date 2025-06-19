@@ -83,6 +83,8 @@
 
 		<div><doc term="MOLD2" hide="true"><input type="checkbox" name="MOLD2" descriptor="1"/> Mold2 (777)</doc></div>
 
+		<div><doc term="OSMORDRED" hide="true"><input type="checkbox" name="OSMORDRED" descriptor="1"/> OSMORDRED (3551)</doc></div>
+
 		<div><doc term="CDDD" hide="true"><input type="checkbox" name="CDDD" descriptor="1"/> CDDD</doc></div>
 
 		<div><doc term="JPlogP" hide="true"><input type="checkbox" name="JPlogP" descriptor="1"/> JPlogP</doc></div>
