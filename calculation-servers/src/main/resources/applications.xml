@@ -195,7 +195,11 @@
 	<application class="qspr.metaserver.cs.RDKITDescriptorsServer" name="RDKIT">
 		<param name="EXE" value="%TOOLS_DIR%/rdkit/run.py" />
 	</application>
-		
+
+	<application class="qspr.metaserver.cs.OSMORDREDDescriptorsServer" name="OSMORDRED">
+		<param name="EXE" value="%TOOLS_DIR%/osmo/osmo.py" />
+	</application>
+
 	<application class="qspr.metaserver.cs.PyDescriptorsServer" name="PyDescriptor">
 			<param name="EXE" value="%TOOLS_DIR%/pydescriptor/PyDescriptor.py" />
 	</application>

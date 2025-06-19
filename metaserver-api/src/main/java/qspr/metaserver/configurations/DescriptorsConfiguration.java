@@ -33,6 +33,7 @@ public class DescriptorsConfiguration  extends DescriptorsAbstractConfiguration 
 	private static final long serialVersionUID = 4L;
 
 	public static final String RDKIT = "RDKIT";
+	public static final String OSMORDRED = "OSMORDRED";
 
 	public static final String CDK2 = "CDK23";
 	public static final String JPLOGP = "JPlogP";

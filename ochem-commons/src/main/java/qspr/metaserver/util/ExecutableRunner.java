@@ -72,7 +72,7 @@ public class ExecutableRunner
 
 	private AliasedDirectory aliasDirectory = null;
 
-	public enum CONDA {RDKIT, MAP4, DEEPCHEM, CDDD, NULL};
+	public enum CONDA {RDKIT, MAP4, DEEPCHEM, CDDD, OSMORDRED, NULL};
 
 	private String environmentConda(CONDA rdkit) throws IOException {
 
@@ -81,6 +81,7 @@ public class ExecutableRunner
 		case CDDD: return "cddd";
 		case MAP4: return "map4";
 		case RDKIT: return "my-rdkit-env";
+		case OSMORDRED: return "osmordred";
 		default:
 			break;
 		}

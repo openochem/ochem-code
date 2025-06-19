@@ -556,6 +556,15 @@ public class MainTest {
 		assertTrue(dtResult.containsColumn("MolMR"));
 	}
 
+	@Test(timeout = MULTIPLIER * 30000*100)
+	@TaskTest(DescriptorsConfiguration.OSMORDRED)
+	public void osmoTest() throws Exception {
+		DescriptorsOSMORDREDConfiguration osmo = new DescriptorsOSMORDREDConfiguration();
+		DataTable dtResult = runTest(DescriptorsConfiguration.OSMORDRED, osmo, wnd_molecules);
+		assertTrue(dtResult.containsColumn("ABCIndex_1"));
+		assertTrue(dtResult.containsColumn("AdjacencyMatrix_9"));
+	}
+
 	/**
 	 * Checks that number of descriptors for each block == number of descriptors for
 	 * all blocks

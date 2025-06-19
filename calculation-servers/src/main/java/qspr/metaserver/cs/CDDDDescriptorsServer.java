@@ -60,9 +60,9 @@ public class CDDDDescriptorsServer extends DescriptorsAbstractExecutableServer
 
 		saveMolecules(dtMolecules,QSPRConstants.SMILES_FORMAT,QSPRConstants.SMILESNOAROM, start, size);
 		String filePython = (new File(QSPRConstants.PYTHON36)).exists()?QSPRConstants.RDKITPYTHON:"python3";
-		String[] commands = new String[] {OSType.isMac()?"python3.6":filePython, getExeFile(), "--infile", QSPRConstants.SMILES_FORMAT, "--outfile",
+		String[] commands = new String[] {OSType.isMac()?"python3":filePython, getExeFile(), "--infile", QSPRConstants.SMILES_FORMAT, "--outfile",
 				dataout,"--augment","1","--isomeric","True"};
-		exeRunner.findWorkingPython(commands,dataout,0,CONDA.MAP4, size);
+		exeRunner.findWorkingPython(commands,dataout,0,CONDA.RDKIT, size);
 
 		LineNumberReader br =  getAliasedLineNumberReader(dataout);
 		BufferedWriter writer  =  getAliasedBufferedWriter(datain+".smi");
