@@ -250,6 +250,9 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 			case Command.CL_GET_SUPPORTED_TASKS:
 				return clGetSupportedTasks(command, peer);
 
+			case Command.CL_GET_FAILED_TASKS:
+				return clGetFailedTasks(command, peer);
+
 			case Command.CL_SET_PARENT:
 				return clSetParent(command, peer);
 
@@ -739,6 +742,23 @@ public class MetaServer extends AbstractServer implements DataReferenceCleaner
 		task.clearData();
 
 		return new Command(Command.MS_TASK_STATUS, task);
+	}
+
+	/**
+	 * Get the list of task types non-supported by at least one server
+	 */
+	protected Command clGetFailedTasks(Command command, OnlinePeer peer)
+	{
+		HashSet<String> failedTasks = new HashSet<String>();
+		for (OnlinePeer onlinePeer : onlinePeers.values())
+		{
+
+			if (onlinePeer.isClient || onlinePeer.getPing() > MetaServer.METASERVER_TASK_NOT_RESPONING)
+				continue;
+			if (onlinePeer.serverInfo != null && onlinePeer.serverInfo.failures != null)
+				failedTasks.addAll(onlinePeer.serverInfo.failures);
+		}
+		return new Command(Command.MS_OK, failedTasks);
 	}
 
 	/**

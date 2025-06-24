@@ -131,7 +131,7 @@ public class CalculationClient
 
 		String md5 = task.getMD5();
 		task.md5 = md5;
-				
+
 		if (md5 != null && task.isCachable())
 		{
 			firstCalculateLocally = false; // all cachable tasks are 
@@ -186,7 +186,7 @@ public class CalculationClient
 			// It is now possible to tolerate the metaserver unavailability
 			if (tolerateIfMetaserverDown)
 			{
-				logger.warn(Command.MEASERVER_DOWN);
+				logger.warn(Command.METASERVER_DOWN);
 				logger.warn("Error while connecting to the metaserver: " + e.getMessage());
 				e.printStackTrace(out);
 				return null;
@@ -285,13 +285,13 @@ public class CalculationClient
 		{
 			if (tolerateIfMetaserverDown)
 			{
-				logger.warn(Command.MEASERVER_DOWN);
+				logger.warn(Command.METASERVER_DOWN);
 				logger.warn(e.getMessage());
 
 				// Return a dummy task
 				Task task = new Task();
 				task.status = Task.INIT;
-				task.setDetailedStatus(Command.MEASERVER_DOWN);
+				task.setDetailedStatus(Command.METASERVER_DOWN);
 				return task;
 			}
 			else
@@ -304,7 +304,11 @@ public class CalculationClient
 		return mytask;
 	}
 
-	public List<Task> getTaskStatuses(List<Integer> taskIds) throws Exception
+	public List<Task> getTaskStatuses(List<Integer> taskIds) throws Exception{
+		return getTaskStatuses(taskIds, true);
+	}
+
+	public List<Task> getTaskStatuses(List<Integer> taskIds, boolean silent) throws Exception
 	{
 		// A method to request statuses of multiple tasks with a single query to metaserver
 		// Not supported for local tasks!
@@ -337,7 +341,7 @@ public class CalculationClient
 		{
 			if (tolerateIfMetaserverDown)
 			{
-				logger.warn(Command.MEASERVER_DOWN);
+				logger.warn(Command.METASERVER_DOWN);
 				logger.warn(e.getMessage());
 				for (int i = 0; i < taskIds.size(); i++)
 				{
@@ -345,7 +349,7 @@ public class CalculationClient
 					Task task = new Task();
 					task.id = taskIds.get(i);
 					task.status = Task.INIT;
-					task.setDetailedStatus(Command.MEASERVER_DOWN);
+					task.setDetailedStatus(Command.METASERVER_DOWN);
 					tasks.add(task);
 				}
 			}
@@ -371,6 +375,16 @@ public class CalculationClient
 	public Set<String> getSupportedTaskTypes() throws MalformedURLException, IOException, ClassNotFoundException
 	{
 		Command res = transport.executeCommand(new Command(Command.CL_GET_SUPPORTED_TASKS, null).sid(sid));
+		return (Set<String>) res.data;
+	}
+
+	/**
+	 * Retrieve the list of the task types supported by at least one available calculation server.
+	 * @return
+	 */
+	public Set<String> getFailedTaskTypes() throws MalformedURLException, IOException, ClassNotFoundException
+	{
+		Command res = transport.executeCommand(new Command(Command.CL_GET_FAILED_TASKS, null).sid(sid));
 		return (Set<String>) res.data;
 	}
 
@@ -458,12 +472,12 @@ public class CalculationClient
 		if (server != null)
 		{
 			server.statusChange.addListener(new EventListener<String>()
-					{
+			{
 				public void onEvent(Event event, String arg) 
 				{
 					CalculationClient.this.setStatus(server.getStatus());
 				}
-					});
+			});
 			task.id = -(int)Math.round(Math.random()*1000);
 			task.calcServerId = ServerPool.getInstance().sid;
 			server.calculateWrapper(task);

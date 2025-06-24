@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +39,12 @@ import qspr.OCHEMConfiguration;
 import qspr.ThreadScope;
 import qspr.entities.PeriodicTestResult;
 import qspr.frontend.WebModel;
+import qspr.metaserver.CalculationClient;
 import qspr.metaserver.protocol.Command;
 import qspr.metaserver.transport.CSTransport;
 import qspr.schedule.MonitoringTask;
 import qspr.tests.PeriodicTestRunner;
+import qspr.workflow.utils.QSPRConstants;
 
 import com.eadmet.exceptions.UserFriendlyException;
 
@@ -75,6 +78,47 @@ public class SystemStatusController extends ControllerWrapper
 		return new ModelAndView("json", "object", new Object[]{getMonitorData("memory", length), getMonitorData("load", length)});
 	}
 
+	@NoLoginRequired@NoFrame
+	public ModelAndView getAvailableServers(HttpServletRequest req, HttpServletResponse res) throws InterruptedException {
+		Set<String> taskTypes = null;
+
+		for(int i=0; (taskTypes == null || taskTypes.size() == 0) && i <200;i++) // trying for 100 seconds max
+
+			try {
+				Thread.sleep(500);
+				taskTypes = new CalculationClient("DescriptorsModelConfigurator").getSupportedTaskTypes();
+			}catch(Exception e) {
+				Thread.sleep(10000);
+			}
+
+		return new ModelAndView("json", "object", taskTypes.size());
+	}
+
+	@NoLoginRequired@NoFrame
+	public ModelAndView getFailedServers(HttpServletRequest req, HttpServletResponse res) throws InterruptedException {
+
+		getAvailableServers(req, res); // at least something should be available :)
+
+		try {
+			Set<String> taskTypes = new CalculationClient("DescriptorsModelConfigurator").getFailedTaskTypes();
+			String all = "Failed:";
+			if(taskTypes != null&& taskTypes.size()>0)
+				for(String task:taskTypes)
+					all += " " + task;
+			taskTypes = new CalculationClient("DescriptorsModelConfigurator").getSupportedTaskTypes();
+			all += "<br/ >Available:";
+			if(taskTypes != null&& taskTypes.size()>0)
+				for(String task:taskTypes)
+					all += " " + task;
+			return new ModelAndView("json", "object", all.trim());
+
+		}catch(Exception e) {
+		}
+
+		return new ModelAndView("json", "object", QSPRConstants.ERROR);
+	}
+
+	
 	@SuppressWarnings("rawtypes")
 	private List getMonitorData(String metrics, int length) 
 	{

@@ -45,6 +45,7 @@ public class Command implements Serializable
 	public static final int  CL_SET_PARENT = 11;
 	public static final int  CL_GET_TASKS_SUMMARY = 12;
 	public static final int  CL_GET_PARENT_ID = 13;
+	public static final int  CL_GET_FAILED_TASKS = 14;
 
 	// MetaServer >>> Client & CS
 	public static final int  MS_UNKNOWN_TASK = 0x10;
@@ -66,7 +67,7 @@ public class Command implements Serializable
 	// MetaServer >> CS
 	public static final int  MS_ASSIGN_TASK = 0x2000;
 	public static final int  MS_OK = 0;
-	public static final String MEASERVER_DOWN = "Can't fetch a task since the metaserver is down. Retry in a while...";
+	public static final String METASERVER_DOWN = "Can't fetch a task since the metaserver is down. Retry in a while...";
 
 	public static final String UNKNOWN_TASK = "Unknown task ID:";
 

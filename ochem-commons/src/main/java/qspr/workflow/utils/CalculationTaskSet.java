@@ -102,7 +102,7 @@ public class CalculationTaskSet
 
 					if (!tasks.get(taskNum).isReady()){
 						message = tasks.get(taskNum).status;
-						message = (message != null && message.length() > 0 && !message.contains(Command.MEASERVER_DOWN))? "Exemplary message: "+message : "";
+						message = (message != null && message.length() > 0 && !message.contains(Command.METASERVER_DOWN))? "Exemplary message: "+message : "";
 						if(manyLeft) break;
 						continue; // we are near to the end; let us check all the remaining tasks
 					}
