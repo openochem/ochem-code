@@ -43,6 +43,7 @@ import qspr.metaserver.protocol.ServerInfo;
 import qspr.metaserver.transport.CSTransport;
 
 import com.eadmet.utils.CryptUtils;
+import com.eadmet.utils.OCHEMUtils;
 import com.eadmet.utils.OSType;
 
 public class CalculationServerConfigurator
@@ -123,7 +124,7 @@ public class CalculationServerConfigurator
 
 			calculationServer.availableMemory = configuration.memoryLimit;
 
-			calculationServer.gpuCard = configuration.gpuCard == null ? CalculationServer.NO_GPU: configuration.gpuCard;
+			calculationServer.gpuCard = configuration.gpuCard != null ? configuration.gpuCard: OCHEMUtils.findFile("nvidia-smi") != null? 0: CalculationServer.NO_GPU;
 
 			// First global configuration params
 			if (application.params != null)
