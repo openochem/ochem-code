@@ -126,6 +126,9 @@ public class CalculationServerConfigurator
 
 			calculationServer.gpuCard = configuration.gpuCard != null ? configuration.gpuCard: OCHEMUtils.findFile("nvidia-smi") != null? 0: CalculationServer.NO_GPU;
 
+			out.println("Configuring gpuCard: " + calculationServer.gpuCard);
+
+			
 			// First global configuration params
 			if (application.params != null)
 				for (ApplicationParam param : application.params)
